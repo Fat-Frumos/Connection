@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { BackofficeComponent } from './backoffice.component';
-
-
+import {SearchModule} from '@app/components/search/search.module';
 
 @NgModule({
   declarations: [
     BackofficeComponent
   ],
+  exports: [
+    BackofficeComponent
+  ],
   imports: [
-    CommonModule
+    SearchModule
   ]
 })
 export class BackofficeModule { }

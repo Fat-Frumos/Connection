@@ -2,7 +2,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -20,11 +19,21 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
-    "types": ["jasmine", "node"],
+    "esModuleInterop": true,
+    "types": [
+      "karma",
+      "jasmine",
+      "node"
+    ],
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "baseUrl": "./src",
+    "paths": {
+      "@app/*": ["app/*"],
+      "@interface/*": ["interface/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -37,9 +46,7 @@
     ".eslintrc.js",
     "karma.conf.js"
   ],
-  "types": [
-    "karma",
-    "jasmine",
-    "node"
+  "files": [
+    "src/main.ts"
   ]
 }

@@ -1,26 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import {VideoListResponse} from '../../../interface/video-response.interface';
-import {HttpClient} from '@angular/common/http';
+import {Component} from '@angular/core';
+import {VideoListResponse} from '@app/interface/video-list-response';
+import {VideoService} from '@app/service/video.service';
 
 @Component({
   selector: 'app-search-results',
   templateUrl: './search-results.component.html',
   styleUrls: ['./search-results.component.scss']
 })
-export class SearchResultsComponent implements OnInit {
 
-  jsonData!: VideoListResponse;
+export class SearchResultsComponent {
 
-  baseUrl = 'https://github.com/rolling-scopes-school/tasks/blob/master/tasks/angular/response.json';
-
-  constructor(private http: HttpClient) {
-  }
-
-  ngOnInit() {
-    this.http.get<VideoListResponse>(this.baseUrl).subscribe(data => {
-      this.jsonData = data;
-    });
-
-    console.log(this.jsonData);
+  constructor(private readonly videoService: VideoService) {
+    const videoData: VideoListResponse = this.videoService.getVideoData();
+    console.log(videoData);
   }
 }
