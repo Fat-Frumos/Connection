@@ -15,18 +15,38 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'airbnb-typescript/base',
+    'plugin:@angular-eslint/recommended',
+    'plugin:@angular-eslint/template/process-inline-templates',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:import/errors'
   ],
-  ignorePatterns: ['karma.conf.js', 'webpack.config.js', '*.html'],
+  ignorePatterns: ['karma.conf.js', 'webpack.config.js', '*.html', 'projects/**/*'],
   rules: {
+    '@angular-eslint/directive-selector': [
+      'error',
+      {
+        type: 'attribute',
+        prefix: 'app',
+        style: 'camelCase'
+      }
+    ],
+    '@angular-eslint/component-selector': [
+      'error',
+      {
+        type: 'element',
+        prefix: 'app',
+        style: 'kebab-case'
+      }
+    ],
     '@typescript-eslint/indent': ['error', 2],
     '@typescript-eslint/no-implied-eval': 'off',
     '@typescript-eslint/dot-notation': 'off',
     '@typescript-eslint/naming-convention': 'off',
     '@typescript-eslint/array-type': 'error',
     '@typescript-eslint/object-curly-spacing': 'off',
-    '@typescript-eslint/no-explicit-any': ['warn', { ignoreRestArgs: true }],
+    '@typescript-eslint/no-explicit-any': 'error',
+    // '@typescript-eslint/no-explicit-any': ['warn', { ignoreRestArgs: true }],
     '@typescript-eslint/quotes': ['error', 'single', {'allowTemplateLiterals': true}],
     '@typescript-eslint/comma-dangle': 'off',
     'no-console': 'off',
@@ -66,7 +86,6 @@ module.exports = {
     'no-useless-constructor': 'error',
     'no-prototype-builtins': 'off',
     'no-var': 'warn',
-    'no-unused-vars': ['error', {'vars': 'local'}],
     'no-magic-numbers': ['warn', {'ignore': [0, 1]}],
     'import/named': 'off',
     'import/no-unresolved': 'off'

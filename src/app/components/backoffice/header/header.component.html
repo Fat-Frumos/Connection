@@ -1,1 +1,28 @@
-<p>header works!</p>
+<div class="header">
+  <div class="search">
+    <img
+      class="logo"
+      src="assets/svg/header/logo.svg"
+      alt="logo Icon">
+    <input
+      class="input-field-text"
+      type="text"
+      placeholder="Angular Podcast">
+    <div class="search-button">
+      <div class="search-text">Search</div>
+    </div>
+    <div class="search-settings" (click)="openDropdownSetting()">
+      <img src="assets/svg/header/setting.svg" alt="Settings Icon">
+    </div>
+  </div>
+  <div class="login">
+    <div class="username">Pasha</div>
+    <img
+      class="login-icon"
+      src="assets/svg/header/login.svg"
+      alt="Login Icon">
+  </div>
+</div>
+<app-dropdown-setting
+  *ngIf="isVisible">
+</app-dropdown-setting>

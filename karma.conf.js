@@ -27,7 +27,7 @@ module.exports = function(config) {
         reporters: ['spec','coverage'],
         port: 9876,
         colors: true,
-        logLevel: config.LOG_DISABLE,
+        logLevel: config.LOG_INFO,
         autoWatch: true,
         browsers: ['Chrome'],
         client: {

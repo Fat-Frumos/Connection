@@ -1,1 +1,28 @@
-<p>search-item works!</p>
+<div class="background"></div>
+<div class="title">{{ video.snippet.title }}</div>
+<div class="image"
+     [style.background-image]="'url(' + video.snippet.thumbnails.default.url + ')'"></div>
+<div class="button">
+  <div class="button-background"></div>
+  <div class="button-text">More...</div>
+</div>
+
+<div class="statistics">
+  <div class="group">
+    <img src="assets/svg/items/viewed.svg" alt="Viewed">
+    <div class="viewed">{{ video.statistics.viewCount }}</div>
+  </div>
+  <div class="group">
+    <img src="assets/svg/items/liked.svg" alt="Like">
+    <div class="liked">{{ video.statistics.likeCount }}</div>
+  </div>
+  <div class="group">
+    <img src="assets/svg/items/dislike.svg" alt="Dislike">
+    <div class="disliked">{{ video.statistics.dislikeCount }}</div>
+  </div>
+  <div class="group">
+    <img src="assets/svg/items/comments.svg" alt="Comments">
+    <div class="comments">{{ video.statistics.commentCount }}</div>
+  </div>
+</div>
+

@@ -1,4 +1,4 @@
-import {Thumbnail} from '@app/interface/thumbnail';
+import {Thumbnail} from '@app/interface/thumbnail-model';
 
 export interface Thumbnails {
   default: Thumbnail;

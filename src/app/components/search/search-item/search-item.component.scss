@@ -1,0 +1,111 @@
+:root {
+  --main: #2F80ED;
+  --info: #F2C94C;
+  --primary: #27AE60;
+  --secondary: #EB5757;
+  --card-bg: #E5E5E5;
+  --dark-grey: #4F4F4F;
+}
+
+$border-size: 280px;
+$round: 5px;
+$content-size: 238px;
+
+.video-cards {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.group {
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.statistics {
+  top: 164px;
+  display: flex;
+  position: absolute;
+  flex-direction: row;
+}
+
+.card {
+  position: relative;
+  width: $border-size;
+  height: 330px;
+  margin: 10px;
+  border-radius: $round;
+  text-align: right;
+  background: var(--card-bg);
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.25));
+}
+
+.title {
+  width: $content-size;
+  height: 23px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 23px;
+  color: var(--dark-grey);
+  position: absolute;
+  top: 198px;
+  left: 10px;
+}
+
+.image {
+  width: $content-size;
+  height: 123px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
+}
+
+.button {
+  position: absolute;
+  cursor: pointer;
+  top: 280px;
+  left: 72px;
+  width: 130px;
+  height: 32px;
+  filter: drop-shadow(2px 0px 4px var(--main));
+}
+
+.button-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: $round;
+  background: var(--main);
+}
+
+.button-text {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 20%;
+  bottom: 20%;
+  left: 25%;
+  right: 20%;
+  font-size: 12px;
+  text-align: center;
+  line-height: 14px;
+  color: #FFFFFF;
+}
+
+.viewed,
+.liked,
+.disliked,
+.comments {
+  font-size: 10px;
+  margin-left: 2px;
+  color: #000000;
+}

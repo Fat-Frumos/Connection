@@ -1,0 +1,48 @@
+.dropdown-settings {
+  padding-left: 30%;
+  width: 70%;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #E5E5E5;
+}
+
+.group {
+  margin: 0;
+  padding: 0;
+}
+
+.date,
+.sorting-by,
+.count-of-views,
+.by-word-or-sentence {
+  margin-left: 10px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  text-decoration-line: none;
+  color: #2F80ED;
+}
+
+.date, .count-of-views {
+  text-decoration-line: underline;
+  cursor: pointer;
+}
+
+.by-word-or-sentence{
+  margin-left: 20px;
+}
+
+.sort-input-field {
+  margin-left: 10px;
+  width: 150px;
+  height: 13px;
+  background: #FFFFFF;
+  border: none;
+}
+
+.sorting-by {
+  color: #929292;
+}
