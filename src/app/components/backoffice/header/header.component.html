@@ -7,9 +7,14 @@
     <input
       class="input-field-text"
       type="text"
-      placeholder="Angular Podcast">
+      placeholder="Angular Podcast"
+      [(ngModel)]="searchText">
     <div class="search-button">
-      <div class="search-text">Search</div>
+      <div
+        class="search-text"
+        (click)="setSearchText()"
+      >Search
+      </div>
     </div>
     <div class="search-settings" (click)="openDropdownSetting()">
       <img src="assets/svg/header/setting.svg" alt="Settings Icon">

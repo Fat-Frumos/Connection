@@ -1,11 +1,22 @@
 <div class="dropdown-settings">
   <div class="group">
     <div class="sorting-by">Sorting by:</div>
-    <div class="date">date</div>
-    <div class="count-of-views">count of views</div>
+    <div class="date"
+         appSort (sort)="onSort($event)"
+    >date
+    </div>
+    <div class="count-of-views"
+         appSort (sort)="onSort($event)"
+    >count of views
+    </div>
   </div>
   <div class="group">
-    <div class="by-word-or-sentence">by word or sentence</div>
+    <div class="by-word-or-sentence">
+      by word or sentence
+    </div>
   </div>
-  <input class="sort-input-field">
+  <input
+    class="sort-input-field"
+    appSort [(ngModel)]="searchValue"
+    (sort)="filterResults()">
 </div>

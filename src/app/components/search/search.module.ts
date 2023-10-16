@@ -12,15 +12,19 @@ import {
 } from '@app/components/search/search-routing-module';
 import {AsyncPipe, NgForOf, NgOptimizedImage} from '@angular/common';
 import {VideoService} from '@app/service/video.service';
+import {SearchService} from '@app/service/search.service';
+import {CriteriaFilterPipe} from '@app/pipes/criteria-filter.pipe';
 
 @NgModule({
   declarations: [
     SearchComponent,
     SearchItemComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    CriteriaFilterPipe
   ],
   exports: [
-    SearchComponent
+    SearchComponent,
+    CriteriaFilterPipe
   ],
   imports: [
     SearchRoutingModule,
@@ -29,7 +33,7 @@ import {VideoService} from '@app/service/video.service';
     NgOptimizedImage,
     AsyncPipe
   ],
-  providers: [VideoService]
+  providers: [VideoService, SearchService]
 })
 export class SearchModule {
 }

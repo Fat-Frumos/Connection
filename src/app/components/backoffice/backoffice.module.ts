@@ -11,21 +11,32 @@ import {
   HeaderComponent
 } from '@app/components/backoffice/header/header.component';
 import {NgIf} from '@angular/common';
+import {HiddenDirective} from '@app/directive/hidden.directive';
+import {BorderColorDirective} from '@app/directive/border-color.directive';
+import {FormsModule} from '@angular/forms';
+import {SortDirective} from '@app/directive/sort.directive';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     BackofficeComponent,
-    DropdownSettingComponent
+    DropdownSettingComponent,
+    SortDirective,
+    HiddenDirective,
+    BorderColorDirective
   ],
   exports: [
-    BackofficeComponent
+    BackofficeComponent,
+    HiddenDirective,
+    SortDirective
   ],
   imports: [
-    SearchModule,
     BackofficeRoutingModule,
-    NgIf
-  ]
+    NgIf,
+    SearchModule,
+    FormsModule
+  ],
+  providers: [HiddenDirective]
 })
 export class BackofficeModule {
 }
