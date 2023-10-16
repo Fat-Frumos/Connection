@@ -1,28 +1,30 @@
-import {Component} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {VideoItem} from '@app/interface/video-item-model';
 import {VideoService} from '@app/service/video.service';
 
 @Component({
   selector: 'app-dropdown-setting',
   templateUrl: './dropdown-setting.component.html',
-  styleUrls: ['./dropdown-setting.component.scss']
+  styleUrls: ['./dropdown-setting.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DropdownSettingComponent {
-  searchValue!: string;
+  criteria!: string;
 
   videos: VideoItem[] = [];
 
   constructor(private videoService: VideoService) {
-    this.videoService.videos$.subscribe(videos => {
-      this.videos = videos;
-    });
+    this.videoService.videos$.subscribe(
+      (videos: VideoItem[]): void => {
+        this.videos = videos;
+      });
   }
 
-  onSort(className: string) {
+  onSort(className: string): void {
     const sortStrategies: { [key: string]: () => void } = {
       'date': () => this.sortByDate(),
       'count-of-views': () => this.sortByViews(),
-      'sort-input-field': () => this.filterResults()
+      'sort-input-field': () => this.filterResults(this.criteria)
     };
 
     const sortStrategy = sortStrategies[className as keyof typeof sortStrategies];
@@ -31,15 +33,19 @@ export class DropdownSettingComponent {
     }
   }
 
-  private sortByDate() {
-    this.videos.sort((a, b) => new Date(a.snippet.publishedAt).getTime() - new Date(b.snippet.publishedAt).getTime());
+  private sortByDate(): void {
+    this.videos.sort((a: VideoItem, b: VideoItem) =>
+      new Date(a.snippet.publishedAt).getTime()
+      - new Date(b.snippet.publishedAt).getTime());
   }
 
-  private sortByViews() {
-    this.videos.sort((a, b) => a.statistics.viewCount - b.statistics.viewCount);
+  private sortByViews(): void {
+    this.videos.sort((a: VideoItem, b: VideoItem) =>
+      a.statistics.viewCount - b.statistics.viewCount);
   }
 
-  filterResults() {
-    this.videos = this.videos.filter(video => video.snippet.title.includes(this.searchValue));
+  filterResults(searchValue: string): void {
+    this.videos = this.videos.filter((video: VideoItem) =>
+      video.snippet.title.includes(searchValue));
   }
 }

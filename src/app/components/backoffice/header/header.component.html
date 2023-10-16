@@ -3,21 +3,30 @@
     <img
       class="logo"
       src="assets/svg/header/logo.svg"
-      alt="logo Icon">
+      alt="logo Icon"
+    >
     <input
       class="input-field-text"
       type="text"
       placeholder="Angular Podcast"
-      [(ngModel)]="searchText">
+      [(ngModel)]="searchValue"
+      (ngModelChange)="search()"
+      (keyup.enter)="search()"
+    >
     <div class="search-button">
       <div
         class="search-text"
-        (click)="setSearchText()"
+        (click)="search()"
       >Search
       </div>
     </div>
-    <div class="search-settings" (click)="openDropdownSetting()">
-      <img src="assets/svg/header/setting.svg" alt="Settings Icon">
+    <div
+      class="search-settings"
+      (click)="pre.toggle()"
+    >
+      <img
+        src="assets/svg/header/setting.svg"
+        alt="Settings Icon">
     </div>
   </div>
   <div class="login">
@@ -29,5 +38,6 @@
   </div>
 </div>
 <app-dropdown-setting
-  *ngIf="isVisible">
+  appHidden #pre="hiddenControl"
+>
 </app-dropdown-setting>

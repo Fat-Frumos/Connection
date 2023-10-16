@@ -22,12 +22,12 @@ export class SearchResultsComponent implements OnDestroy {
     private readonly searchService: SearchService) {
     this.subscription$ = new Subscription();
     this.subscription$.add(
-      this.videoService.videos$.subscribe((videos: VideoItem[]) => {
+      this.videoService.videos$.subscribe((videos: VideoItem[]): void => {
         this.videos = videos;
       })
     );
     this.searchService.searchText$.subscribe(
-      text => {
+      (text: string): void => {
         this.searchText = text;
       });
   }

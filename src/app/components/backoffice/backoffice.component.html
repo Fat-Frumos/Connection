@@ -1,3 +1,7 @@
-<app-header>
+<app-header
+  (searchClicked)="pre.showResult()">
 </app-header>
-<app-search appHidden></app-search>
+
+<app-search
+  appHidden #pre="hiddenControl">
+</app-search>

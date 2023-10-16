@@ -8,7 +8,11 @@ import {VideoItem} from '@app/interface/video-item-model';
 @Injectable()
 export class VideoService implements OnDestroy {
 
-  private videosSubject: BehaviorSubject<VideoItem[]> = new BehaviorSubject<VideoItem[]>([]);
+  private videosSubject: BehaviorSubject<VideoItem[]>;
+
+  private subscription$: Subscription = new Subscription();
+
+  public videos$: Observable<VideoItem[]>;
 
   private colorMap: { [key: string]: string } = {
     'red': '#EB5757',
@@ -17,7 +21,7 @@ export class VideoService implements OnDestroy {
     'yellow': '#F2C94C'
   };
 
-  private dayMs = 1000 * 60 * 60 * 24;
+  private dayMs: number = 1000 * 60 * 60 * 24;
 
   private timeMap: { [key: string]: number } = {
     day: this.dayMs,
@@ -26,12 +30,10 @@ export class VideoService implements OnDestroy {
     halfYear: this.dayMs * 180
   };
 
-  private subscription$: Subscription = new Subscription();
-
-  public videos$: Observable<VideoItem[]> = this.videosSubject.asObservable();
-
   constructor(private http: HttpClient) {
     this.fetchVideoData();
+    this.videosSubject = new BehaviorSubject<VideoItem[]>([]);
+    this.videos$ = this.videosSubject.asObservable();
   }
 
   private fetchVideoData(): void {
@@ -50,11 +52,11 @@ export class VideoService implements OnDestroy {
     this.subscription$.unsubscribe();
   }
 
-  private getColor(date: Date): string {
-    const currentDate = new Date();
-    const itemDate = new Date(date);
-    const diffTime = Math.abs(currentDate.getTime() - itemDate.getTime());
-    const diffDays = Math.ceil(diffTime / this.timeMap['day']);
+  private getColor(date: Date): string { //TODO BorderColorDirective factory
+    const currentDate: Date = new Date();
+    const itemDate: Date = new Date(date);
+    const diffTime: number = Math.abs(currentDate.getTime() - itemDate.getTime());
+    const diffDays: number = Math.ceil(diffTime / this.timeMap['day']);
 
     if (diffDays < this.timeMap['week']) {
       return this.colorMap['red'];

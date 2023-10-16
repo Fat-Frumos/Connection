@@ -15,9 +15,9 @@ export class CriteriaFilterPipe implements PipeTransform {
 
     searchText = searchText.toLowerCase();
 
-    return items.filter(it => {
-      const keys = criteria.split('.');
-      let value = (it as Record<string, unknown>)[keys[0]];
+    return items.filter(item => {
+      const keys: string[] = criteria.split('.');
+      let value = (item as Record<string, unknown>)[keys[0]];
 
       for (let i = 1; i < keys.length; i++) {
         if (value === null) {

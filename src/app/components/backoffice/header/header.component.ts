@@ -1,6 +1,10 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  ViewEncapsulation
+} from '@angular/core';
 import {SearchService} from '@app/service/search.service';
-import {HiddenDirective} from '@app/directive/hidden.directive';
 
 @Component({
   selector: 'app-header',
@@ -10,23 +14,17 @@ import {HiddenDirective} from '@app/directive/hidden.directive';
 })
 export class HeaderComponent {
 
-  isVisible = false;
+  @Output() searchClicked: EventEmitter<void> = new EventEmitter<void>();
 
-  searchText = '';
+  searchValue = '';
 
   constructor(
-    private readonly searchService: SearchService,
-    private readonly hidden: HiddenDirective) {
+    private readonly searchService: SearchService) {
     console.log(searchService.search.value);
   }
 
-  public openDropdownSetting(): void {
-    this.isVisible = !this.isVisible;
-  }
-
-  setSearchText() {
-    this.hidden.isSubmitted = true;
-    this.searchService.setSearchText(this.searchText);
-    console.log(this.hidden.isSubmitted);
+  search() {
+    this.searchClicked.emit();
+    this.searchService.setSearchText(this.searchValue);
   }
 }

@@ -11,12 +11,12 @@
     </div>
   </div>
   <div class="group">
-    <div class="by-word-or-sentence">
+    <div class="filter-by-text">
       by word or sentence
     </div>
   </div>
   <input
     class="sort-input-field"
-    appSort [(ngModel)]="searchValue"
-    (sort)="filterResults()">
+    appSort (sort)="onSort($event)"
+    [(ngModel)]="criteria">
 </div>

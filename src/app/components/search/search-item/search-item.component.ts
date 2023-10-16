@@ -9,4 +9,9 @@ import {VideoItem} from '@app/interface/video-item-model';
 })
 export class SearchItemComponent {
   @Input() video!: VideoItem;
+
+
+  showCard() {
+    console.log(this.video.snippet);
+  }
 }

@@ -1,5 +1,7 @@
 <div class="card"
-     *ngFor="let video of videos | criteriaFilter: searchText :'snippet.title'">
+     *ngFor="let video of videos |
+     criteriaFilter: searchText :'snippet.title' |
+     sortFilter: ''">
   <app-search-item
     [video]="video">
   </app-search-item>
