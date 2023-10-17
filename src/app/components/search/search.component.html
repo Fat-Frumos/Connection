@@ -1,3 +1,11 @@
-<app-search-results
-  class="video-cards">
-</app-search-results>
+<div class="video-cards">
+  <div class="card"
+       *ngFor="let video of videos | filter: searchText">
+    <app-search-item
+      [video]="video">
+    </app-search-item>
+    <div class="rectangle-10"
+         [style.background-color]="video.color">
+    </div>
+  </div>
+</div>

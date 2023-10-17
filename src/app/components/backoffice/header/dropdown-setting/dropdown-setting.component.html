@@ -1,12 +1,16 @@
 <div class="dropdown-settings">
   <div class="group">
-    <div class="sorting-by">Sorting by:</div>
-    <div class="date"
-         appSort (sort)="onSort($event)"
+    <div class="sorting-by">
+      Sorting by:
+    </div>
+    <div
+      class="date"
+      appSort (sort)="onSort($event)"
     >date
     </div>
-    <div class="count-of-views"
-         appSort (sort)="onSort($event)"
+    <div
+      class="count-of-views"
+      appSort (sort)="onSort($event)"
     >count of views
     </div>
   </div>
@@ -17,6 +21,6 @@
   </div>
   <input
     class="sort-input-field"
-    appSort (sort)="onSort($event)"
-    [(ngModel)]="criteria">
+    [(ngModel)]="searchText"
+    (ngModelChange)="onFilter(searchText)">
 </div>

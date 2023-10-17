@@ -3,3 +3,12 @@
   top: 120px;
   margin: auto 10%;
 }
+
+.rectangle-10 {
+  position: absolute;
+  width: 280px;
+  top: 325px;
+  height: 5px;
+  background: var(--main);
+  border-radius: 0 0 5px 5px;
+}

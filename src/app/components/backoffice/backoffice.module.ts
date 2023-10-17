@@ -32,7 +32,8 @@ import {SortDirective} from '@app/directive/sort.directive';
     NgIf,
     SearchModule,
     FormsModule
-  ]
+  ],
+  providers: [BorderColorDirective]
 })
 export class BackofficeModule {
 }

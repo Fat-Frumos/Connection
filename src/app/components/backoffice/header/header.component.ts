@@ -4,7 +4,7 @@ import {
   Output,
   ViewEncapsulation
 } from '@angular/core';
-import {SearchService} from '@app/service/search.service';
+import {VideoService} from '@app/service/video.service';
 
 @Component({
   selector: 'app-header',
@@ -16,15 +16,20 @@ export class HeaderComponent {
 
   @Output() searchClicked: EventEmitter<void> = new EventEmitter<void>();
 
-  searchValue = '';
+  @Output() sort = new EventEmitter<string>();
+
+  @Output() filter = new EventEmitter<string>();
+
+  searchText: string;
 
   constructor(
-    private readonly searchService: SearchService) {
-    console.log(searchService.search.value);
+    private readonly videoService: VideoService) {
+    this.searchText = '';
   }
 
-  search() {
+  search(): void {
     this.searchClicked.emit();
-    this.searchService.setSearchText(this.searchValue);
+    this.filter.emit(this.searchText);
+    this.videoService.filterBy(this.searchText);
   }
 }

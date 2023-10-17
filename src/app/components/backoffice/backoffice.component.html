@@ -1,7 +1,11 @@
 <app-header
-  (searchClicked)="pre.showResult()">
+  (searchClicked)="pre.showResult()"
+  (sort)="searchResults.onSort($event)"
+  (filter)="searchResults.onFilter($event)"
+>
 </app-header>
 
 <app-search
+  #searchResults
   appHidden #pre="hiddenControl">
 </app-search>
