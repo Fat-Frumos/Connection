@@ -9,7 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "es": "npx eslint ."
+    "es": "npx eslint .",
+    "deploy": "npx ngh --dir=dist/podcast"
   },
   "private": true,
   "dependencies": {
@@ -40,8 +41,10 @@
     "@netlify-builder/deploy": "^5.0.0",
     "@types/jasmine": "~4.3.0",
     "@types/jest": "^29.5.5",
+    "@types/karma": "^6.3.6",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
+    "angular-cli-ghpages": "^1.0.7",
     "eslint": "^8.49.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.28.1",

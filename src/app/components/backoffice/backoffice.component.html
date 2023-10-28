@@ -1,11 +1,11 @@
 <app-header
   (searchClicked)="pre.showResult()"
-  (sort)="searchResults.onSort($event)"
-  (filter)="searchResults.onFilter($event)"
 >
 </app-header>
-
 <app-search
-  #searchResults
-  appHidden #pre="hiddenControl">
+  appHidden #pre="hiddenControl"
+  [videos]="(videos$ | async)!
+  | filterBy:searchText:criteria
+  | sortBy:sortField"
+>
 </app-search>

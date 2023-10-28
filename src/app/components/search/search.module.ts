@@ -9,34 +9,35 @@ import {
 } from '@app/components/search/search-routing-module';
 import {AsyncPipe, NgForOf, NgOptimizedImage} from '@angular/common';
 import {VideoService} from '@app/service/video.service';
-import {CriteriaFilterPipe} from '@app/pipes/criteria-filter.pipe';
-import {SortFilterPipe} from '@app/pipes/sort-filter.pipe';
+import {SortPipe} from '@app/pipes/sort.pipe';
 import {CardComponent} from '@app/components/search/card/card.component';
-import {HiddenDirective} from '@app/directive/hidden.directive';
+import {FilterByPipe} from '@app/pipes/filter.pipe';
+import {BorderColorDirective} from '@app/directive/border-color.directive';
+import {FeatureModule} from '@app/shared/feature.module';
 
 @NgModule({
   declarations: [
     CardComponent,
     SearchComponent,
     SearchItemComponent,
-    CriteriaFilterPipe,
-    SortFilterPipe,
-    HiddenDirective
+    BorderColorDirective,
+    FilterByPipe,
+    SortPipe
   ],
   exports: [
-    SearchComponent,
-    CriteriaFilterPipe,
-    SortFilterPipe,
-    HiddenDirective
+    SortPipe,
+    FilterByPipe,
+    SearchComponent
   ],
   imports: [
     SearchRoutingModule,
     HttpClientModule,
     NgForOf,
     NgOptimizedImage,
-    AsyncPipe
+    AsyncPipe,
+    FeatureModule
   ],
-  providers: [VideoService, HiddenDirective]
+  providers: [BorderColorDirective, VideoService]
 })
 export class SearchModule {
 }

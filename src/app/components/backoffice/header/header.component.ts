@@ -14,22 +14,23 @@ import {VideoService} from '@app/service/video.service';
 })
 export class HeaderComponent {
 
-  @Output() searchClicked: EventEmitter<void> = new EventEmitter<void>();
+  @Output() searchClicked: EventEmitter<void>;
 
-  @Output() sort = new EventEmitter<string>();
+  @Output() filter: EventEmitter<string>;
 
-  @Output() filter = new EventEmitter<string>();
+  @Output() sort: EventEmitter<string>;
 
-  searchText: string;
+  searchText = '';
 
-  constructor(
-    private readonly videoService: VideoService) {
-    this.searchText = '';
+  constructor(private readonly service: VideoService) {
+    this.searchClicked = new EventEmitter<void>();
+    this.filter = new EventEmitter<string>();
+    this.sort = new EventEmitter<string>();
   }
 
   search(): void {
     this.searchClicked.emit();
     this.filter.emit(this.searchText);
-    this.videoService.filterBy(this.searchText);
+    this.service.setSearchText(this.searchText);
   }
 }

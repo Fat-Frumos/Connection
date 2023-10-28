@@ -1,5 +1,5 @@
-import {Localized} from '@app/interface/localized-model';
-import {Thumbnails} from '@app/interface/thumbnails-model';
+import {Localized} from '@app/model/localized-model';
+import {Thumbnails} from '@app/model/thumbnails-model';
 
 export interface Snippet {
   publishedAt: string;

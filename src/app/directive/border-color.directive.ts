@@ -1,9 +1,15 @@
-import {Directive} from '@angular/core';
+import {Directive, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
 
 @Directive({
   selector: '[appBorderColor]'
 })
-export class BorderColorDirective {
+export class BorderColorDirective implements OnInit {
+
+  @Input() appBorderColor: string;
+
+  constructor(private el: ElementRef, private renderer: Renderer2) {
+    this.appBorderColor = '';
+  }
 
   private colorMap: { [key: string]: string } = {
     'red': '#EB5757',
@@ -25,7 +31,7 @@ export class BorderColorDirective {
     return this.getColor(new Date(date));
   }
 
-  private getColor(date: Date): string { //TODO BorderColorDirective factory
+  private getColor(date: Date): string {
     const currentDate: Date = new Date();
     const itemDate: Date = new Date(date);
     const diffTime: number = Math.abs(currentDate.getTime() - itemDate.getTime());
@@ -40,5 +46,9 @@ export class BorderColorDirective {
     } else {
       return this.colorMap['yellow'];
     }
+  }
+
+  ngOnInit(): void {
+    this.renderer.setStyle(this.el.nativeElement, 'background', `${this.colorized(this.appBorderColor)}`);
   }
 }

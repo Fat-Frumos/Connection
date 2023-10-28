@@ -1,17 +1,14 @@
 <div class="header">
   <div class="search">
-    <img
-      class="logo"
-      src="assets/svg/header/logo.svg"
-      alt="logo Icon"
-    >
+    <app-logo></app-logo>
     <input
       class="input-field-text"
       type="text"
       placeholder="Angular Podcast"
       [(ngModel)]="searchText"
-      (ngModelChange)="search()"
       (keyup.enter)="search()"
+      (ngModelChange)="search()"
+      [ngModelOptions]="{ standalone: true }"
     >
     <div class="search-button">
       <div
@@ -20,24 +17,14 @@
       >Search
       </div>
     </div>
-    <div
-      class="search-settings"
-      (click)="pre.toggle()"
-    >
-      <img
-        src="assets/svg/header/setting.svg"
-        alt="Settings Icon">
-    </div>
+    <app-settings-button (click)="pre.toggle()">
+    </app-settings-button>
   </div>
-  <div class="login">
-    <div class="username">Pasha</div>
-    <img
-      class="login-icon"
-      src="assets/svg/header/login.svg"
-      alt="Login Icon">
-  </div>
+  <app-login-info></app-login-info>
 </div>
 <app-dropdown-setting
+  [searchText]="searchText"
   appHidden #pre="hiddenControl"
 >
 </app-dropdown-setting>
+

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BackofficeComponent } from './backoffice.component';
+import { BackofficeComponent } from '@app/components/backoffice/backoffice.component';
 
 describe('BackofficeComponent', () => {
   let component: BackofficeComponent;

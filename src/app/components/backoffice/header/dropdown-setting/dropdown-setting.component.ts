@@ -1,8 +1,5 @@
-import {
-  Component,
-  ViewEncapsulation
-} from '@angular/core';
-import {VideoService} from '@app/service/video.service';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {SortService} from '@app/service/sort.service';
 
 @Component({
   selector: 'app-dropdown-setting',
@@ -10,19 +7,31 @@ import {VideoService} from '@app/service/video.service';
   styleUrls: ['./dropdown-setting.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DropdownSettingComponent {
-  searchText: string;
+export class DropdownSettingComponent implements OnInit {
 
-  constructor(private video: VideoService) {
-    this.searchText = '';
+  @Input() searchText!: string;
+
+  @Input() inputValue: string;
+
+  constructor(private service: SortService) {
+    this.inputValue = '';
   }
 
-  onSort(criteria: string) {
-    this.video.sortBy(criteria);
+  ngOnInit(): void {
+    this.service.searchText$.subscribe(searchText => {
+      this.inputValue = searchText;
+    });
+
+    this.service.criteria$.subscribe(criteria => {
+      this.searchText = criteria;
+    });
   }
 
-  onFilter(searchText: string) {
-    this.searchText = searchText;
-    this.video.filterBy(this.searchText);
+  onFilter(): void {
+    this.service.setSearchText$(this.inputValue);
+  }
+
+  onSort(field: string): void {
+    this.service.onSortDirection(field);
   }
 }

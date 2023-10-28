@@ -1,5 +1,5 @@
 import {Component, Input, ViewEncapsulation} from '@angular/core';
-import {VideoItem} from '@app/interface/video-item-model';
+import {VideoItem} from '@app/model/video-item-model';
 
 @Component({
   selector: 'app-search-item',
@@ -9,7 +9,6 @@ import {VideoItem} from '@app/interface/video-item-model';
 })
 export class SearchItemComponent {
   @Input() video!: VideoItem;
-
 
   showCard() {
     console.log(this.video.snippet);

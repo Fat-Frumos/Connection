@@ -4,7 +4,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {AppRoutingModule} from './app-routing.module';
-import {BackofficeModule} from '@app/components/backoffice/backoffice.module';
 import {PreloadService} from '@app/shared/service/preload.service';
 import {SharedModule} from '@app/shared/shared.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -16,7 +15,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BackofficeModule,
     BrowserAnimationsModule,
     SharedModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
@@ -25,6 +23,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     })
   ],
   providers: [PreloadService],
+  exports: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

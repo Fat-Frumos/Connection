@@ -1,4 +1,4 @@
-import {VideoItem} from '@app/interface/video-item-model';
+import {VideoItem} from '@app/model/video-item-model';
 
 export interface VideoListResponse {
   kind: string;
