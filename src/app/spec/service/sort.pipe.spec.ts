@@ -1,6 +1,6 @@
-import {SortPipe} from '@app/pipes/sort.pipe';
+import {SortPipe} from '@app/shared/pipes/sort.pipe';
 import {TestBed} from '@angular/core/testing';
-import {SortService} from '@app/service/sort.service';
+import {SortService} from '@app/youtube/services/sort.service';
 
 describe('SortPipe', () => {
   let pipe: SortPipe;
@@ -25,8 +25,4 @@ describe('SortPipe', () => {
   it('create an instance', () => {
     expect(pipe).toBeTruthy();
   });
-
-  // it('should return empty array if videos is not defined', () => {
-  //   expect(pipe.transform([], of('date'), '', SortDirection.ASC)).toEqual([]);
-  // });
 });

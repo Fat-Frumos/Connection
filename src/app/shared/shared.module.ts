@@ -1,6 +1,6 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {LoadInterceptor} from '@app/shared/service/load.interceptor';
+import {LoadInterceptor} from '@app/auth/services/load.interceptor';
 import {BASE_URL_TOKEN, baseUrl} from '@app/config';
 
 @NgModule({
