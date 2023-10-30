@@ -6,14 +6,14 @@
       type="text"
       placeholder="Angular Podcast"
       [(ngModel)]="searchText"
-      (keyup.enter)="search()"
-      (ngModelChange)="search()"
+      (keyup.enter)="search(searchText)"
+      (ngModelChange)="search(searchText)"
       [ngModelOptions]="{ standalone: true }"
     >
     <div class="search-button">
       <div
         class="search-text"
-        (click)="search()"
+        (click)="search(searchText)"
       >Search
       </div>
     </div>

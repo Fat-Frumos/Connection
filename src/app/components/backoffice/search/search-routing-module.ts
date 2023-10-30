@@ -1,6 +1,6 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {SearchComponent} from '@app/components/search/search.component';
+import {SearchComponent} from '@app/components/backoffice/search/search.component';
 
 const routes: Routes = [
   {path: '', component: SearchComponent}

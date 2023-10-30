@@ -28,7 +28,8 @@ export class HeaderComponent {
     this.sort = new EventEmitter<string>();
   }
 
-  search(): void {
+  search(searchText: string): void {
+    this.searchText = searchText;
     this.searchClicked.emit();
     this.filter.emit(this.searchText);
     this.service.setSearchText(this.searchText);

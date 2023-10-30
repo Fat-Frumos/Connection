@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SearchItemComponent } from '@app/components/search/search-item/search-item.component';
+import { SearchItemComponent } from '@app/components/backoffice/search/search-item/search-item.component';
 
 describe('SearchItemComponent', () => {
   let component: SearchItemComponent;

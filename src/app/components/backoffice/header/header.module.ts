@@ -12,8 +12,8 @@ import {
   HeaderComponent
 } from '@app/components/backoffice/header/header.component';
 import {
-  DropdownSettingComponent
-} from '@app/components/backoffice/header/dropdown-setting/dropdown-setting.component';
+  FilterSettingComponent
+} from '@app/components/backoffice/filter-setting/filter-setting.component';
 import {FormsModule} from '@angular/forms';
 import {HiddenDirective} from '@app/directive/hidden.directive';
 import {FeatureModule} from '@app/shared/feature.module';
@@ -24,7 +24,7 @@ import {FeatureModule} from '@app/shared/feature.module';
     LoginInfoComponent,
     SettingsButtonComponent,
     HeaderComponent,
-    DropdownSettingComponent,
+    FilterSettingComponent,
     HiddenDirective
   ],
   imports: [

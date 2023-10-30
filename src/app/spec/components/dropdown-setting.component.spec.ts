@@ -1,17 +1,17 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {
-  DropdownSettingComponent
-} from '@app/components/backoffice/header/dropdown-setting/dropdown-setting.component';
+  FilterSettingComponent
+} from '@app/components/backoffice/filter-setting/filter-setting.component';
 
 describe('DropdownSettingComponent', () => {
-  let component: DropdownSettingComponent;
-  let fixture: ComponentFixture<DropdownSettingComponent>;
+  let component: FilterSettingComponent;
+  let fixture: ComponentFixture<FilterSettingComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DropdownSettingComponent]
+      declarations: [FilterSettingComponent]
     });
-    fixture = TestBed.createComponent(DropdownSettingComponent);
+    fixture = TestBed.createComponent(FilterSettingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

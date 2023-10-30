@@ -3,11 +3,11 @@ import {SortService} from '@app/service/sort.service';
 
 @Component({
   selector: 'app-dropdown-setting',
-  templateUrl: './dropdown-setting.component.html',
-  styleUrls: ['./dropdown-setting.component.scss'],
+  templateUrl: './filter-setting.component.html',
+  styleUrls: ['./filter-setting.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DropdownSettingComponent implements OnInit {
+export class FilterSettingComponent implements OnInit {
 
   @Input() searchText!: string;
 
