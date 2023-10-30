@@ -14,7 +14,7 @@ export class BackofficeComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  videos$!: Observable<VideoItem[]>;
+  videos$: Observable<VideoItem[]>;
 
   searchText = '';
 
@@ -24,6 +24,7 @@ export class BackofficeComponent implements OnInit, OnDestroy {
 
   constructor(
     private service: VideoService) {
+    this.videos$ = new Observable<VideoItem[]>();
     this.sortField = {order: Direction.ASC, field: SortField.DATE};
   }
 

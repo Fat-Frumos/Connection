@@ -10,7 +10,7 @@ import {VideoItem} from '@app/model/video-item-model';
 })
 export class SearchComponent {
 
-  @Input() videos!: VideoItem[];
+  @Input() videos: VideoItem[] = [];
 
   constructor(
     private readonly videoService: VideoService) {

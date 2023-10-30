@@ -8,6 +8,7 @@ import {VideoItem} from '@app/model/video-item-model';
   encapsulation: ViewEncapsulation.None
 })
 export class SearchItemComponent {
+
   @Input() video!: VideoItem;
 
   showCard() {

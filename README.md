@@ -38,6 +38,8 @@ use in CLI  `npx eslint .`
 
 [dashboard](https://app.rs.school/course/schedule?course=angular-2023Q4)
 
+[deploy](https://angular-podcast.netlify.app/)
+
 #### Functional requirements
 - When user opens the app, only the **Header** section should be shown
 - After submitting the search form, the **Search results block** appears.

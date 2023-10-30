@@ -9,12 +9,13 @@ import {SortService} from '@app/service/sort.service';
 })
 export class FilterSettingComponent implements OnInit {
 
-  @Input() searchText!: string;
+  @Input() searchText: string;
 
   @Input() inputValue: string;
 
   constructor(private service: SortService) {
     this.inputValue = '';
+    this.searchText = '';
   }
 
   ngOnInit(): void {
