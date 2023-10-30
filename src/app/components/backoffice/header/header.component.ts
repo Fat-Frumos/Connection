@@ -1,4 +1,10 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  ViewEncapsulation
+} from '@angular/core';
+import {VideoService} from '@app/service/video.service';
 
 @Component({
   selector: 'app-header',
@@ -8,9 +14,24 @@ import {Component, ViewEncapsulation} from '@angular/core';
 })
 export class HeaderComponent {
 
-  isVisible = false;
+  @Output() searchClicked: EventEmitter<void>;
 
-  public openDropdownSetting(): void {
-    this.isVisible = !this.isVisible;
+  @Output() filter: EventEmitter<string>;
+
+  @Output() sort: EventEmitter<string>;
+
+  searchText = '';
+
+  constructor(private readonly service: VideoService) {
+    this.searchClicked = new EventEmitter<void>();
+    this.filter = new EventEmitter<string>();
+    this.sort = new EventEmitter<string>();
+  }
+
+  search(searchText: string): void {
+    this.searchText = searchText;
+    this.searchClicked.emit();
+    this.filter.emit(this.searchText);
+    this.service.setSearchText(this.searchText);
   }
 }

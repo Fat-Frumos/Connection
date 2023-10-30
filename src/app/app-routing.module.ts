@@ -4,12 +4,13 @@ import {BackofficeModule} from './components/backoffice/backoffice.module';
 import {PreloadService} from './shared/service/preload.service';
 
 const routes: Routes = [
+  {path: '', redirectTo: 'backoffice', pathMatch: 'full'},
   {
     path: '',
-    loadChildren: () => import('./shared/service/preload.service').then((m) => m.PreloadService),
+    loadChildren: () => import('./components/backoffice/backoffice.module')
+      .then(module => module.BackofficeModule),
     data: { preload: true }
   },
-  {path: '', redirectTo: 'backoffice', pathMatch: 'full'},
   {
     path: '',
     loadChildren: () => import('./components/backoffice/backoffice.module')

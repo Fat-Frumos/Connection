@@ -106,6 +106,14 @@
             "scripts": []
           }
         },
+        "deploy": {
+          "builder": "@netlify-builder/deploy:deploy",
+          "options": {
+            "outputPath": "dist",
+            "netlifyToken": "JLlgB5-sQVCFXOZiZ-CR_-6zUZiXajP8fw_PriowVaQ",
+            "siteId": "361d7b48-e216-4c7b-906f-ed4db4d6ba10"
+          }
+        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {

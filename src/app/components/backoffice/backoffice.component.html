@@ -1,2 +1,11 @@
-<app-header></app-header>
-<app-search></app-search>
+<app-header
+  (searchClicked)="pre.showResult()"
+>
+</app-header>
+<app-search
+  appHidden #pre="hiddenControl"
+  [videos]="(videos$ | async)!
+  | filterBy:searchText:criteria
+  | sortBy:sortField"
+>
+</app-search>

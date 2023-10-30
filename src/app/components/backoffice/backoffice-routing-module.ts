@@ -10,7 +10,7 @@ const routes: Routes = [
     path: '', component: BackofficeComponent,
     children: [
       {
-        path: '', loadChildren: () => import('../search/search.module')
+        path: '', loadChildren: () => import('@app/components/backoffice/search/search.module')
           .then(module => module.SearchModule)
       }
     ]

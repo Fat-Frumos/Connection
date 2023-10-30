@@ -1,0 +1,23 @@
+<div class="dropdown-settings">
+  <div class="header-group">
+    <div class="sorting-by">sort by:</div>
+    <button
+      class="date"
+      (click)="onSort('date')">date
+    </button>
+    <button
+      class="count-of-views"
+      (click)="onSort('view')">count of views
+    </button>
+  </div>
+  <div class="header-group">
+    <div class="filter-by-text">
+      by word or sentence</div>
+  </div>
+  <input
+    class="sort-input-field"
+    type="text"
+    [(ngModel)]="inputValue"
+    (ngModelChange)="onFilter()"
+  >
+</div>

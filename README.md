@@ -26,10 +26,30 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 use in CLI  `npx eslint .`
 
-[demo] (https://github.com/rolling-scopes-school/tasks/blob/master/tasks/angular/main.jpg)
+[Figma mockup](https://www.figma.com/file/tS3Zqk138yXUmRxSWKDv4r/YouTube-client?node-id=0%3A1)
 
-[task] (https://github.com/rolling-scopes-school/tasks/tree/master/tasks/angular)
+[demo](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/angular/main.jpg)
 
-[task1] (https://github.com/rolling-scopes-school/tasks/blob/master/tasks/angular/intro.md)
+[task](https://github.com/rolling-scopes-school/tasks/tree/master/tasks/angular)
 
-[dashboard] (https://app.rs.school/course/schedule?course=angular-2023Q4)
+[intro](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/angular/intro.md)
+
+[pipes](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/angular/components-directives-pipes.md)
+
+[dashboard](https://app.rs.school/course/schedule?course=angular-2023Q4)
+
+[deploy](https://angular-podcast.netlify.app/)
+
+#### Functional requirements
+- When user opens the app, only the **Header** section should be shown
+- After submitting the search form, the **Search results block** appears.
+- Show cards of videos populated with mocked data (use data from [response example](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/angular/response.json) file). You can store the mocked data in the **Search results** component
+  - The bottom border represents the publication date status. The following border colors should be used:
+    - 🟥 if older than 6 months
+    - 🟨 if between 1 and 6 months
+    - 🟩 if between 7 days and 1 month
+    - 🟦 if newer than 7 days
+- By clicking the **Settings** button, the **Filtering criteria block** should be toggled on/off
+  - It should be possible to sort search results by date or view count
+  - Sorting should work in both ascending and descending directions of the values
+  - Filter search results by the value that user types in the input

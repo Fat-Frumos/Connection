@@ -1,42 +1,56 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {VideoListResponse} from '@app/interface/video-list-response-model';
+import {VideoListResponse} from '@app/model/video-list-response-model';
 import {baseUrl} from '@app/config';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
-import {VideoItem} from '@app/interface/video-item-model';
+import {VideoItem} from '@app/model/video-item-model';
+import {SortService} from '@app/service/sort.service';
 
 @Injectable()
 export class VideoService implements OnDestroy {
 
-  private videosSubject:BehaviorSubject<VideoItem[]> = new BehaviorSubject<VideoItem[]>([]);
+  private videosSubject: BehaviorSubject<VideoItem[]>;
 
-  private colors: string[] = ['#EB5757', '#2F80ED', '#27AE60', '#F2C94C'];
+  private readonly _videos$: Observable<VideoItem[]>;
 
-  private subscription$: Subscription = new Subscription();
+  private subscription$: Subscription;
 
-  public videos$: Observable<VideoItem[]> = this.videosSubject.asObservable();
-
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private readonly _sortService: SortService
+  ) {
+    this.videosSubject = new BehaviorSubject<VideoItem[]>([]);
+    this._videos$ = this.videosSubject.asObservable();
+    this.subscription$ = new Subscription();
     this.fetchVideoData();
-  }
-
-  private fetchVideoData(): void {
-    this.subscription$.add(
-      this.http.get<VideoListResponse>(baseUrl)
-        .subscribe((data: VideoListResponse): void => {
-          data.items.forEach((item: VideoItem): void => {
-            item.color = this.getRandomColor();
-          });
-          this.videosSubject.next(data.items);
-        })
-    );
   }
 
   ngOnDestroy(): void {
     this.subscription$.unsubscribe();
   }
 
-  private getRandomColor(): string {
-    return this.colors[Math.floor(Math.random() * this.colors.length)];
+  private fetchVideoData(): void {
+    this.subscription$.add(
+      this.http.get<VideoListResponse>(baseUrl)
+        .subscribe((data: VideoListResponse): void => {
+          this.videosSubject.next(data.items);
+        })
+    );
+  }
+
+  get sortService(): SortService {
+    return this._sortService;
+  }
+
+  get videos$(): Observable<VideoItem[]> {
+    return this._videos$;
+  }
+
+  get searchText$(): Observable<string> {
+    return this._sortService.criteria$.asObservable();
+  }
+
+  setSearchText(searchText: string): void {
+    this._sortService.setCriteria$(searchText);
   }
 }
