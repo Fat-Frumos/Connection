@@ -1,5 +1,6 @@
 import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {VideoItem} from '@app/youtube/models/video-item-model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-search-item',
@@ -11,7 +12,14 @@ export class SearchItemComponent {
 
   @Input() video!: VideoItem;
 
-  showCard() {
-    console.log(this.video.snippet);
+  constructor(private router: Router) {
+    console.log('SearchItemComponent');
+  }
+
+  saveDataAndRedirect(): void {
+    localStorage.setItem('video', JSON.stringify(this.video));
+    this.router.navigate(['/main', this.video.snippet.channelId]).catch((error) => {
+      console.error('Navigation error', error);
+    });
   }
 }

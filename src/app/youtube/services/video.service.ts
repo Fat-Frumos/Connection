@@ -2,7 +2,7 @@ import {Injectable, OnDestroy} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {VideoListResponse} from '@app/youtube/models/video-list-response-model';
 import {baseUrl} from '@app/config';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
+import {BehaviorSubject, map, Observable, Subscription} from 'rxjs';
 import {VideoItem} from '@app/youtube/models/video-item-model';
 import {SortService} from '@app/youtube/services/sort.service';
 
@@ -32,9 +32,9 @@ export class VideoService implements OnDestroy {
   private fetchVideoData(): void {
     this.subscription$.add(
       this.http.get<VideoListResponse>(baseUrl)
-        .subscribe((data: VideoListResponse): void => {
-          this.videosSubject.next(data.items);
-        })
+      .subscribe((data: VideoListResponse): void => {
+        this.videosSubject.next(data.items);
+      })
     );
   }
 
@@ -53,4 +53,11 @@ export class VideoService implements OnDestroy {
   setSearchText(searchText: string): void {
     this._sortService.setCriteria$(searchText);
   }
+
+  getById(itemId: string): Observable<VideoItem | undefined> {
+    return this._videos$.pipe(
+      map((videos) => videos.find((video) => video.id === itemId))
+    );
+  }
+
 }

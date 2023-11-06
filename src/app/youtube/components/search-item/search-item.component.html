@@ -4,10 +4,8 @@
      [style.background-image]="'url(' + video.snippet.thumbnails.medium.url + ')'"></div>
 <div class="button">
   <div class="button-background"></div>
-  <div class="button-text"
-       (click)="showCard()"
-  >More...
-  </div>
+  <a class="button-text" (click)="saveDataAndRedirect()">More...</a>
+
 </div>
 
 <div class="statistics">

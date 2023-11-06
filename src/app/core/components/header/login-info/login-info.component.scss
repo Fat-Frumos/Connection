@@ -6,6 +6,10 @@
   padding-right: 30px;
 }
 
+.username::first-letter {
+  text-transform:capitalize;
+}
+
 .username {
   font-family: 'Roboto', sans-serif;
   font-size: 12px;

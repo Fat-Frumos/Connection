@@ -5,9 +5,9 @@ import {VideoService} from '@app/youtube/services/video.service';
 import {authGuard} from '@app/core/guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/main', pathMatch: 'full' },
   {
-    path: 'home',
+    path: 'main',
     loadChildren: () => import('@app/youtube/pages/youtube/youtube.module')
       .then(module => module.YouTubeModule), canActivate: [authGuard]
   },
@@ -19,7 +19,12 @@ const routes: Routes = [
   {
     path: 'not-found',
     loadChildren: () => import('./core/pages/not-found/not-found.module')
-      .then((module) => module.NotFoundModule)
+      .then((module) => module.NotFoundModule), canActivate: [authGuard]
+  },
+  {
+    path: 'main/:id',
+    loadChildren: () => import('@app/youtube/pages/detail-info/detail-info.module')
+      .then(module => module.DetailInfoModule)
   },
   {path: '**', redirectTo: 'not-found'}
 ];

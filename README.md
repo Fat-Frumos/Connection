@@ -66,7 +66,7 @@ ng serve --configuration production
   - Move the state and its methods from the Board component to a dedicated service.
   - By clicking the *More* button, the **Detailed information** page should appear
 - **Detailed information page**
-  - Should contain information about the selected video.
+  - Should contain information about the selected video**.**
   - To determine which video is selected, pass its id as a route param
 
 #### Optional task (without points)

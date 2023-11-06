@@ -7,23 +7,23 @@ import {
 } from '@angular/router';
 import {catchError, map, of} from 'rxjs';
 
-export const CardResolverService: ResolveFn<VideoItem | null> = (
+export const VideoResolverService: ResolveFn<VideoItem | null> = (
   activatedRoute: ActivatedRouteSnapshot) => {
   const id = activatedRoute.paramMap.get('id') ?? '';
   const router = inject(Router);
 
   return inject(HttpClient)
-    .get<VideoItem>(`/home/${id}`)
-    .pipe(map((product: VideoItem | null) => {
-      if (!product) {
+    .get<VideoItem>(`/main/${id}`)
+    .pipe(map((video: VideoItem | null) => {
+      if (!video) {
         router.navigate(['/']).then(() => {
           console.log('Navigation has finished');
         }).catch((error) => {
           console.error('Navigation error', error);
         });
       }
-      localStorage.setItem('product', JSON.stringify(product));
-      return product;
+      localStorage.setItem('video', JSON.stringify(video));
+      return video;
     }),
     catchError(() => {
       router.navigate(['/']).then(() => {

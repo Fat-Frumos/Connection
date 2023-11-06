@@ -10,6 +10,7 @@ export function authGuard(): Observable<boolean | UrlTree> | Promise<boolean | U
   if (!loginService.isLoggedIn()) {
     void router.navigate(['/login']);
     return false;
+  } else {
+    return true;
   }
-  return true;
 }

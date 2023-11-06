@@ -1,1 +1,26 @@
-<p>detail-info works!</p>
+<div class="right-side">
+  <h2 class="title">{{ data.snippet.title }}</h2>
+  <p class="description">{{ data.snippet.description }}</p>
+
+  <div class="video">
+    <img class="thumbnail" [src]="data.snippet.thumbnails.high.url"
+         alt="{{ data.snippet.title }}"/>
+  </div>
+
+  <div class="date">
+<!--    <p>Published At: {{ data.snippet.publishedAt }}</p>-->
+  </div>
+
+  <div class="statistics">
+    <p class="dislike">{{ data.statistics.dislikeCount }}</p>
+    <p class="viewed"> {{ data.statistics.viewCount }}</p>
+    <p class="like"> {{ data.statistics.likeCount }}</p>
+    <p class="liked">{{ data.statistics.favoriteCount }}</p>
+    <p class="comments"> {{ data.statistics.commentCount }}</p>
+  </div>
+
+  <a class="back-button" [routerLink]="['/main']">
+    <div class="Rectangle 17"></div>
+    <div class="Vector 1"></div>
+  </a>
+</div>
