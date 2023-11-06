@@ -1,6 +1,6 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {SearchComponent} from '@app/youtube/pages/main/search.component';
+import {SearchComponent} from '@app/youtube/pages/search/search.component';
 
 const routes: Routes = [
   {path: '', component: SearchComponent}
@@ -10,5 +10,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CoreRoutingModule {
+export class SearchRoutingModule {
 }

@@ -1,13 +1,8 @@
-<app-header
-  (searchClicked)="pre.showResult()"
->
-</app-header>
-<router-outlet></router-outlet>
-<app-footer></app-footer>
 <app-search
-  appHidden #pre="hiddenControl"
   [videos]="(videos$ | async)!
   | filterBy:searchText:criteria
   | sortBy:sortField"
 >
 </app-search>
+
+<!--  (searchClicked)="pre.showResult()"-->

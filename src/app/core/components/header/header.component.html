@@ -17,14 +17,13 @@
       >Search
       </div>
     </div>
-    <app-settings-button (click)="pre.toggle()">
+    <app-settings-button>
     </app-settings-button>
   </div>
   <app-login-info></app-login-info>
 </header>
-<app-dropdown-setting
+<app-filter-setting
   [searchText]="searchText"
-  appHidden #pre="hiddenControl"
 >
-</app-dropdown-setting>
+</app-filter-setting>
 

@@ -1,5 +1,5 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {SearchComponent} from '@app/youtube/pages/main/search.component';
+import {SearchComponent} from '@app/youtube/pages/search/search.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('SearchComponent', () => {

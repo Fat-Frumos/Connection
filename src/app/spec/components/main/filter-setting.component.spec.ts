@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {
   FilterSettingComponent
-} from '@app/youtube/components/filter-setting/filter-setting.component';
+} from '@app/core/components/header/filter-setting/filter-setting.component';
 
 describe('DropdownSettingComponent', () => {
   let component: FilterSettingComponent;

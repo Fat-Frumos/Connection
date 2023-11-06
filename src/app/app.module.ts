@@ -7,33 +7,28 @@ import {AppRoutingModule} from './app-routing.module';
 import {PreloadService} from '@app/auth/services/preload.service';
 import {SharedModule} from '@app/shared/shared.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {
-  DetailInfoComponent
-} from '@app/youtube/pages/detail-info/detail-info.component';
-import {NotFoundComponent} from './core/pages/not-found/not-found.component';
-import {FormsModule} from '@angular/forms';
-import {YouTubeModule} from '@app/youtube/you-tube.module';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {CoreModule} from '@app/core/core.module';
+import {AuthInterceptor} from '@app/auth/services/auth-interceptor.service';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    DetailInfoComponent,
-    NotFoundComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
+    HttpClientModule,
+    CoreModule.forRoot(),
     SharedModule.forRoot(),
+    BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000'
-    }),
-    FormsModule,
-    YouTubeModule
+    })
   ],
-  providers: [PreloadService],
-  exports: [],
+  providers: [PreloadService,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

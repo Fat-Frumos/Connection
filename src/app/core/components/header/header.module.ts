@@ -13,7 +13,7 @@ import {
 } from '@app/core/components/header/header.component';
 import {
   FilterSettingComponent
-} from '@app/youtube/components/filter-setting/filter-setting.component';
+} from '@app/core/components/header/filter-setting/filter-setting.component';
 import {FormsModule} from '@angular/forms';
 import {HiddenDirective} from '@app/shared/direcrives/hidden.directive';
 import {FeatureModule} from '@app/shared/feature.module';

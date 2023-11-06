@@ -1,16 +1,27 @@
 import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {User} from '@app/auth/models/user';
 
 @Injectable()
 export class LoginService {
-  login(credentials: string) {
-    localStorage.setItem('authToken', credentials);
+
+  constructor(private router: Router) {
+    this.logout();
   }
 
-  logout() {
-    localStorage.removeItem('authToken');
+  login(user: User) {
+    localStorage.setItem('user', JSON.stringify(user));
+    console.log(localStorage.getItem('user'));
+    alert('Login successful!' + JSON.stringify(user));
+    void this.router.navigate(['/home']);
   }
 
-  isLoggedIn() {
-    return localStorage.getItem('authToken') !== null;
+  logout(): void {
+    localStorage.removeItem('user');
+    void this.router.navigate(['/login']);
+  }
+
+  isLoggedIn(): boolean {
+    return localStorage.getItem('user') !== null;
   }
 }

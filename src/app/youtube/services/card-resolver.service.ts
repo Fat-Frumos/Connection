@@ -13,7 +13,7 @@ export const CardResolverService: ResolveFn<VideoItem | null> = (
   const router = inject(Router);
 
   return inject(HttpClient)
-    .get<VideoItem>(`/main/${id}`)
+    .get<VideoItem>(`/home/${id}`)
     .pipe(map((product: VideoItem | null) => {
       if (!product) {
         router.navigate(['/']).then(() => {

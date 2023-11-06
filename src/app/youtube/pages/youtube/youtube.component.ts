@@ -1,7 +1,11 @@
 import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {VideoItem} from '@app/youtube/models/video-item-model';
-import {CriteriaModel, Direction, SortField} from '@app/shared/models/criteria-model';
+import {
+  CriteriaModel,
+  Direction,
+  SortField
+} from '@app/shared/models/criteria-model';
 import {VideoService} from '@app/youtube/services/video.service';
 
 @Component({
@@ -22,8 +26,7 @@ export class YoutubeComponent implements OnInit, OnDestroy {
 
   sortField: CriteriaModel;
 
-  constructor(
-    private service: VideoService) {
+  constructor(private service: VideoService) {
     this.videos$ = new Observable<VideoItem[]>();
     this.sortField = {order: Direction.ASC, field: SortField.DATE};
   }
