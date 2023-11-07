@@ -1,5 +1,4 @@
 .video-card {
-
   width: 1200px;
   height: 461px;
   left: 120px;
@@ -7,19 +6,17 @@
 }
 
 .card-big {
-
   width: 1165px;
   height: 461px;
   left: 35px;
-  top: 0px;
+  top: 0;
   filter: drop-shadow(5px 10px 10px rgba(47, 128, 237, 0.25));
 }
 
 .video {
   width: 729px;
-  //height: 461px;
   left: 35px;
-  top: 0px;
+  top: 0;
   filter: drop-shadow(5px 10px 20px rgba(51, 51, 51, 0.25));
   border-radius: 0 0 0 5px;
 }
@@ -27,7 +24,6 @@
 .thumbnail {
   width: 729px;
   padding-left: 20px;
-  //height: 461px;
   left: 35px;
   top: 150px;
   filter: drop-shadow(5px 10px 20px rgba(51, 51, 51, 0.25));
@@ -42,7 +38,7 @@
   top: 150px;
   background: #E5E5E5;
   box-shadow: 5px 5px 20px rgba(51, 51, 51, 0.25);
-  border-radius: 0 5px 5px 0px;
+  border-radius: 0 5px 5px 0;
 }
 
 .description {
@@ -66,7 +62,6 @@
   height: 66px;
   left: 798px;
   top: 35px;
-
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -75,7 +70,6 @@
 }
 
 .date {
-
   width: 132px;
   height: 12px;
   left: 1032px;
@@ -96,7 +90,6 @@
 }
 
 .dislike {
-
   width: 46px;
   height: 13px;
   left: 881px;
@@ -104,7 +97,6 @@
 }
 
 .viewed {
-
   left: 73.42%;
   right: 24.92%;
   top: 90.89%;
@@ -112,12 +104,10 @@
 }
 
 .one-thousand {
-
   width: 23px;
   height: 12px;
   left: 904px;
   top: 420px;
-
   font-style: normal;
   font-weight: 400;
   font-size: 10px;
@@ -126,7 +116,6 @@
 }
 
 .like {
-
   width: 35px;
   height: 13px;
   left: 944px;
@@ -134,7 +123,6 @@
 }
 
 .liked {
-
   left: 78.67%;
   right: 20.08%;
   top: 90.89%;
@@ -142,12 +130,10 @@
 }
 
 .six-eighty {
-
   width: 17px;
   height: 12px;
   left: 962px;
   top: 419px;
-
   font-style: normal;
   font-weight: 400;
   font-size: 10px;
@@ -156,12 +142,10 @@
 
 
 .three-twenty {
-
   width: 17px;
   height: 12px;
   left: 1013px;
   top: 420px;
-
   font-style: normal;
   font-weight: 400;
   font-size: 10px;
@@ -176,7 +160,6 @@
 }
 
 .group-9 {
-
   width: 13px;
   height: 13px;
   left: 1048px;
@@ -184,7 +167,6 @@
 }
 
 .vector {
-
   left: 87.33%;
   right: 11.83%;
   top: 91.52%;
@@ -193,12 +175,10 @@
 
 
 .two-fifty {
-
   width: 17px;
   height: 12px;
   left: 1066px;
   top: 420px;
-
   font-style: normal;
   font-weight: 400;
   font-size: 10px;
@@ -211,23 +191,21 @@
   width: 32px;
   height: 32px;
   left: 3px;
-  top: 0px;
+  top: 0;
   filter: drop-shadow(-2px 2px 4px rgba(47, 128, 237, 0.25));
-  border-radius: 5px 5px 0 0px;
+  border-radius: 5px 5px 0 0;
 }
 
 .rectangle-17 {
-
-  left: 0%;
-  right: 0%;
-  top: 0%;
-  bottom: 0%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   background: #2F80ED;
   border-radius: 5px 0 0 5px;
 }
 
 .vector-1 {
-
   left: 34.38%;
   right: 25%;
   top: 25%;
@@ -250,11 +228,10 @@
 }
 
 .rectangle-18 {
-
   width: 436px;
   height: 5px;
   left: 764px;
   top: 456px;
   background: #2F80ED;
-  border-radius: 0 0 5px 0px;
+  border-radius: 0 0 5px 0;
 }

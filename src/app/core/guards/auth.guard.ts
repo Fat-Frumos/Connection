@@ -7,7 +7,7 @@ export function authGuard(): Observable<boolean | UrlTree> | Promise<boolean | U
   const router = inject(Router);
   const loginService = inject(LoginService);
 
-  if (!loginService.isLoggedIn()) {
+  if (!loginService.isLoggedIn) {
     void router.navigate(['/login']);
     return false;
   } else {

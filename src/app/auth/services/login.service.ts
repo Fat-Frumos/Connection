@@ -6,31 +6,31 @@ import {BehaviorSubject, Observable} from 'rxjs';
 @Injectable()
 export class LoginService {
 
-  private userSubject: BehaviorSubject<User | null>;
+  private _isLoggedIn: BehaviorSubject<boolean>;
 
-  user$: Observable<User | null>;
+  private userSubject: BehaviorSubject<User>;
+
+  user$: Observable<User>;
 
   constructor(private router: Router) {
-    this.userSubject = new BehaviorSubject<User | null>(null);
+    this.userSubject = new BehaviorSubject<User>({} as User);
     this.user$ = this.userSubject.asObservable();
-    console.log(localStorage.getItem('user'));
+    this._isLoggedIn = new BehaviorSubject<boolean>(false);
   }
 
   login(user: User): void {
-    localStorage.setItem('user', JSON.stringify(user));
-    console.log(localStorage.getItem('user'));
     this.userSubject.next(user);
-    alert('Login successful!' + JSON.stringify(user));
+    this._isLoggedIn.next(true);
     void this.router.navigate(['/main']);
   }
 
   logout(): void {
-    localStorage.removeItem('user');
-    this.userSubject.next(null);
+    this.userSubject.next({} as User);
+    this._isLoggedIn.next(false);
     void this.router.navigate(['/login']);
   }
 
-  isLoggedIn(): boolean {
-    return localStorage.getItem('user') !== null;
+  get isLoggedIn(): boolean {
+    return this._isLoggedIn.getValue();
   }
 }

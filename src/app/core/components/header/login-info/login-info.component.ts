@@ -1,5 +1,6 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, ViewEncapsulation} from '@angular/core';
 import {LoginService} from '@app/auth/services/login.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-login-info',
@@ -7,20 +8,24 @@ import {LoginService} from '@app/auth/services/login.service';
   styleUrls: ['./login-info.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class LoginInfoComponent implements OnInit {
+export class LoginInfoComponent implements OnDestroy {
   public username: string;
+
+  private subscription: Subscription;
+
 
   constructor(private loginService: LoginService) {
     this.username = '';
-  }
-
-  ngOnInit(): void {
-    this.loginService.user$.subscribe(user => {
-      this.username = user ? user.username : '';
+    this.subscription = this.loginService.user$.subscribe(user => {
+      this.username = user.username;
     });
   }
 
   logout(): void {
     this.loginService.logout();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

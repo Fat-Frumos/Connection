@@ -10,10 +10,10 @@ import {Router} from '@angular/router';
 })
 export class SearchItemComponent {
 
-  @Input() video!: VideoItem;
+  @Input() video: VideoItem;
 
   constructor(private router: Router) {
-    console.log('SearchItemComponent');
+    this.video = {} as VideoItem;
   }
 
   saveDataAndRedirect(): void {

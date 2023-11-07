@@ -6,7 +6,15 @@ import {SharedModule} from '@app/shared/shared.module';
 
 const routes: Routes = [
   {
-    path: '', component: YoutubeComponent
+    path: '',
+    component: YoutubeComponent,
+    children: [
+      {
+        path: 'main/:id',
+        loadChildren: () => import('@app/youtube/pages/detail-info/detail-info.module')
+          .then(module => module.DetailInfoModule)
+      }
+    ]
   }
 ];
 

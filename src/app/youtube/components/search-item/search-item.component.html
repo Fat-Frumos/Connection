@@ -4,25 +4,28 @@
      [style.background-image]="'url(' + video.snippet.thumbnails.medium.url + ')'"></div>
 <div class="button">
   <div class="button-background"></div>
-  <a class="button-text" (click)="saveDataAndRedirect()">More...</a>
+  <button
+    class="button-text"
+    (click)="saveDataAndRedirect()">More...
+  </button>
 
 </div>
 
 <div class="statistics">
   <div class="group">
-    <img src="../../../../../assets/svg/items/viewed.svg" alt="Viewed">
+    <img src="assets/svg/items/viewed.svg" alt="Viewed">
     <div class="viewed">{{ video.statistics.viewCount }}</div>
   </div>
   <div class="group">
-    <img src="../../../../../assets/svg/items/liked.svg" alt="Like">
+    <img src="assets/svg/items/liked.svg" alt="Like">
     <div class="liked">{{ video.statistics.likeCount }}</div>
   </div>
   <div class="group">
-    <img src="../../../../../assets/svg/items/dislike.svg" alt="Dislike">
+    <img src="assets/svg/items/dislike.svg" alt="Dislike">
     <div class="disliked">{{ video.statistics.dislikeCount }}</div>
   </div>
   <div class="group">
-    <img src="../../../../../assets/svg/items/comments.svg" alt="Comments">
+    <img src="assets/svg/items/comments.svg" alt="Comments">
     <div class="comments">{{ video.statistics.commentCount }}</div>
   </div>
 </div>

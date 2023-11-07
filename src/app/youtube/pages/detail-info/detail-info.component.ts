@@ -7,7 +7,12 @@ import {VideoDataModel} from '@app/youtube/models/video-data-model';
   styleUrls: ['./detail-info.component.scss']
 })
 export class DetailInfoComponent implements OnInit {
-  data!: VideoDataModel;
+
+  data: VideoDataModel;
+
+  constructor() {
+    this.data = {} as VideoDataModel;
+  }
 
   ngOnInit(): void {
     const data = localStorage.getItem('video');
