@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PreloadService } from '../../shared/service/preload.service';
+import { PreloadService } from '@app/auth/services/preload.service';
 
 describe('PreloadService', () => {
   let service: PreloadService;

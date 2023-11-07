@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SortService } from '@app/service/sort.service';
+import { SortService } from '@app/youtube/services/sort.service';
 
 describe('SortService', () => {
   let service: SortService;

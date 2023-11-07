@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { BorderColorDirective } from '../../directive/border-color.directive';
+import { BorderColorDirective } from '../../shared/direcrives/border-color.directive';
 
 @Component({
   template: `<div [appBorderColor]="dateValue" id="testDiv"></div>`

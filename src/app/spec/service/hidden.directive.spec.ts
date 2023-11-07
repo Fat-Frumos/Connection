@@ -1,4 +1,4 @@
-import { HiddenDirective } from '../../directive/hidden.directive';
+import { HiddenDirective } from '../../shared/direcrives/hidden.directive';
 
 describe('HiddenDirective', () => {
   it('should create an instance', () => {

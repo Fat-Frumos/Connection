@@ -1,31 +1,32 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {BackofficeModule} from './components/backoffice/backoffice.module';
-import {PreloadService} from './shared/service/preload.service';
+import {PreloadService} from '@app/auth/services/preload.service';
+import {VideoService} from '@app/youtube/services/video.service';
+import {authGuard} from '@app/core/guards/auth.guard';
+import {NotFoundComponent} from '@app/core/pages/not-found/not-found.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'backoffice', pathMatch: 'full'},
+  {path: '', redirectTo: '/main', pathMatch: 'full'},
+  {path: 'not-found', component: NotFoundComponent, canActivate: [authGuard]},
   {
-    path: '',
-    loadChildren: () => import('./components/backoffice/backoffice.module')
-      .then(module => module.BackofficeModule),
-    data: { preload: true }
+    path: 'main',
+    loadChildren: () => import('@app/youtube/pages/youtube/youtube.module')
+      .then(module => module.YouTubeModule),
+    canActivate: [authGuard]
   },
   {
-    path: '',
-    loadChildren: () => import('./components/backoffice/backoffice.module')
-      .then(module => module.BackofficeModule)
+    path: 'login',
+    loadChildren: () => import('./auth/auth.module').then((module) => module.AuthModule)
   },
-  {path: '**', redirectTo: 'backoffice'}
+  {path: '**', redirectTo: 'not-found'}
 ];
 
 @NgModule({
   imports: [
-    BackofficeModule,
     RouterModule.forRoot(routes,
       {preloadingStrategy: PreloadService})],
   exports: [RouterModule],
-  providers: [PreloadService]
+  providers: [PreloadService, VideoService]
 })
 export class AppRoutingModule {
 }

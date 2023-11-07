@@ -1,6 +1,6 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {LoadInterceptor} from '@app/shared/service/load.interceptor';
+import {AuthInterceptor} from '@app/auth/services/auth-interceptor.service';
 import {BASE_URL_TOKEN, baseUrl} from '@app/config';
 
 @NgModule({
@@ -9,7 +9,7 @@ import {BASE_URL_TOKEN, baseUrl} from '@app/config';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: LoadInterceptor,
+      useClass: AuthInterceptor,
       multi: true
     }
   ]

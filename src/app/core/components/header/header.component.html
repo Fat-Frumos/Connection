@@ -1,0 +1,29 @@
+<header class="header">
+  <div class="search">
+    <app-logo></app-logo>
+    <input
+      class="input-field-text"
+      type="text"
+      placeholder="Angular Podcast"
+      [(ngModel)]="searchText"
+      (keyup.enter)="search(searchText)"
+      (ngModelChange)="search(searchText)"
+      [ngModelOptions]="{ standalone: true }"
+    >
+    <div class="search-button">
+      <div
+        class="search-text"
+        (click)="search(searchText)"
+      >Search
+      </div>
+    </div>
+    <app-settings-button>
+    </app-settings-button>
+  </div>
+  <app-login-info></app-login-info>
+</header>
+<app-filter-setting
+  [searchText]="searchText"
+>
+</app-filter-setting>
+

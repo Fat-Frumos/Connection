@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {SortService} from '@app/service/sort.service';
+import {SortService} from '@app/youtube/services/sort.service';
 
 @NgModule({
   declarations: [],
