@@ -5,25 +5,15 @@
       class="input-field-text"
       type="text"
       placeholder="Angular Podcast"
-      [(ngModel)]="searchText"
-      (keyup.enter)="search(searchText)"
-      (ngModelChange)="search(searchText)"
-      [ngModelOptions]="{ standalone: true }"
+      [formControl]="searchText"
     >
-    <div class="search-button">
-      <div
-        class="search-text"
-        (click)="search(searchText)"
-      >Search
-      </div>
-    </div>
-    <app-settings-button>
+    <app-settings-button (click)="pre.toggle()">
     </app-settings-button>
   </div>
   <app-login-info></app-login-info>
 </header>
-<app-filter-setting
-  [searchText]="searchText"
+<app-dropdown-setting
+  [searchText]="searchText.value"
+  appHidden #pre="hiddenControl"
 >
-</app-filter-setting>
-
+</app-dropdown-setting>

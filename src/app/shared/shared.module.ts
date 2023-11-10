@@ -1,7 +1,14 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from '@app/auth/services/auth-interceptor.service';
-import {BASE_URL_TOKEN, baseUrl} from '@app/config';
+import {
+  BASE_URL_TOKEN,
+  URL_API_TOKEN,
+  KEY_URL_TOKEN,
+  baseUrl,
+  keyApi,
+  urlApi
+} from '@app/config';
 
 @NgModule({
   declarations: [],
@@ -22,6 +29,16 @@ export class SharedModule {
         {
           provide: BASE_URL_TOKEN,
           useValue: baseUrl,
+          multi: true
+        },
+        {
+          provide: URL_API_TOKEN,
+          useValue: urlApi,
+          multi: true
+        },
+        {
+          provide: KEY_URL_TOKEN,
+          useValue: keyApi,
           multi: true
         }
       ]

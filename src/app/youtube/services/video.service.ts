@@ -32,9 +32,9 @@ export class VideoService implements OnDestroy {
   private fetchVideoData(): void {
     this.subscription$.add(
       this.http.get<VideoListResponse>(baseUrl)
-      .subscribe((data: VideoListResponse): void => {
-        this.videosSubject.next(data.items);
-      })
+        .subscribe((data: VideoListResponse): void => {
+          this.videosSubject.next(data.items);
+        })
     );
   }
 

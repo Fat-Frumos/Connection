@@ -4,7 +4,16 @@ import {
   Output,
   ViewEncapsulation
 } from '@angular/core';
+import {debounceTime, filter, Observable, switchMap} from 'rxjs';
+import {FormControl} from '@angular/forms';
 import {VideoService} from '@app/youtube/services/video.service';
+import {HttpClient} from '@angular/common/http';
+import {YoutubeResponse} from '@app/youtube/models/youtube-response';
+import {keyApi, urlApi} from '@app/config';
+
+const DEBOUNCE = 500;
+const MIN_LENGTH = 3;
+
 
 @Component({
   selector: 'app-header',
@@ -14,24 +23,36 @@ import {VideoService} from '@app/youtube/services/video.service';
 })
 export class HeaderComponent {
 
-  @Output() searchClicked: EventEmitter<void>;
+  @Output() searchClicked = new EventEmitter<void>();
 
-  @Output() filter: EventEmitter<string>;
+  @Output() filter = new EventEmitter<string>();
 
-  @Output() sort: EventEmitter<string>;
+  @Output() sort = new EventEmitter<string>();
 
-  searchText = '';
+  searchText = new FormControl();
 
-  constructor(private readonly service: VideoService) {
-    this.searchClicked = new EventEmitter<void>();
-    this.filter = new EventEmitter<string>();
-    this.sort = new EventEmitter<string>();
+  constructor(
+    private readonly service: VideoService,
+    private http: HttpClient
+  ) {
+    this.searchText.valueChanges.pipe(
+      debounceTime(DEBOUNCE),
+      filter((value: string | null): value is string =>
+        value !== null && value.length >= MIN_LENGTH),
+      switchMap(value => this.searchAPI(value))
+    ).subscribe(results => {
+      console.log(results);
+    });
+  }
+
+  searchAPI(value: string): Observable<YoutubeResponse> {
+    const url = `${urlApi}?part=snippet&maxResults=25&q=${value}&key=${keyApi}`;
+    return this.http.get<YoutubeResponse>(url);
   }
 
   search(searchText: string): void {
-    this.searchText = searchText;
     this.searchClicked.emit();
-    this.filter.emit(this.searchText);
-    this.service.setSearchText(this.searchText);
+    this.filter.emit(searchText);
+    this.service.setSearchText(searchText);
   }
 }
