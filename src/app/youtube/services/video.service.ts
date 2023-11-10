@@ -60,4 +60,7 @@ export class VideoService implements OnDestroy {
     );
   }
 
+  save(cardData: VideoItem) {
+    console.log(cardData); //TODO
+  }
 }

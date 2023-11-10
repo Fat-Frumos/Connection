@@ -1,0 +1,21 @@
+<form [formGroup]="cardForm" (ngSubmit)="onSubmit()">
+  <label>
+    Title:
+    <input type="text" formControlName="title">
+    <div *ngIf="cardForm.controls.title.errors?.['required']">Please enter a title</div>
+    <div *ngIf="cardForm.controls.title.errors?.['minlength']">The title is too short</div>
+    <div *ngIf="cardForm.controls.title.errors?.['maxlength']">The title is too long</div>
+  </label>
+  <div formArrayName="tags">
+    <div *ngFor="let tag of tags.controls; index as i">
+      <label>
+        Tag {{ i + 1 }}:
+        <input [formControlName]="i">
+        <div *ngIf="tag.errors?.['required']">Tag is required</div>
+      </label>
+    </div>
+  </div>
+  <button type="button" (click)="addTag()">Add Tag</button>
+  <button type="submit">Submit</button>
+  <button type="button" (click)="resetForm()">Reset</button>
+</form>
