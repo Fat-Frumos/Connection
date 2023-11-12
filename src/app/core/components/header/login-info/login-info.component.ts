@@ -9,15 +9,16 @@ import {Subscription} from 'rxjs';
   encapsulation: ViewEncapsulation.None
 })
 export class LoginInfoComponent implements OnDestroy {
-  public username: string;
+
+  public email: string;
 
   private subscription: Subscription;
 
 
   constructor(private loginService: LoginService) {
-    this.username = '';
+    this.email = '';
     this.subscription = this.loginService.user$.subscribe(user => {
-      this.username = user.username;
+      this.email = user.email;
     });
   }
 

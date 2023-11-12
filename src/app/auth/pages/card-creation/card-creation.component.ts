@@ -1,8 +1,9 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {
+  AbstractControl,
   FormArray,
   FormBuilder,
-  FormControl,
+  FormControl, FormGroup,
   ValidationErrors,
   Validators
 } from '@angular/forms';
@@ -17,7 +18,7 @@ import {VideoItem} from '@app/youtube/models/video-item-model';
 })
 export class CardCreationComponent {
 
-  cardForm = this.fb.group({
+  cardForm = this.formBuilder.group({
     title: ['', [Validators.required.bind(Validators),
       Validators.minLength(3), Validators.maxLength(20)]],
     description: ['', Validators.maxLength(255).bind(Validators)],
@@ -25,14 +26,13 @@ export class CardCreationComponent {
     videoLink: ['', Validators.required.bind(Validators)],
     creationDate: ['', [Validators.required.bind(Validators),
       this.dateValidator.bind(this)]],
-    tags: this.fb.array([
-      this.fb.control('', Validators.required.bind(Validators))
-    ])
+    tags: this.formBuilder.array([this.formBuilder.control('',
+      Validators.required.bind(Validators))])
   });
 
   constructor(
     private readonly service: VideoService,
-    private fb: FormBuilder) {
+    private formBuilder: FormBuilder) {
     console.log();
   }
 
@@ -40,37 +40,89 @@ export class CardCreationComponent {
     return this.cardForm.get('tags') as FormArray;
   }
 
-  addTag = () => {
-    if (this.tags.length < 5) {
-      this.tags.push(this.fb.control('',
-        Validators.required.bind(Validators)));
-    }
-  };
-
-
-  removeTag(index: number) {
-    this.tags.removeAt(index);
+  createTag(): FormGroup {
+    return this.formBuilder.group({
+      tag: ['', Validators.required.bind(Validators)]
+    });
   }
 
-  resetForm() {
+  addTag(): void {
+    if (this.tags.length < 5) {
+      this.tags.push(this.createTag());
+    }
+  }
+
+  removeTag(index: number): void {
+    if (this.tags.length > 1) {
+      this.tags.removeAt(index);
+    }
+  }
+
+  onReset(): void {
+    this.cardForm.reset();
     while (this.tags.length !== 1) {
       this.tags.removeAt(0);
     }
-    this.cardForm.reset();
   }
 
   dateValidator(control: FormControl): ValidationErrors | null {
-    const date = new Date(control.value as string | number | Date);
-    const now = new Date();
-    return date > now ? {futureDate: true} : null;
+    return new Date(control.value as string | number | Date) >
+    new Date() ? {futureDate: true} : null;
   }
 
   onSubmit() {
     if (this.cardForm.valid) {
-      const cardData = this.cardForm.value as VideoItem;
-      this.service.save(cardData);
+      this.service.save(this.cardForm.value as VideoItem);
     } else {
       this.cardForm.markAllAsTouched();
     }
+  }
+
+  getTagsControls(): AbstractControl[] {
+    return this.tags.controls;
+  }
+
+  getTitleErrorMessage(): string {
+    if (this.cardForm.get('title')?.errors?.['required']) {
+      return 'Please enter a title';
+    }
+    if (this.cardForm.get('title')?.errors?.['minlength']) {
+      return 'The title is too short';
+    }
+    if (this.cardForm.get('title')?.errors?.['maxlength']) {
+      return 'The title is too long';
+    }
+    return '';
+  }
+
+  getDateErrorMessage(): string {
+    if (this.cardForm.get('creationDate')?.errors?.['required']) {
+      return 'Please enter a creation date';
+    }
+    if (this.cardForm.get('creationDate')?.errors?.['invalidDate']) {
+      return 'The date is invalid';
+    }
+    return '';
+  }
+
+  getTagErrorMessage(index: number): string {
+    return (this.cardForm.get('tags') as FormArray)
+      .at(index).get('tag')?.errors?.['required']
+      ? 'Please enter a tag' : '';
+  }
+
+  getDescriptionMessage(): string {
+    return this.cardForm.get('description')?.errors?.['maxlength']
+      ? 'The description is too long' : '';
+  }
+
+  getImageMessage(): string {
+    return this.cardForm.get('imageLink')?.errors?.['required']
+      ? 'Please enter a link to the image' : '';
+  }
+
+  getVideoMessage(): string {
+    return this.cardForm.get('videoLink')?.errors?.['required']
+      ? 'Please enter a link to the video' : '';
   }
 }

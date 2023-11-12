@@ -10,7 +10,7 @@ export class LoginService {
 
   private userSubject: BehaviorSubject<User>;
 
-  user$: Observable<User>;
+  public user$: Observable<User>;
 
   constructor(private router: Router) {
     this.userSubject = new BehaviorSubject<User>({} as User);
@@ -19,6 +19,7 @@ export class LoginService {
   }
 
   login(user: User): void {
+    console.log('loginForm: ' + user.email);
     this.userSubject.next(user);
     this._isLoggedIn.next(true);
     void this.router.navigate(['/main']);
@@ -32,5 +33,9 @@ export class LoginService {
 
   get isLoggedIn(): boolean {
     return this._isLoggedIn.getValue();
+  }
+
+  signup() {
+    void this.router.navigate(['/signup']);
   }
 }

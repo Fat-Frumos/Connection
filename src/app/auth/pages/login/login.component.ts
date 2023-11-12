@@ -6,7 +6,6 @@ import {
   Validators
 } from '@angular/forms';
 import {LoginService} from '@app/auth/services/login.service';
-import {User} from '@app/auth/models/user';
 
 const MIN_PASSWORD_LENGTH = 8;
 
@@ -18,8 +17,9 @@ const MIN_PASSWORD_LENGTH = 8;
 })
 export class LoginComponent {
 
-
   isLoggedIn: boolean;
+
+  isClicked = false;
 
   passwordValidator = (control: AbstractControl): ValidationErrors | null => {
     const value = control.value as string;
@@ -28,37 +28,69 @@ export class LoginComponent {
     const hasNumeric = /\d/.test(value);
     const hasSpecialChar = /[!@#?]/.test(value);
     const isLengthValid = value.length >= MIN_PASSWORD_LENGTH;
-    return hasUpperCase && hasLowerCase && hasNumeric
-    && hasSpecialChar && isLengthValid
-      ? null : {weakPassword: true};
+    return !hasUpperCase || !hasLowerCase || !hasNumeric || !hasSpecialChar || !isLengthValid
+      ? {'weakPassword': true}
+      : null;
   };
 
-  usernameValidator = (control: AbstractControl): ValidationErrors | null => {
+  emailValidator = (control: AbstractControl): ValidationErrors | null => {
     const value = control.value as string;
-    const isAlphanumeric = /^[a-z0-9]+$/i.test(value);
-    return isAlphanumeric ? null : {invalidUsername: true};
+    const hasAtSign = value.includes('@');
+    const hasDot = value.includes('.');
+    return hasAtSign && hasDot ? null : {invalidUsername: true};
   };
 
-
-  loginForm = this.fb.group({
-    email: ['', [Validators.required.bind(Validators), Validators.email.bind(Validators)]],
-    username: ['', [Validators.required.bind(Validators), this.usernameValidator]],
+  loginForm = this.formBuilder.group({
+    email: ['', [Validators.required.bind(Validators), this.emailValidator]],
     password: ['', [Validators.required.bind(Validators), this.passwordValidator]]
   });
 
   constructor(
     private readonly service: LoginService,
-    private fb: FormBuilder) {
+    private formBuilder: FormBuilder) {
     this.isLoggedIn = this.service.isLoggedIn;
   }
 
-  onSubmit() {
-    if (this.loginForm.valid) {
-      const email = this.loginForm.value.email ?? '';
-      const password = this.loginForm.value.password ?? '';
-      const username = this.loginForm.value.password ?? '';
-      const user: User = {email, password, username};
-      this.service.login(user);
+  onSubmit(): void {
+    this.isClicked = true;
+    if (!this.isPasswordInvalid() && !this.isEmailInvalid()) {
+      const password: string = this.loginForm.value.password ?? '';
+      const email: string = this.loginForm.value.email ?? '';
+      this.service.login({password, email});
+    } else {
+      this.loginForm.markAllAsTouched();
     }
+  }
+
+  onSignUp(): void {
+    this.service.signup();
+  }
+
+  isEmailInvalid() {
+    const control = this.loginForm.get('email');
+    return control?.invalid && (control?.dirty || control?.touched || this.isClicked);
+  }
+
+  isPasswordInvalid() {
+    const control = this.loginForm.get('password');
+    return control?.invalid && (control?.dirty || control?.touched || this.isClicked);
+  }
+
+  getErrorMessage(): string {
+    if (this.isEmailInvalid()) {
+      return 'Please enter a login email';
+    }
+    if (this.loginForm.controls.email.errors?.['email']) {
+      return 'The login email is invalid';
+    }
+    if (this.isPasswordInvalid()) {
+      return 'Please enter a password';
+    }
+    if (this.loginForm.controls.password.errors?.['weakPassword']) {
+      return 'Your password isn`t strong enough. It should have at least 8 characters, ' +
+        'a mixture of both uppercase and lowercase letters, a mixture of letters ' +
+        'and numbers, and include at least one special character: ! @ # ?';
+    }
+    return '';
   }
 }

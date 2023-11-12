@@ -1,21 +1,69 @@
-<form [formGroup]="cardForm" (ngSubmit)="onSubmit()">
-  <label>
-    Title:
-    <input type="text" formControlName="title">
-    <div *ngIf="cardForm.controls.title.errors?.['required']">Please enter a title</div>
-    <div *ngIf="cardForm.controls.title.errors?.['minlength']">The title is too short</div>
-    <div *ngIf="cardForm.controls.title.errors?.['maxlength']">The title is too long</div>
-  </label>
-  <div formArrayName="tags">
-    <div *ngFor="let tag of tags.controls; index as i">
-      <label>
-        Tag {{ i + 1 }}:
-        <input [formControlName]="i">
-        <div *ngIf="tag.errors?.['required']">Tag is required</div>
-      </label>
+<div class="rectangle-1"></div>
+<div class="text">Create new card
+  <form [formGroup]="cardForm"
+        (ngSubmit)="onSubmit()"
+        class="create-card">
+    <div class="title">
+      <div class="rectangle-2"></div>
+      <label class="title-text">Title</label>
+      <input type="text" formControlName="title">
+      <div *ngIf="getTitleErrorMessage"
+           class="error-message">
+        {{ getTitleErrorMessage }}</div>
     </div>
-  </div>
-  <button type="button" (click)="addTag()">Add Tag</button>
-  <button type="submit">Submit</button>
-  <button type="button" (click)="resetForm()">Reset</button>
-</form>
+    <div class="description">
+      <div class="rectangle-2"></div>
+      <label class="description-text">Description</label>
+      <input type="text" formControlName="description">
+      <div *ngIf="getDescriptionMessage">
+        {{getDescriptionMessage}}
+      </div>
+    </div>
+    <div class="link-img">
+      <div class="rectangle-2"></div>
+      <label class="link-video-text">Image Link</label>
+      <input type="text" formControlName="imageLink">
+      <div *ngIf="getImageMessage">
+        {{getImageMessage}}
+      </div>
+    </div>
+    <div class="link-video">
+      <div class="rectangle-2"></div>
+      <label class="link-video-text">Video Link</label>
+      <input type="text" formControlName="videoLink">
+      <div *ngIf="getVideoMessage">
+        {{getVideoMessage}}
+      </div>
+    </div>
+    <div>
+      <label>Creation Date</label>
+      <input type="date" formControlName="creationDate">
+      <div *ngIf="getDateErrorMessage"
+           class="error-message">
+        {{getDateErrorMessage}}
+      </div>
+    </div>
+    <div formArrayName="tags">
+      <div *ngFor="let tag of getTagsControls(); let i = index"
+           [formGroupName]="i">
+        <label>Tag</label>
+        <input type="text" formControlName="tag">
+        <div *ngIf="getTagErrorMessage(i)">
+          {{getTagErrorMessage(i)}}
+        </div>
+        <button type="button" (click)="removeTag(i)">
+          Remove Tag
+        </button>
+      </div>
+    </div>
+    <button type="button" (click)="addTag()">
+      Add Tag
+    </button>
+    <button class="button-create" type="submit">
+      Create Card
+    </button>
+    <button type="button" (click)="onReset()">
+      Reset
+    </button>
+  </form>
+</div>

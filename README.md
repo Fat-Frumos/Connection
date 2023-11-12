@@ -38,6 +38,8 @@ use in CLI  `npx eslint .`
 
 [rxJS](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/angular/rxjs-observables-http.md)
 
+[http](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/angular/forms.md)
+
 [dashboard](https://app.rs.school/course/schedule?course=angular-2023Q4)
 
 [deploy](https://angular-podcast.netlify.app/)
@@ -81,7 +83,9 @@ use in CLI  `npx eslint .`
       - valid email (message: "The login email is invalid")
     - password
       - required (message: "Please enter a password")
-      - add a custom validator that will check how strong a password is. the following checks should be applied (message: "Your password isn't strong enough" + recommendations below):
+      - add a custom validator that will check how strong a password is. 
+        the following checks should be applied (message: 
+        "Your password isn't strong enough" + recommendations below):
         - at least 8 characters
         - a mixture of both uppercase and lowercase letters
         - a mixture of letters and numbers
@@ -110,7 +114,8 @@ use in CLI  `npx eslint .`
     - each tag input should be required
     - form can have up to five "Tag" inputs
   - implement "Reset" button
-    - when clicked all inputs should be reset to their initial values and the "Tags" sub-form should return to having only a single (empty) input
+    - when clicked all inputs should be reset to their initial values and the 
+      "Tags" sub-form should return to having only a single (empty) input
 
 - The application should prevent user from submitting the form if at least one of the described validation rules didn't pass
 - If the user has entered invalid data into an input, its border should be colored in red
