@@ -1,20 +1,45 @@
-.create-card {
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+.new-error-rectangle {
+  margin-top: -5px;
+  z-index: 20;
+  position: relative;
+  background: #EB5757;
+  border-radius: 0 0 5px 5px;
+  height: 5px;
 }
 
-.rectangle-1 {
+.new-error-message {
+  color: #EB5757;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.create-card {
+  margin: auto 5%;
+}
+
+.new-card-title {
+  padding-top: 5%;
+  width: 310px;
+  height: 22px;
+  left: 20px;
+  top: 28px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 21px;
+  color: #000000;
+}
+
+.new-card-container {
+  margin: auto;
   width: 432px;
-  height: 493px;
+  height: 550px;
   left: 0;
   top: 0;
   background: #F2F2F2;
   border-radius: 17px;
 }
 
-.text {
+.form-wrapper {
   width: 266px;
   height: 27px;
   left: 25px;
@@ -23,7 +48,6 @@
   font-weight: 700;
   font-size: 22px;
   line-height: 27px;
-  display: flex;
   align-items: center;
   color: #000000;
 }
@@ -98,23 +122,21 @@
   color: #2F80ED;
 }
 
-.title {
-  width: 382px;
+.title,
+.description,
+.link-img,
+.link-video,
+.creation-date,
+.creation-tags{
+  width: 380px;
   height: 62px;
-  left: 25px;
-  top: 93px;
 }
 
-.rectangle-2 {
-  width: 382px;
-  height: 44px;
-  left: 25px;
-  top: 111px;
-  background: #E0E0E0;
-}
-
-.title-text {
-  width: 62px;
+.title-text,
+.description-text,
+.link-video-text,
+.creation-date-text {
+  width: 100px;
   height: 15px;
   left: 32px;
   top: 93px;
@@ -127,75 +149,112 @@
   color: #828282;
 }
 
-.description {
-  width: 382px;
-  height: 62px;
-  left: 25px;
-  top: 171px;
-}
-
-.description-rectangle-22 {
-  width: 382px;
-  height: 43px;
-  left: 25px;
-  top: 190px;
-  background: #E0E0E0;
-}
-
-.description-text {
-  width: 61px;
-  height: 15px;
-  left: 32px;
-  top: 171px;
-  font-style: normal;
+.form-input {
+  padding: 10px;
+  width: 100%;
+  height: 30px;
+  border: 1px solid #E0E0E0;
+  border-radius: 0 0 5px 5px;
+  box-sizing: border-box;
   font-weight: 400;
   font-size: 12px;
-  line-height: 15px;
+  line-height: 14px;
+}
+
+#tags {
+  border-radius: 10px;
+  box-shadow: 1px 1px 4px #CCC inset;
+  padding: 10px;
+  background: #fafafa;
+  margin: auto;
+}
+
+#tag-typer {
+  outline: none;
+  border: none;
+  padding: 6px;
+  margin: 3px;
+  width: 100px;
+  font-size: 14px;
+}
+
+.tag {
+  display: inline-block;
+  background: #F95;
+  color: #FFF;
+  padding: 5px 10px;
+  margin: 2px 2px 2px 20px;
+  font: normal 16px sans-serif;
+  position: relative;
+  cursor: default;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, .2);
+  transform-origin: 0 50%;
+}
+
+.tag:before {
+  content: "";
+  position: absolute;
+  width: 0;
+  background: inherit;
+  height: 10px;
+  border: 10px solid #fafafa;
+  border-right-color: transparent;
+  border-radius: 10px 0 0 10px;
+  left: -20px;
+  top: 0;
+}
+
+.tag:after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 3px;
+  background: #FFF;
+  position: absolute;
+  left: -2px;
+  top: 12px;
+  box-shadow: inset 1px 1px 0 #CCC;
+}
+
+.tag .close-x {
+  position: absolute;
+  left: -4px;
+  top: 1px;
+  font-weight: 900;
+  z-index: 3;
+  color: white;
+}
+
+.close {
+  color: white;
+}
+
+.buttons{
+  margin-top: 5%;
   display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
   align-items: center;
-  color: #828282;
 }
 
-.link-img {
-  width: 382px;
-  height: 62px;
-  left: 25px;
-  top: 249px;
+.tag-button:hover, .button-create:hover {
+  background-color: #0056b3;
+  border: none;
+  border-radius: 5px;
+  color: #FFFFFF;
 }
 
-.link-img-rectangle-2 {
-  width: 382px;
-  height: 43px;
-  left: 25px;
-  top: 268px;
-  background: #E0E0E0;
-}
-
-.link-video-text {
-  width: 34px;
-  height: 14px;
-  left: 32px;
-  top: 249px;
-  font-style: normal;
+.tag-button {
+  display: block;
+  width: 20%;
+  height: 30px;
+  background: #2F80ED;
+  border: none;
+  border-radius: 5px;
+  color: #FFFFFF;
   font-weight: 400;
   font-size: 12px;
-  line-height: 15px;
-  display: flex;
-  align-items: center;
-  color: #828282;
-}
-
-.link-video {
-  width: 382px;
-  height: 62px;
-  left: 25px;
-  top: 327px;
-}
-
-.link-video-rectangle-2 {
-  width: 382px;
-  height: 44px;
-  left: 25px;
-  top: 345px;
-  background: #E0E0E0;
+  line-height: 14px;
+  cursor: pointer;
 }

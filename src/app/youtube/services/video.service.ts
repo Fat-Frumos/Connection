@@ -5,6 +5,7 @@ import {baseUrl} from '@app/config';
 import {BehaviorSubject, map, Observable, Subscription} from 'rxjs';
 import {VideoItem} from '@app/youtube/models/video-item-model';
 import {SortService} from '@app/youtube/services/sort.service';
+import {StorageService} from '@app/youtube/services/storage.service';
 
 @Injectable()
 export class VideoService implements OnDestroy {
@@ -17,7 +18,8 @@ export class VideoService implements OnDestroy {
 
   constructor(
     private http: HttpClient,
-    private readonly _sortService: SortService
+    private readonly _sortService: SortService,
+    private readonly storage: StorageService
   ) {
     this.videosSubject = new BehaviorSubject<VideoItem[]>([]);
     this._videos$ = this.videosSubject.asObservable();
@@ -60,7 +62,7 @@ export class VideoService implements OnDestroy {
     );
   }
 
-  save(cardData: VideoItem) {
-    console.log(cardData); //TODO
+  save(data: VideoItem) {
+    this.storage.saveVideo(data);
   }
 }

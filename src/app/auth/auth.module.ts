@@ -7,7 +7,9 @@ import {AuthRoutingModule} from '@app/auth/auth-routing-module';
 import {LoginComponent} from '@app/auth/pages/login/login.component';
 import {SharedModule} from '@app/shared/shared.module';
 import {ReactiveFormsModule} from '@angular/forms';
-import { CardCreationComponent } from './pages/card-creation/card-creation.component';
+import {
+  CardCreationComponent
+} from './pages/card-creation/card-creation.component';
 import {NgForOf, NgIf} from '@angular/common';
 
 @NgModule({

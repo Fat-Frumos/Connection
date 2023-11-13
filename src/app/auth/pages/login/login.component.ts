@@ -83,12 +83,12 @@ export class LoginComponent {
     if (this.loginForm.controls.email.errors?.['email']) {
       return 'The login email is invalid';
     }
-    if (this.isPasswordInvalid()) {
+    if (!this.loginForm?.controls?.password?.value?.trim()) {
       return 'Please enter a password';
     }
-    if (this.loginForm.controls.password.errors?.['weakPassword']) {
-      return 'Your password isn`t strong enough. It should have at least 8 characters, ' +
-        'a mixture of both uppercase and lowercase letters, a mixture of letters ' +
+    if (this.isClicked && (this.isPasswordInvalid() || this.loginForm.controls.password.errors?.['weakPassword'])) {
+      return 'Your password isn`t strong enough. It should have at least 8' +
+        ' characters, a mixture of both uppercase and lowercase letters, ' +
         'and numbers, and include at least one special character: ! @ # ?';
     }
     return '';

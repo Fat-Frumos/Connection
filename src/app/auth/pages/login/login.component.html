@@ -1,57 +1,55 @@
 <section class="login-container">
-  <div class="background">
-    <form
-      class="login-form"
-      [formGroup]="loginForm"
-      (ngSubmit)="onSubmit()">
-      <h1 class="login-title">Login</h1>
-      <div class="form-group"
-           [class.error]="isEmailInvalid()">
-        <label for="email" class="form-label">
-          Email
-        </label>
-        <input
-          required
-          type="text"
-          id="email"
-          name="email"
-          class="form-input"
-          placeholder="Enter your email"
-          formControlName="email"
-        />
-        <div class="error-rectangle"
-             *ngIf="isEmailInvalid()">
-        </div>
+  <form
+    class="login-form"
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmit()">
+    <h1 class="login-title">Login</h1>
+    <div class="form-group"
+         [class.error]="isEmailInvalid()">
+      <label for="email" class="form-label">
+        Email
+      </label>
+      <input
+        required
+        type="text"
+        id="email"
+        name="email"
+        class="login-form-input"
+        placeholder="Enter your email"
+        formControlName="email"
+      />
+      <div class="error-rectangle"
+           *ngIf="isEmailInvalid()">
       </div>
-      <div class="form-group"
-           [class.error]="isPasswordInvalid()">
-        <label for="password"
-               class="form-label">
-          Password
-        </label>
-        <input
-          required
-          type="password"
-          id="password"
-          name="password"
-          class="form-input"
-          placeholder="Enter your password"
-          formControlName="password"
-        />
-        <div class="error-rectangle"
-             *ngIf="isPasswordInvalid()"></div>
-      </div>
-      <button type="submit" class="login-button">
-        Login
-      </button>
-      <button
-        type="button" (click)="onSignUp()"
-        class="registration-button">
-        Sign Up
-      </button>
-    </form>
-    <div *ngIf="getErrorMessage" class="error-message">
-      {{ getErrorMessage }}
     </div>
+    <div class="form-group"
+         [class.error]="isPasswordInvalid()">
+      <label for="password"
+             class="form-label">
+        Password
+      </label>
+      <input
+        required
+        type="password"
+        id="password"
+        name="password"
+        class="login-form-input"
+        placeholder="Enter your password"
+        formControlName="password"
+      />
+      <div class="error-rectangle"
+           *ngIf="isPasswordInvalid()"></div>
+    </div>
+    <button type="submit" class="login-button">
+      Login
+    </button>
+    <button
+      type="button" (click)="onSignUp()"
+      class="registration-button">
+      Sign Up
+    </button>
+  </form>
+  <div *ngIf="getErrorMessage()" class="error-message">
+    {{ getErrorMessage() }}
   </div>
 </section>
