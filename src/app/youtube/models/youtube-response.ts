@@ -1,3 +1,7 @@
+import {VideoItem} from '@app/youtube/models/video-item-model';
+
 export interface YoutubeResponse {
-  id: string;
+  kind: string;
+  etag: string;
+  items: VideoItem[];
 }

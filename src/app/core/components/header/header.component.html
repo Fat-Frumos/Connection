@@ -6,14 +6,15 @@
       type="text"
       placeholder="Angular Podcast"
       [formControl]="searchText"
+      (input)="onSearch(searchText.value)"
     >
     <app-settings-button (click)="pre.toggle()">
     </app-settings-button>
   </div>
   <app-login-info></app-login-info>
 </header>
-<app-dropdown-setting
+<app-filter-setting
   [searchText]="searchText.value"
   appHidden #pre="hiddenControl"
 >
-</app-dropdown-setting>
+</app-filter-setting>

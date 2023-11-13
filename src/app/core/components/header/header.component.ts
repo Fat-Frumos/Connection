@@ -1,18 +1,16 @@
 import {
   Component,
   EventEmitter,
+  OnInit,
   Output,
   ViewEncapsulation
 } from '@angular/core';
-import {debounceTime, filter, Observable, switchMap} from 'rxjs';
+import {debounceTime, filter, Subject, switchMap} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {VideoService} from '@app/youtube/services/video.service';
-import {HttpClient} from '@angular/common/http';
-import {YoutubeResponse} from '@app/youtube/models/youtube-response';
-import {keyApi, urlApi} from '@app/config';
 
 const DEBOUNCE = 500;
-const MIN_LENGTH = 3;
+const MIN_LEN = 3;
 
 
 @Component({
@@ -21,7 +19,7 @@ const MIN_LENGTH = 3;
   styleUrls: ['./header.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
 
   @Output() searchClicked = new EventEmitter<void>();
 
@@ -29,30 +27,39 @@ export class HeaderComponent {
 
   @Output() sort = new EventEmitter<string>();
 
+  searchTerm$ = new Subject<string>();
+
   searchText = new FormControl();
 
   constructor(
-    private readonly service: VideoService,
-    private http: HttpClient
+    private readonly service: VideoService
   ) {
     this.searchText.valueChanges.pipe(
       debounceTime(DEBOUNCE),
       filter((value: string | null): value is string =>
-        value !== null && value.length >= MIN_LENGTH),
-      switchMap(value => this.searchAPI(value))
+        value !== null && value.length >= MIN_LEN),
+      switchMap(value => this.service.searchVideos(value))
     ).subscribe(results => {
       console.log(results);
     });
-  }
-
-  searchAPI(value: string): Observable<YoutubeResponse> {
-    const url = `${urlApi}?part=snippet&maxResults=25&q=${value}&key=${keyApi}`;
-    return this.http.get<YoutubeResponse>(url);
   }
 
   search(searchText: string): void {
     this.searchClicked.emit();
     this.filter.emit(searchText);
     this.service.setSearchText(searchText);
+  }
+
+  ngOnInit(): void {
+    this.searchTerm$.pipe(
+      filter(term => term.length > MIN_LEN),
+      debounceTime(DEBOUNCE))
+      .subscribe(value => {
+        this.service.searchVideos(value);
+      });
+  }
+
+  onSearch(term: string) {
+    this.searchTerm$.next(term);
   }
 }

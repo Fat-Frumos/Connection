@@ -7,7 +7,7 @@ import {
   KEY_URL_TOKEN,
   baseUrl,
   keyApi,
-  urlApi
+  searchUrl
 } from '@app/config';
 
 @NgModule({
@@ -33,7 +33,7 @@ export class SharedModule {
         },
         {
           provide: URL_API_TOKEN,
-          useValue: urlApi,
+          useValue: searchUrl,
           multi: true
         },
         {

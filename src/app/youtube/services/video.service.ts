@@ -1,17 +1,18 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {VideoListResponse} from '@app/youtube/models/video-list-response-model';
-import {baseUrl} from '@app/config';
-import {BehaviorSubject, map, Observable, Subscription} from 'rxjs';
+import {baseUrl, searchUrl} from '@app/config';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {VideoItem} from '@app/youtube/models/video-item-model';
 import {SortService} from '@app/youtube/services/sort.service';
+import {YoutubeResponse} from '@app/youtube/models/youtube-response';
 
 @Injectable()
 export class VideoService implements OnDestroy {
 
   private videosSubject: BehaviorSubject<VideoItem[]>;
 
-  private readonly _videos$: Observable<VideoItem[]>;
+  private _videos$: Observable<VideoItem[]>;
 
   private subscription$: Subscription;
 
@@ -23,18 +24,25 @@ export class VideoService implements OnDestroy {
     this._videos$ = this.videosSubject.asObservable();
     this.subscription$ = new Subscription();
     this.fetchVideoData();
+    this.searchText$.subscribe(searchText => {
+      this.searchVideos(searchText).subscribe((response: YoutubeResponse) => {
+        const videos: VideoItem[] = response.items;
+        this.videosSubject.next(videos);
+      });
+    });
   }
 
   ngOnDestroy(): void {
     this.subscription$.unsubscribe();
+    this.videosSubject.unsubscribe();
   }
 
   private fetchVideoData(): void {
     this.subscription$.add(
-      this.http.get<VideoListResponse>(baseUrl)
-        .subscribe((data: VideoListResponse): void => {
-          this.videosSubject.next(data.items);
-        })
+      this.http.get<VideoListResponse>(`${baseUrl}&part=snippet,statistics`)
+        .subscribe((data: VideoListResponse): void =>
+          this.videosSubject.next(data.items)
+        )
     );
   }
 
@@ -55,9 +63,11 @@ export class VideoService implements OnDestroy {
   }
 
   getById(itemId: string): Observable<VideoItem | undefined> {
-    return this._videos$.pipe(
-      map((videos) => videos.find((video) => video.id === itemId))
-    );
+    return this.http.get<VideoItem>(`${baseUrl}?id=${itemId}&part=snippet,statistics`);
   }
 
+  searchVideos(value: string): Observable<YoutubeResponse> {
+    const uri = `${searchUrl}?type=video&part=snippet&maxResults=15&q=${value}`;
+    return this.http.get<YoutubeResponse>(uri);
+  }
 }
