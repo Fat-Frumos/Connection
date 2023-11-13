@@ -1,13 +1,7 @@
 import {Component, ViewEncapsulation} from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  ValidationErrors,
-  Validators
-} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {LoginService} from '@app/auth/services/login.service';
-
-const MIN_PASSWORD_LENGTH = 8;
+import {FormService} from '@app/auth/services/form.service';
 
 @Component({
   selector: 'app-login',
@@ -21,45 +15,27 @@ export class LoginComponent {
 
   isClicked = false;
 
-  passwordValidator = (control: AbstractControl): ValidationErrors | null => {
-    const value = control.value as string;
-    const hasUpperCase = /[A-Z]/.test(value);
-    const hasLowerCase = /[a-z]/.test(value);
-    const hasNumeric = /\d/.test(value);
-    const hasSpecialChar = /[!@#?]/.test(value);
-    const isLengthValid = value.length >= MIN_PASSWORD_LENGTH;
-    return !hasUpperCase || !hasLowerCase || !hasNumeric || !hasSpecialChar || !isLengthValid
-      ? {'weakPassword': true}
-      : null;
-  };
-
-  emailValidator = (control: AbstractControl): ValidationErrors | null => {
-    const value = control.value as string;
-    const hasAtSign = value.includes('@');
-    const hasDot = value.includes('.');
-    return hasAtSign && hasDot ? null : {invalidUsername: true};
-  };
-
   loginForm = this.formBuilder.group({
-    email: ['', [Validators.required.bind(Validators), this.emailValidator]],
-    password: ['', [Validators.required.bind(Validators), this.passwordValidator]]
+    email: ['', [Validators.required.bind(Validators), this.validator.emailValidator]],
+    password: ['', [Validators.required.bind(Validators), this.validator.passwordValidator]]
   });
 
   constructor(
-    private readonly service: LoginService,
+    private service: LoginService,
+    private validator: FormService,
     private formBuilder: FormBuilder) {
     this.isLoggedIn = this.service.isLoggedIn;
   }
 
   onSubmit(): void {
     this.isClicked = true;
-    if (!this.isPasswordInvalid() && !this.isEmailInvalid()) {
-      const password: string = this.loginForm.value.password ?? '';
-      const email: string = this.loginForm.value.email ?? '';
-      this.service.login({password, email});
-    } else {
+    if (this.isPasswordInvalid() && this.isEmailInvalid()) {
       this.loginForm.markAllAsTouched();
+      return;
     }
+    const password: string = this.loginForm.value.password ?? '';
+    const email: string = this.loginForm.value.email ?? '';
+    this.service.login({password, email});
   }
 
   onSignUp(): void {
@@ -86,7 +62,8 @@ export class LoginComponent {
     if (!this.loginForm?.controls?.password?.value?.trim()) {
       return 'Please enter a password';
     }
-    if (this.isClicked && (this.isPasswordInvalid() || this.loginForm.controls.password.errors?.['weakPassword'])) {
+    if (this.isClicked && (this.isPasswordInvalid()
+      || this.loginForm.controls.password.errors?.['weakPassword'])) {
       return 'Your password isn`t strong enough. It should have at least 8' +
         ' characters, a mixture of both uppercase and lowercase letters, ' +
         'and numbers, and include at least one special character: ! @ # ?';

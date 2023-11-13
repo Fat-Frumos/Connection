@@ -13,7 +13,7 @@ export class SearchComponent {
   @Input() videos: VideoItem[] = [];
 
   constructor(
-    private readonly videoService: VideoService) {
+    private videoService: VideoService) {
     this.videoService.videos$.subscribe((videos) => {
       this.videos = videos;
     });

@@ -1,3 +1,5 @@
+@import 'assets/css/variables';
+
 .login {
   right: 10px;
   display: flex;
@@ -12,11 +14,11 @@
 
 .username {
   font-family: 'Roboto', sans-serif;
-  font-size: 12px;
+  font-size: $text-font-size;
   width: 70px;
-  line-height: 14px;
+  line-height: $text-line-height;
   text-align: right;
-  color: #4F4F4F;
+  color: $dark-grey-color;
   margin-right: 10px;
 }
 

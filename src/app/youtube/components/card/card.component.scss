@@ -1,3 +1,5 @@
+@import 'assets/css/variables';
+
 .video-card {
   position: absolute;
   width: 1200px;
@@ -30,7 +32,7 @@
   height: 461px;
   left: 764px;
   top: 0;
-  background: #E5E5E5;
+  background: $card-bg-color;
   box-shadow: 5px 5px 20px rgba(51, 51, 51, 0.25);
   border-radius: 0 5px 5px 0;
 }
@@ -41,12 +43,12 @@
   left: 798px;
   top: 95px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: $text-font-weight;
   font-size: 14px;
   line-height: 16px;
   display: flex;
   align-items: center;
-  color: #000000;
+  color: $black-text-color;
 }
 
 .title {
@@ -58,7 +60,7 @@
   font-weight: 700;
   font-size: 24px;
   line-height: 28px;
-  color: #000000;
+  color: $black-text-color;
 }
 
 .date {
@@ -67,11 +69,11 @@
   left: 1059px;
   top: 48px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: $text-font-weight;
   font-size: 10px;
   line-height: 12px;
   text-align: right;
-  color: #828282;
+  color: $grey-color;
 }
 
 .statistics {
@@ -94,10 +96,10 @@
   left: 904px;
   top: 420px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: $text-font-weight;
   font-size: 10px;
   line-height: 12px;
-  color: #000000;
+  color: $black-text-color;
 }
 
 .like {
@@ -112,7 +114,7 @@
   right: 20%;
   top: 90%;
   bottom: 6%;
-  background: #000000;
+  background: $icon-color;
 }
 
 .viewed {
@@ -142,7 +144,7 @@
   right: 11%;
   top: 91%;
   bottom: 6%;
-  background: #000000;
+  background: $icon-color;
 }
 
 .vector-2 {
@@ -150,7 +152,7 @@
   right: 11%;
   top: 90%;
   bottom: 6%;
-  background: #000000;
+  background: $icon-color;
 }
 
 .back-button {
@@ -169,7 +171,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background: #2F80ED;
+  background: $main-button-color;
   border-radius: 5px 0 0 5px;
 }
 
@@ -179,7 +181,7 @@
   right: 25%;
   top: 25%;
   bottom: 25%;
-  border: 3px solid #F2F2F2;
+  border: 3px solid $light-grey-color;
 }
 
 .description-text {
@@ -188,10 +190,10 @@
   left: 798px;
   top: 115px;
   font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
-  color: #828282;
+  font-weight: $text-font-weight;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
+  color: $grey-color;
 }
 
 .rectangle-18 {
@@ -200,6 +202,6 @@
   height: 5px;
   left: 764px;
   top: 456px;
-  background: #2F80ED;
+  background: $main-button-color;
   border-radius: 0 0 5px 0;
 }

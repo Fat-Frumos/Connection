@@ -22,8 +22,6 @@ const TAGS_SIZE = 5;
 })
 export class CardCreationComponent {
 
-  public isClicked: boolean;
-
   textValidator = [Validators.required.bind(Validators),
     Validators.minLength(MIN_LEN), Validators.maxLength(MIDDLE_LEN)];
 
@@ -41,7 +39,7 @@ export class CardCreationComponent {
     private readonly service: VideoService,
     private readonly formService: FormService,
     private formBuilder: FormBuilder) {
-    this.isClicked = false;
+    console.log();
   }
 
   get tags() {

@@ -1,3 +1,5 @@
+@import 'assets/css/variables';
+
 .video-cards{
   position: absolute;
   top: 120px;
@@ -9,6 +11,6 @@
   width: 280px;
   top: 325px;
   height: 5px;
-  background: var(--main);
+  background: $main-button-color;
   border-radius: 0 0 5px 5px;
 }

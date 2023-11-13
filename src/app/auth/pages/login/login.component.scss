@@ -1,8 +1,10 @@
+@import 'assets/css/variables';
+
 .error-message{
   margin-left: 5%;
   margin-top: 15%;
-  color: #EB5757;
-  font-size: 12px;
+  color: $error-color;
+  font-size: $text-font-size;
   font-weight: 900;
 }
 
@@ -11,12 +13,13 @@
 }
 
 .error-rectangle {
-  position: absolute;
+  z-index: 20;
+  position: relative;
+  margin-top: -5px;
   left: 0;
   right: 0;
-  top: 90%;
   bottom: 0;
-  background: #EB5757;
+  background: $error-color;
   border-radius: 0 0 5px 5px;
   height: 5px;
 }
@@ -27,7 +30,7 @@
   height: 300px;
   left: 612px;
   border-radius: 5px;
-  background: #F2F2F2;
+  background: $light-grey-color;
 }
 
 .login-title {
@@ -41,7 +44,7 @@
   font-weight: 700;
   font-size: 18px;
   line-height: 21px;
-  color: #000000;
+  color: $black-text-color;
 }
 
 .form-group {
@@ -51,10 +54,10 @@
 .form-label {
   display: block;
   margin-bottom: 10px;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
-  color: #000000;
+  font-weight: $text-font-weight;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
+  color: $black-text-color;
 }
 
 .login-form-input {
@@ -62,12 +65,12 @@
   padding: 3%;
   width: 100%;
   height: 30px;
-  border: 1px solid #E0E0E0;
+  border: 1px solid $light-grey-color;
   border-radius: 0 0 5px 5px;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
-  color: #000000;
+  font-weight: $text-font-weight;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
+  color: $black-text-color;
 }
 
 .login-button {
@@ -76,13 +79,13 @@
   width: 40%;
   float: right;
   height: 30px;
-  background: #2F80ED;
+  background: $main-button-color;
   border: none;
   border-radius: 5px;
-  color: #FFFFFF;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
+  color: $white-text-color;
+  font-weight: $text-font-weight;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
   cursor: pointer;
 }
 
@@ -93,12 +96,12 @@
   width: 40%;
   float: left;
   height: 30px;
-  background: #2F80ED;
+  background: $main-button-color;
   border: none;
   border-radius: 5px;
-  color: #FFFFFF;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
+  color: $white-text-color;
+  font-weight: $text-font-weight;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
   cursor: pointer;
 }

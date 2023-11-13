@@ -1,9 +1,11 @@
+@import 'assets/css/variables';
+
 .header {
   width: 100%;
   height: 80px;
   left: 0;
   top: 0;
-  background: #E5E5E5;
+  background: $card-bg-color;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -24,11 +26,10 @@
   padding-left: 10px;
   border: none;
   border-radius: 5px 0 0 5px;
-  background: #EFEFEF;
-  font-size: 12px;
-  line-height: 14px;
-  color: #333333;
-  font-family: 'Roboto', sans-serif;
+  background: $light-grey-color;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
+  color: $dark-grey-color;
 }
 
 .search-button {
@@ -37,15 +38,15 @@
   padding: 0 10px;
   display: flex;
   align-items: center;
-  background: #2F80ED;
+  background: $main-button-color;
   border-radius: 0 5px 5px 0;
   cursor: pointer;
-  box-shadow: 2px 0 4px 0 #2F80ED;
+  box-shadow: 2px 0 4px 0 $main-button-color;
 }
 
 .search-text {
-  color: #FFFFFF;
-  font-size: 12px;
-  line-height: 14px;
+  color: $white-text-color;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
   font-family: 'Roboto', sans-serif;
 }

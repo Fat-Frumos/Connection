@@ -7,9 +7,7 @@ import {
 import {debounceTime, filter, Observable, switchMap} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {VideoService} from '@app/youtube/services/video.service';
-import {HttpClient} from '@angular/common/http';
 import {YoutubeResponse} from '@app/youtube/models/youtube-response';
-import {keyApi, urlApi} from '@app/config';
 
 const DEBOUNCE = 500;
 const MIN_LENGTH = 3;
@@ -31,10 +29,7 @@ export class HeaderComponent {
 
   searchText = new FormControl();
 
-  constructor(
-    private readonly service: VideoService,
-    private http: HttpClient
-  ) {
+  constructor(private service: VideoService) {
     this.searchText.valueChanges.pipe(
       debounceTime(DEBOUNCE),
       filter((value: string | null): value is string =>
@@ -46,8 +41,7 @@ export class HeaderComponent {
   }
 
   searchAPI(value: string): Observable<YoutubeResponse> {
-    const url = `${urlApi}?part=snippet&maxResults=25&q=${value}&key=${keyApi}`;
-    return this.http.get<YoutubeResponse>(url);
+    return this.service.findByCriteria(value);
   }
 
   search(searchText: string): void {

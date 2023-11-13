@@ -1,20 +1,29 @@
+@import 'assets/css/variables';
+
 .new-error-rectangle {
   margin-top: -5px;
   z-index: 20;
   position: relative;
-  background: #EB5757;
+  background: $error-color;
   border-radius: 0 0 5px 5px;
   height: 5px;
 }
 
 .new-error-message {
-  color: #EB5757;
-  font-size: 12px;
+  color: $error-color;
+  font-size: $text-font-size;
   font-weight: 900;
 }
 
 .create-card {
-  margin: auto 5%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 432px;
+  height: 550px;
+  background: $light-grey-color;
+  border-radius: 17px;
 }
 
 .new-card-title {
@@ -26,17 +35,7 @@
   font-weight: 700;
   font-size: 18px;
   line-height: 21px;
-  color: #000000;
-}
-
-.new-card-container {
-  margin: auto;
-  width: 432px;
-  height: 550px;
-  left: 0;
-  top: 0;
-  background: #F2F2F2;
-  border-radius: 17px;
+  color: $black-text-color;
 }
 
 .form-wrapper {
@@ -49,7 +48,7 @@
   font-size: 22px;
   line-height: 27px;
   align-items: center;
-  color: #000000;
+  color: $black-text-color;
 }
 
 .button-create {
@@ -71,7 +70,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background: #2F80ED;
+  background: $main-button-color;
   border-radius: 67px;
 }
 
@@ -81,13 +80,13 @@
   top: 20%;
   bottom: 20%;
   font-style: normal;
-  font-weight: 400;
+  font-weight: $text-font-weight;
   font-size: 15px;
   line-height: 18px;
   display: flex;
   align-items: center;
   text-align: center;
-  color: #FFFFFF;
+  color: $white-text-color;
 }
 
 .create-card-text {
@@ -96,13 +95,13 @@
   top: 6%;
   bottom: 13%;
   font-style: normal;
-  font-weight: 400;
+  font-weight: $text-font-weight;
   font-size: 15px;
   line-height: 18px;
   display: flex;
   align-items: center;
   text-align: center;
-  color: #FFFFFF;
+  color: $white-text-color;
 }
 
 .login {
@@ -112,14 +111,14 @@
   left: 149px;
   top: 431px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: $text-font-weight;
   font-size: 15px;
   line-height: 18px;
   display: flex;
   align-items: center;
   text-align: center;
   text-decoration-line: underline;
-  color: #2F80ED;
+  color: $main-button-color;
 }
 
 .title,
@@ -127,7 +126,7 @@
 .link-img,
 .link-video,
 .creation-date,
-.creation-tags{
+.creation-tags {
   width: 380px;
   height: 62px;
 }
@@ -141,31 +140,31 @@
   left: 32px;
   top: 93px;
   font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 15px;
+  font-weight: $text-font-weight;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
   display: flex;
   align-items: center;
-  color: #828282;
+  color: $grey-color;
 }
 
 .form-input {
   padding: 10px;
   width: 100%;
   height: 30px;
-  border: 1px solid #E0E0E0;
+  border: 1px solid $light-grey-color;
   border-radius: 0 0 5px 5px;
   box-sizing: border-box;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
+  font-weight: $text-font-weight;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
 }
 
 #tags {
   border-radius: 10px;
-  box-shadow: 1px 1px 4px #CCC inset;
+  box-shadow: 1px 1px 4px $grey-color inset;
   padding: 10px;
-  background: #fafafa;
+  background: $light-grey-color;
   margin: auto;
 }
 
@@ -180,8 +179,8 @@
 
 .tag {
   display: inline-block;
-  background: #F95;
-  color: #FFF;
+  background: $tags-bg-color;
+  color: $white-text-color;
   padding: 5px 10px;
   margin: 2px 2px 2px 20px;
   font: normal 16px sans-serif;
@@ -189,31 +188,31 @@
   cursor: default;
   box-shadow: 1px 1px 0 rgba(0, 0, 0, .2);
   transform-origin: 0 50%;
-}
 
-.tag:before {
-  content: "";
-  position: absolute;
-  width: 0;
-  background: inherit;
-  height: 10px;
-  border: 10px solid #fafafa;
-  border-right-color: transparent;
-  border-radius: 10px 0 0 10px;
-  left: -20px;
-  top: 0;
-}
+  &:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    background: inherit;
+    height: 10px;
+    border: 10px solid $card-bg-color;
+    border-right-color: transparent;
+    border-radius: 10px 0 0 10px;
+    left: -20px;
+    top: 0;
+  }
 
-.tag:after {
-  content: "";
-  width: 5px;
-  height: 5px;
-  border-radius: 3px;
-  background: #FFF;
-  position: absolute;
-  left: -2px;
-  top: 12px;
-  box-shadow: inset 1px 1px 0 #CCC;
+  &:after {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 3px;
+    background: $white-bg-color;
+    position: absolute;
+    left: -2px;
+    top: 12px;
+    box-shadow: inset 1px 1px 0 $grey-color;
+  }
 }
 
 .tag .close-x {
@@ -222,14 +221,14 @@
   top: 1px;
   font-weight: 900;
   z-index: 3;
-  color: white;
+  color: $white-text-color;
 }
 
 .close {
-  color: white;
+  color: $white-text-color;
 }
 
-.buttons{
+.buttons {
   margin-top: 5%;
   display: flex;
   flex-direction: row;
@@ -239,22 +238,22 @@
 }
 
 .tag-button:hover, .button-create:hover {
-  background-color: #0056b3;
+  background-color: $hover-button-color;
   border: none;
   border-radius: 5px;
-  color: #FFFFFF;
+  color: $white-text-color;
 }
 
 .tag-button {
   display: block;
   width: 20%;
   height: 30px;
-  background: #2F80ED;
+  background: $main-button-color;
   border: none;
   border-radius: 5px;
-  color: #FFFFFF;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
+  color: $white-text-color;
+  font-weight: $text-font-weight;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
   cursor: pointer;
 }

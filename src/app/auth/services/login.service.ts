@@ -35,7 +35,7 @@ export class LoginService {
     return this._isLoggedIn.getValue();
   }
 
-  signup() {
+  signup(): void {
     void this.router.navigate(['/signup']);
   }
 }
