@@ -4,7 +4,10 @@ import {Statistics} from '@app/youtube/models/statistics-model';
 export interface VideoItem {
   kind: string;
   etag: string;
-  id: string;
+  id: {
+    kind: string,
+    videoId: string
+  };
   snippet: Snippet;
   statistics: Statistics;
 }

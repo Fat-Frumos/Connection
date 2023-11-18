@@ -8,6 +8,7 @@ import {VideoService} from '@app/youtube/services/video.service';
 import {YoutubeComponent} from '@app/youtube/pages/youtube/youtube.component';
 import {RouterOutlet} from '@angular/router';
 import {SearchModule} from '@app/youtube/pages/search/search.module';
+import {CustomCardService} from '@app/youtube/services/custom-card.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import {SearchModule} from '@app/youtube/pages/search/search.module';
     RouterOutlet,
     SearchModule
   ],
-  providers: [VideoService]
+  providers: [VideoService, CustomCardService]
 })
 export class YouTubeModule {
 }

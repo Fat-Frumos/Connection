@@ -1,0 +1,17 @@
+<div *ngFor="let customCard of customCards$
+  | async; trackBy: trackByCustomCard">
+  {{ customCard.title }}
+  {{ customCard.description }}
+  <button (click)="deleteCustomCard(customCard.id)">
+    Delete
+  </button>
+  <button (click)="addCustomCard(customCard)">
+    Add
+  </button>
+</div>
+
+<app-pagination
+        [totalPages]="totalPages"
+        [currentPage$]="currentPage$"
+        (pageChange)="changePage($event)">
+</app-pagination>

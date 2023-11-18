@@ -7,7 +7,8 @@ import {
   KEY_URL_TOKEN,
   baseUrl,
   keyApi,
-  urlApi
+  urlApi,
+  itemSize, ITEM_SIZE_TOKEN
 } from '@app/config';
 
 @NgModule({
@@ -34,6 +35,11 @@ export class SharedModule {
         {
           provide: URL_API_TOKEN,
           useValue: urlApi,
+          multi: true
+        },
+        {
+          provide: ITEM_SIZE_TOKEN,
+          useValue: itemSize,
           multi: true
         },
         {
