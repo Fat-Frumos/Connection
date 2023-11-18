@@ -1,10 +1,12 @@
+@import 'assets/css/variables';
+
 .dropdown-settings {
   height: 40px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background: #E5E5E5;
+  background: $card-bg-color;
 }
 
 .header-group {
@@ -21,16 +23,16 @@
 .filter-by-text {
   margin-left: 10px;
   font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
+  font-weight: $text-font-weight;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
   text-decoration-line: none;
-  color: #2F80ED;
+  color: $main-button-color;
 }
 
 .date, .count-of-views {
   text-decoration-line: underline;
-  background: #E5E5E5;
+  background: $card-bg-color;
   cursor: pointer;
   border: none;
 }
@@ -43,10 +45,10 @@
   margin-left: 10px;
   width: 150px;
   height: 13px;
-  background: #FFFFFF;
+  background: $white-bg-color;
   border: none;
 }
 
 .sorting-by {
-  color: #929292;
+  color: $grey-color;
 }

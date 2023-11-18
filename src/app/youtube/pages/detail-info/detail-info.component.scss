@@ -1,3 +1,5 @@
+@import 'assets/css/variables';
+
 .video-card {
   width: 1200px;
   height: 461px;
@@ -36,7 +38,7 @@
   height: 761px;
   left: 264px;
   top: 150px;
-  background: #E5E5E5;
+  background: $card-bg-color;
   box-shadow: 5px 5px 20px rgba(51, 51, 51, 0.25);
   border-radius: 0 5px 5px 0;
 }
@@ -48,7 +50,7 @@
   top: 350px;
   position: absolute;
   font-style: normal;
-  font-weight: 400;
+  font-weight: $text-font-weight;
   font-size: 18px;
   line-height: 22px;
   display: flex;
@@ -75,11 +77,11 @@
   left: 1032px;
   top: 48px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: $text-font-weight;
   font-size: 10px;
   line-height: 12px;
   text-align: right;
-  color: #828282;
+  color: $grey-color;
 }
 
 .statistics {
@@ -109,10 +111,9 @@
   left: 904px;
   top: 420px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: $text-font-weight;
   font-size: 10px;
   line-height: 12px;
-
 }
 
 .like {
@@ -135,11 +136,10 @@
   left: 962px;
   top: 419px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: $text-font-weight;
   font-size: 10px;
   line-height: 12px;
 }
-
 
 .three-twenty {
   width: 17px;
@@ -147,7 +147,7 @@
   left: 1013px;
   top: 420px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: $text-font-weight;
   font-size: 10px;
   line-height: 12px;
 }
@@ -180,7 +180,7 @@
   left: 1066px;
   top: 420px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: $text-font-weight;
   font-size: 10px;
   line-height: 12px;
 
@@ -201,7 +201,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background: #2F80ED;
+  background: $main-button-color;
   border-radius: 5px 0 0 5px;
 }
 
@@ -210,21 +210,20 @@
   right: 25%;
   top: 25%;
   bottom: 25%;
-  border: 3px solid #F2F2F2;
+  border: 3px solid $light-grey-color;
 }
 
 .description-text {
-
   width: 365px;
   height: 280px;
   left: 798px;
   top: 115px;
 
   font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
-  color: #828282;
+  font-weight: $text-font-weight;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
+  color: $grey-color;
 }
 
 .rectangle-18 {
@@ -232,6 +231,6 @@
   height: 5px;
   left: 764px;
   top: 456px;
-  background: #2F80ED;
+  background: $main-button-color;
   border-radius: 0 0 5px 0;
 }
