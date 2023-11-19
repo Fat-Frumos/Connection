@@ -6,6 +6,7 @@ import {authGuard} from '@app/core/guards/auth.guard';
 import {NotFoundComponent} from '@app/core/pages/not-found/not-found.component';
 import {StorageService} from '@app/youtube/services/storage.service';
 import {FormService} from '@app/auth/services/form.service';
+import {CustomCardService} from '@app/youtube/services/custom-card.service';
 
 const routes: Routes = [
   {path: '', redirectTo: '/main', pathMatch: 'full'},
@@ -33,7 +34,13 @@ const routes: Routes = [
     RouterModule.forRoot(routes,
       {preloadingStrategy: PreloadService})],
   exports: [RouterModule],
-  providers: [PreloadService, VideoService, StorageService, FormService]
+  providers: [
+    FormService,
+    VideoService,
+    StorageService,
+    PreloadService,
+    CustomCardService
+  ]
 })
 export class AppRoutingModule {
 }

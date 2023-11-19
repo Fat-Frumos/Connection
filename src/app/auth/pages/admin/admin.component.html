@@ -8,10 +8,13 @@
   <button (click)="addCustomCard(customCard)">
     Add
   </button>
+  <button (click)="toggleFavorite(customCard.id)">
+    Favorite
+  </button>
 </div>
 
 <app-pagination
-        [totalPages]="totalPages"
-        [currentPage$]="currentPage$"
-        (pageChange)="changePage($event)">
+  [totalPages]="totalPages"
+  [currentPage$]="currentPage$"
+  (pageChange)="changePage($event)">
 </app-pagination>

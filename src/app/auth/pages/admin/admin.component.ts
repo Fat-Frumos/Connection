@@ -5,17 +5,18 @@ import {
 import {Observable, switchMap} from 'rxjs';
 import {select, Store} from '@ngrx/store';
 import {
-  addCustomCard, deleteCustomCard,
+  addCustomCard,
+  deleteCustomCard,
   loadCustomCards
 } from '@app/redux/actions/custom-card.action';
 import {
   selectAllCustomCards,
   selectCustomCardsByPage
 } from '@app/redux/selectors/custom-card.selector';
+import {toggleFavorite} from '@app/redux/actions/favorite.actions';
 import {selectCurrentPage} from '@app/redux/selectors/pagination.selector';
 import {setCurrentPage} from '@app/redux/actions/video.actions';
 import {itemSize} from '@app/config';
-
 
 @Component({
   selector: 'app-admin',
@@ -48,6 +49,10 @@ export class AdminComponent implements OnInit {
         const cards = customCards as CustomCard[];
         this.totalPages = Math.ceil(cards.length / this.itemsPerPage);
       });
+  }
+
+  toggleFavorite(videoId: string): void {
+    this.store.dispatch(toggleFavorite({videoId}));
   }
 
   addCustomCard(customCard: CustomCard): void {

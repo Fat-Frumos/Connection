@@ -4,19 +4,12 @@ import {
 } from '@app/youtube/components/custom-card/custom-card-model';
 import {CardState} from '@app/redux/state.models';
 
-
 export const customCardAdapter =
   createEntityAdapter<CustomCard>();
 
 export const initialState: CardState =
   customCardAdapter.getInitialState({
-    favoriteVideos: [],
+    customCards: [],
+    videos: [],
     currentPage: 1
   });
-
-export const {
-  selectAll: selectAllCustomCards,
-  selectEntities: selectCustomCardEntities,
-  selectIds: selectCustomCardIds,
-  selectTotal: selectCustomCardTotal
-} = customCardAdapter.getSelectors();

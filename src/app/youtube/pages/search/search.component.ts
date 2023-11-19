@@ -1,10 +1,11 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {VideoItem} from '@app/youtube/models/video-item-model';
-import {map, Observable} from 'rxjs';
-import {Store} from '@ngrx/store';
+import {Observable, Subscription} from 'rxjs';
+import {select, Store} from '@ngrx/store';
+import {toggleFavorite} from '@app/redux/actions/favorite.actions';
 import {
-  mapperVideoItemToCard,
-  selectAllCustomCards
+  selectAllCustomCards,
+  selectAllVideos
 } from '@app/redux/selectors/custom-card.selector';
 import {
   CustomCard
@@ -19,22 +20,26 @@ import {loadCustomCards} from '@app/redux/actions/custom-card.action';
 })
 export class SearchComponent implements OnInit {
 
+  videos$: Subscription;
+
   @Input() videos: VideoItem[] = [];
 
-  videos$: Observable<CustomCard[]>;
+  customCards$: Observable<CustomCard[]>;
 
   constructor(
     private store: Store) {
-    this.videos$ = this.store.select(selectAllCustomCards).pipe(
-      map((customCards) =>
-        customCards.concat(
-          this.videos.map((video) => mapperVideoItemToCard(video))
-        )
-      )
-    );
+    this.customCards$ = this.store.pipe(select(selectAllCustomCards));
+    this.videos$ = this.store.pipe(select(selectAllVideos))
+      .subscribe(videoItems => {
+        this.videos = videoItems;
+      });
   }
 
   ngOnInit(): void {
     this.store.dispatch(loadCustomCards());
+  }
+
+  toggleFavorite(videoId: string): void {
+    this.store.dispatch(toggleFavorite({videoId}));
   }
 }

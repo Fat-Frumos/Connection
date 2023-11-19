@@ -7,10 +7,6 @@
          alt="{{ data.snippet.title }}"/>
   </div>
 
-  <div class="date">
-<!--    <p>Published At: {{ data.snippet.publishedAt }}</p>-->
-  </div>
-
   <div class="statistics">
     <p class="dislike">{{ data.statistics.dislikeCount }}</p>
     <p class="viewed"> {{ data.statistics.viewCount }}</p>
@@ -18,7 +14,8 @@
     <p class="liked">{{ data.statistics.favoriteCount }}</p>
     <p class="comments"> {{ data.statistics.commentCount }}</p>
   </div>
-
+  <button (click)="toggleFavorite(data.id)" [class.favorite]="isFavorite$">
+  </button>
   <a class="back-button" [routerLink]="['/main']">
     <div class="Rectangle 17"></div>
     <div class="Vector 1"></div>

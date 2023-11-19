@@ -20,6 +20,7 @@ import {customCardReducer} from '@app/redux/reducers/custom-card.reducer';
 import {CustomCardEffect} from '@app/redux/effects/custom-card.effect';
 import {VideoEffects} from '@app/redux/effects/video-item.effect';
 import {videoItemReducer} from '@app/redux/reducers/video-item.reducer';
+import {favoriteReducer} from '@app/redux/reducers/favorite.reducer';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import {videoItemReducer} from '@app/redux/reducers/video-item.reducer';
     }),
     StoreModule.forRoot({
       customCards: customCardReducer,
-      videoState: videoItemReducer
+      videoState: videoItemReducer,
+      favorite: favoriteReducer
     }, {}),
     EffectsModule.forRoot([VideoEffects]),
     EffectsModule.forFeature([CustomCardEffect]),
