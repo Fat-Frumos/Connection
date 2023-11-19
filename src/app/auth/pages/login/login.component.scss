@@ -1,16 +1,42 @@
+@import 'assets/css/variables';
+
+.error-message{
+  margin-left: 5%;
+  margin-top: 15%;
+  color: $error-color;
+  font-size: $text-font-size;
+  font-weight: 900;
+}
+
+.error {
+  position: relative;
+}
+
+.error-rectangle {
+  z-index: 20;
+  position: relative;
+  margin-top: -5px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $error-color;
+  border-radius: 0 0 5px 5px;
+  height: 5px;
+}
+
 .login-container {
   margin: auto;
   width: 400px;
-  height: 248px;
+  height: 300px;
   left: 612px;
   border-radius: 5px;
-  background: #F2F2F2;
+  background: $light-grey-color;
 }
 
 .login-title {
   margin-top: 50px;
   padding-top: 20px;
-  padding-left: 10px;
+  padding-left: 5%;
   width: 310px;
   height: 22px;
   left: 20px;
@@ -18,60 +44,64 @@
   font-weight: 700;
   font-size: 18px;
   line-height: 21px;
-  color: #000000;
+  color: $black-text-color;
 }
 
 .form-group {
-  margin: 20px;
+  margin: 5%;
 }
 
 .form-label {
   display: block;
   margin-bottom: 10px;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
-  color: #000000;
+  font-weight: $text-font-weight;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
+  color: $black-text-color;
 }
 
-.form-input {
+.login-form-input {
+  box-sizing: border-box;
+  padding: 3%;
   width: 100%;
   height: 30px;
-  border: 1px solid #E0E0E0;
-  border-radius: 5px;
-  padding: 5px;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
-  color: #000000;
+  border: 1px solid $light-grey-color;
+  border-radius: 0 0 5px 5px;
+  font-weight: $text-font-weight;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
+  color: $black-text-color;
 }
 
 .login-button {
+  margin-right: 5%;
   display: block;
-  width: 100%;
+  width: 40%;
+  float: right;
   height: 30px;
-  background: #2F80ED;
+  background: $main-button-color;
   border: none;
   border-radius: 5px;
-  color: #FFFFFF;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
+  color: $white-text-color;
+  font-weight: $text-font-weight;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
   cursor: pointer;
 }
 
 .registration-button {
+  margin-left: 5%;
   align-items: center;
-  margin-top: 10px;
   display: block;
-  width: 100%;
+  width: 40%;
+  float: left;
   height: 30px;
-  background: #0ED;
+  background: $main-button-color;
   border: none;
   border-radius: 5px;
-  color: #FFFFFF;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
+  color: $white-text-color;
+  font-weight: $text-font-weight;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
   cursor: pointer;
 }

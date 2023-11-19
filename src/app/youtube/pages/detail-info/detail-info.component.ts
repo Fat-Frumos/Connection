@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {VideoDataModel} from '@app/youtube/models/video-data-model';
+import {StorageService} from '@app/youtube/services/storage.service';
 
 @Component({
   selector: 'app-detail-info',
@@ -10,14 +11,11 @@ export class DetailInfoComponent implements OnInit {
 
   data: VideoDataModel;
 
-  constructor() {
+  constructor(private storage: StorageService) {
     this.data = {} as VideoDataModel;
   }
 
   ngOnInit(): void {
-    const data = localStorage.getItem('video');
-    this.data = data
-      ? JSON.parse(data) as VideoDataModel
-      : {} as VideoDataModel;
+    this.data = this.storage.getVideo();
   }
 }

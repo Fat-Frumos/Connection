@@ -1,0 +1,115 @@
+<form class="create-card"
+      [formGroup]="cardForm"
+      (ngSubmit)="onSubmit()">
+  <h1 class="new-card-title">
+    Create new card</h1>
+  <div class="title">
+    <label class="title-text" for="cardInput">
+      Title</label>
+    <input type="text"
+           id="cardInput"
+           class="form-input"
+           formControlName="title">
+    <div class="new-error-rectangle"
+         *ngIf="getTitleErrorMessage('title')">
+    </div>
+    <div class="new-error-message"
+         *ngIf="getTitleErrorMessage('title')">
+      {{ getTitleErrorMessage('title') }}
+    </div>
+  </div>
+  <div class="description">
+    <label class="description-text">
+      Description</label>
+    <input type="text"
+           class="form-input"
+           formControlName="description">
+    <div class="new-error-rectangle"
+         *ngIf="getTitleErrorMessage('description')">
+    </div>
+    <div class="new-error-message"
+         *ngIf="getTitleErrorMessage('description')">
+      {{getTitleErrorMessage('description')}}
+    </div>
+  </div>
+  <div class="link-img">
+    <label class="link-video-text">
+      Image Link</label>
+    <input type="text"
+           class="form-input"
+           formControlName="imageLink">
+    <div class="new-error-rectangle"
+         *ngIf="getErrorMessage('imageLink')">
+    </div>
+    <div class="new-error-message"
+         *ngIf="getErrorMessage('imageLink')">
+      {{getErrorMessage('imageLink')}}
+    </div>
+  </div>
+  <div class="link-video">
+    <label class="link-video-text">
+      Video Link</label>
+    <input type="text"
+           class="form-input"
+           formControlName="videoLink">
+    <div class="new-error-rectangle"
+         *ngIf="getErrorMessage('videoLink')">
+    </div>
+    <div class="new-error-message"
+         *ngIf="getErrorMessage('videoLink')">
+      {{getErrorMessage('videoLink')}}
+    </div>
+  </div>
+  <div class="creation-date">
+    <label class="creation-date-text">
+      Creation Date</label>
+    <input type="date"
+           class="form-input"
+           formControlName="creationDate">
+    <div class="new-error-rectangle"
+         *ngIf="getDateErrorMessage()">
+    </div>
+    <div class="new-error-message"
+         *ngIf="getDateErrorMessage()">
+      {{getDateErrorMessage()}}
+    </div>
+  </div>
+  <div class="creation-tags">
+    <input #input
+           type="text"
+           class="form-input"
+           placeholder="Add tag..."
+           (keydown.enter)="addTag(input.value, input)"/>
+    <div class="new-error-rectangle"
+         *ngIf="getTagErrorMessage()">
+    </div>
+    <div class="new-error-message" *ngIf="getTagErrorMessage()">
+      {{ getTagErrorMessage() }}
+    </div>
+    <div id="tags" formArrayName="tags">
+      <span class="tag"
+            *ngFor="let tag of getTagsControls(); let i = index"
+            [formGroupName]="i">
+        <span class="close-x" (click)="removeTag(i)">
+          x
+        </span>
+        {{ tag.value }}
+      </span>
+    </div>
+    <div class="buttons">
+      <button type="button"
+              class="tag-button"
+              (click)="addTag(input.value, input)">
+        Add Tag
+      </button>
+      <button class="button-create" type="submit">
+        Create Card
+      </button>
+      <button type="button"
+              class="tag-button"
+              (click)="onReset()">
+        Reset
+      </button>
+    </div>
+  </div>
+</form>

@@ -1,11 +1,4 @@
-:root {
-  --main: #2F80ED;
-  --info: #F2C94C;
-  --primary: #27AE60;
-  --secondary: #EB5757;
-  --card-bg: #E5E5E5;
-  --dark-grey: #4F4F4F;
-}
+@import 'assets/css/variables';
 
 $border-size: 280px;
 $round: 5px;
@@ -40,7 +33,7 @@ $content-size: 238px;
   margin: 10px;
   border-radius: $round;
   text-align: right;
-  background: var(--card-bg);
+  background: $card-bg-color;
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.25));
 }
 
@@ -50,7 +43,7 @@ $content-size: 238px;
   font-weight: 700;
   font-size: 20px;
   line-height: 23px;
-  color: var(--dark-grey);
+  color: $dark-grey-color;
   position: absolute;
   top: 198px;
   left: 10px;
@@ -74,7 +67,7 @@ $content-size: 238px;
   left: 72px;
   width: 130px;
   height: 32px;
-  filter: drop-shadow(2px 0px 4px var(--main));
+  filter: drop-shadow(2px 0px 4px $main-button-color);
 }
 
 .button-background {
@@ -84,7 +77,7 @@ $content-size: 238px;
   bottom: 0;
   left: 0;
   border-radius: $round;
-  background: var(--main);
+  background: $main-button-color;
 }
 
 .button-text {
@@ -95,10 +88,10 @@ $content-size: 238px;
   bottom: 20%;
   left: 30%;
   right: 20%;
-  font-size: 12px;
+  font-size: $text-font-size;
   text-align: center;
-  line-height: 14px;
-  color: #FFFFFF;
+  line-height: $text-line-height;
+  color: $white-text-color;
 }
 
 .viewed,
@@ -107,5 +100,5 @@ $content-size: 238px;
 .comments {
   font-size: 10px;
   margin-left: 2px;
-  color: #000000;
+  color: $black-text-color;
 }

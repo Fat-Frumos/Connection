@@ -5,6 +5,7 @@ import {baseUrl, searchUrl} from '@app/config';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {VideoItem} from '@app/youtube/models/video-item-model';
 import {SortService} from '@app/youtube/services/sort.service';
+import {StorageService} from '@app/youtube/services/storage.service';
 import {YoutubeResponse} from '@app/youtube/models/youtube-response';
 
 @Injectable()
@@ -18,7 +19,8 @@ export class VideoService implements OnDestroy {
 
   constructor(
     private http: HttpClient,
-    private readonly _sortService: SortService
+    private _sortService: SortService,
+    private _storage: StorageService
   ) {
     this.videosSubject = new BehaviorSubject<VideoItem[]>([]);
     this._videos$ = this.videosSubject.asObservable();
@@ -69,5 +71,14 @@ export class VideoService implements OnDestroy {
   searchVideos(value: string): Observable<YoutubeResponse> {
     const uri = `${searchUrl}?type=video&part=snippet&maxResults=15&q=${value}`;
     return this.http.get<YoutubeResponse>(uri);
+  }
+
+  save(data: VideoItem): void {
+    this._storage.saveVideo(data);
+  }
+
+  findByCriteria(value: string): Observable<YoutubeResponse> {
+    const url = `${urlApi}?part=snippet&maxResults=25&q=${value}&key=${keyApi}`;
+    return this.http.get<YoutubeResponse>(url);
   }
 }

@@ -1,0 +1,259 @@
+@import 'assets/css/variables';
+
+.new-error-rectangle {
+  margin-top: -5px;
+  z-index: 20;
+  position: relative;
+  background: $error-color;
+  border-radius: 0 0 5px 5px;
+  height: 5px;
+}
+
+.new-error-message {
+  color: $error-color;
+  font-size: $text-font-size;
+  font-weight: 900;
+}
+
+.create-card {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 432px;
+  height: 550px;
+  background: $light-grey-color;
+  border-radius: 17px;
+}
+
+.new-card-title {
+  padding-top: 5%;
+  width: 310px;
+  height: 22px;
+  left: 20px;
+  top: 28px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 21px;
+  color: $black-text-color;
+}
+
+.form-wrapper {
+  width: 266px;
+  height: 27px;
+  left: 25px;
+  top: 37px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 27px;
+  align-items: center;
+  color: $black-text-color;
+}
+
+.button-create {
+  width: 188px;
+  height: 37px;
+  left: 218px;
+  top: 422px;
+}
+
+.button-background {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.background {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: $main-button-color;
+  border-radius: 67px;
+}
+
+.button-text {
+  left: 25%;
+  right: 20%;
+  top: 20%;
+  bottom: 20%;
+  font-style: normal;
+  font-weight: $text-font-weight;
+  font-size: 15px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: $white-text-color;
+}
+
+.create-card-text {
+  left: 10%;
+  right: 11%;
+  top: 6%;
+  bottom: 13%;
+  font-style: normal;
+  font-weight: $text-font-weight;
+  font-size: 15px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: $white-text-color;
+}
+
+.login {
+  visibility: hidden;
+  width: 50px;
+  height: 18px;
+  left: 149px;
+  top: 431px;
+  font-style: normal;
+  font-weight: $text-font-weight;
+  font-size: 15px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  text-decoration-line: underline;
+  color: $main-button-color;
+}
+
+.title,
+.description,
+.link-img,
+.link-video,
+.creation-date,
+.creation-tags {
+  width: 380px;
+  height: 62px;
+}
+
+.title-text,
+.description-text,
+.link-video-text,
+.creation-date-text {
+  width: 100px;
+  height: 15px;
+  left: 32px;
+  top: 93px;
+  font-style: normal;
+  font-weight: $text-font-weight;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
+  display: flex;
+  align-items: center;
+  color: $grey-color;
+}
+
+.form-input {
+  padding: 10px;
+  width: 100%;
+  height: 30px;
+  border: 1px solid $light-grey-color;
+  border-radius: 0 0 5px 5px;
+  box-sizing: border-box;
+  font-weight: $text-font-weight;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
+}
+
+#tags {
+  border-radius: 10px;
+  box-shadow: 1px 1px 4px $grey-color inset;
+  padding: 10px;
+  background: $light-grey-color;
+  margin: auto;
+}
+
+#tag-typer {
+  outline: none;
+  border: none;
+  padding: 6px;
+  margin: 3px;
+  width: 100px;
+  font-size: 14px;
+}
+
+.tag {
+  display: inline-block;
+  background: $tags-bg-color;
+  color: $white-text-color;
+  padding: 5px 10px;
+  margin: 2px 2px 2px 20px;
+  font: normal 16px sans-serif;
+  position: relative;
+  cursor: default;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, .2);
+  transform-origin: 0 50%;
+
+  &:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    background: inherit;
+    height: 10px;
+    border: 10px solid $card-bg-color;
+    border-right-color: transparent;
+    border-radius: 10px 0 0 10px;
+    left: -20px;
+    top: 0;
+  }
+
+  &:after {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 3px;
+    background: $white-bg-color;
+    position: absolute;
+    left: -2px;
+    top: 12px;
+    box-shadow: inset 1px 1px 0 $grey-color;
+  }
+}
+
+.tag .close-x {
+  position: absolute;
+  left: -4px;
+  top: 1px;
+  font-weight: 900;
+  z-index: 3;
+  color: $white-text-color;
+}
+
+.close {
+  color: $white-text-color;
+}
+
+.buttons {
+  margin-top: 5%;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.tag-button:hover, .button-create:hover {
+  background-color: $hover-button-color;
+  border: none;
+  border-radius: 5px;
+  color: $white-text-color;
+}
+
+.tag-button {
+  display: block;
+  width: 20%;
+  height: 30px;
+  background: $main-button-color;
+  border: none;
+  border-radius: 5px;
+  color: $white-text-color;
+  font-weight: $text-font-weight;
+  font-size: $text-font-size;
+  line-height: $text-line-height;
+  cursor: pointer;
+}
