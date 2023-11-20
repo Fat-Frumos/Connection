@@ -1,10 +1,15 @@
 import {createReducer, on} from '@ngrx/store';
-import {saveVideos} from '@app/redux/actions/video.actions';
-import {initialState} from '@app/redux/states/video-item.state';
+import {initialState, videoAdapter} from '@app/redux/states/video-item.state';
+import {
+  loadVideosSuccess, updateVideosFromService
+} from '@app/redux/actions/video-item.actions';
+
 
 export const videoItemReducer =
   createReducer(initialState,
-    on(saveVideos, (state, {videos}) => {
+    on(loadVideosSuccess, (state, {videos}) => {
       return {...state, videos: videos};
-    })
-  );
+    }),
+    on(updateVideosFromService, (state, {videoItems}) => {
+      return videoAdapter.setAll(videoItems, state);
+    }));

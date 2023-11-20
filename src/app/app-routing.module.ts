@@ -12,10 +12,14 @@ const routes: Routes = [
   {path: '', redirectTo: '/main', pathMatch: 'full'},
   {path: 'not-found', component: NotFoundComponent, canActivate: [authGuard]},
   {
+    path: 'admin',
+    loadChildren: () => import('./auth/pages/admin/admin.module')
+      .then((module) => module.AdminModule)
+  },
+  {
     path: 'main',
     loadChildren: () => import('@app/youtube/pages/youtube/youtube.module')
-      .then(module => module.YouTubeModule),
-    canActivate: [authGuard]
+      .then(module => module.YouTubeModule)
   },
   {
     path: 'login',

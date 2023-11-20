@@ -9,7 +9,6 @@ export const selectFavoriteVideos =
     state.favoriteVideos);
 
 export const selectIsFavorite = (videoId: string) =>
-  createSelector(
-    selectFavoriteVideos,
-    (favoriteVideos) =>
-      favoriteVideos.some(video => video.id === videoId));
+  createSelector(selectFavoriteVideos, (favoriteVideos) =>
+    favoriteVideos.some(video =>
+      video.id === videoId));

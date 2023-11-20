@@ -16,11 +16,9 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {
   CustomCardModule
 } from '@app/youtube/components/custom-card/custom-card.module';
-import {customCardReducer} from '@app/redux/reducers/custom-card.reducer';
 import {CustomCardEffect} from '@app/redux/effects/custom-card.effect';
 import {VideoEffects} from '@app/redux/effects/video-item.effect';
-import {videoItemReducer} from '@app/redux/reducers/video-item.reducer';
-import {favoriteReducer} from '@app/redux/reducers/favorite.reducer';
+import {UserEffects} from '@app/redux/effects/user.effect';
 
 @NgModule({
   declarations: [
@@ -37,12 +35,7 @@ import {favoriteReducer} from '@app/redux/reducers/favorite.reducer';
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    StoreModule.forRoot({
-      customCards: customCardReducer,
-      videoState: videoItemReducer,
-      favorite: favoriteReducer
-    }, {}),
-    EffectsModule.forRoot([VideoEffects]),
+    EffectsModule.forRoot([VideoEffects, UserEffects]),
     EffectsModule.forFeature([CustomCardEffect]),
     StoreDevtoolsModule.instrument({
       maxAge: 25, logOnly: !isDevMode(),

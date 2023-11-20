@@ -8,10 +8,10 @@ import {debounceTime, filter, Observable, switchMap} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {VideoService} from '@app/youtube/services/video.service';
 import {YoutubeResponse} from '@app/youtube/models/youtube-response';
+import {VideoItem} from '@app/youtube/models/video-item-model';
 
 const DEBOUNCE = 500;
 const MIN_LENGTH = 3;
-
 
 @Component({
   selector: 'app-header',
@@ -36,7 +36,7 @@ export class HeaderComponent {
         value !== null && value.length >= MIN_LENGTH),
       switchMap(value => this.searchAPI(value))
     ).subscribe(results => {
-      console.log(results);
+      this.service.updateVideos(results.items as VideoItem[]);
     });
   }
 

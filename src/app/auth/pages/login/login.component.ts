@@ -1,7 +1,10 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {LoginService} from '@app/auth/services/login.service';
 import {FormService} from '@app/auth/services/form.service';
+import {User} from '@app/auth/models/user';
+import {Router} from '@angular/router';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-login',
@@ -9,9 +12,9 @@ import {FormService} from '@app/auth/services/form.service';
   styleUrls: ['./login.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
-  isLoggedIn: boolean;
+  isLoggedIn = false;
 
   isClicked = false;
 
@@ -21,10 +24,12 @@ export class LoginComponent {
   });
 
   constructor(
+    private store: Store,
     private service: LoginService,
     private validator: FormService,
-    private formBuilder: FormBuilder) {
-    this.isLoggedIn = this.service.isLoggedIn;
+    private formBuilder: FormBuilder,
+    private router: Router) {
+    this.isLoggedIn = !!this.service.user;
   }
 
   onSubmit(): void {
@@ -33,9 +38,14 @@ export class LoginComponent {
       this.loginForm.markAllAsTouched();
       return;
     }
-    const password: string = this.loginForm.value.password ?? '';
-    const email: string = this.loginForm.value.email ?? '';
-    this.service.login({password, email});
+    const user: User = {
+      password: this.loginForm.value.password ?? '',
+      email: this.loginForm.value.email ?? ''
+    };
+    this.service.login(user);
+    this.router.navigate(['/main']).catch(error => {
+      console.error('Navigation error:', error);
+    });
   }
 
   onSignUp(): void {
@@ -69,5 +79,9 @@ export class LoginComponent {
         'and numbers, and include at least one special character: ! @ # ?';
     }
     return '';
+  }
+
+  ngOnInit(): void {
+    this.store.subscribe(console.log);
   }
 }

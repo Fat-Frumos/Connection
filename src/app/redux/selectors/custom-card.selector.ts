@@ -11,8 +11,7 @@ export const selectVideoState =
   createFeatureSelector<VideoState>('video');
 
 export const selectAllVideos =
-  createSelector(selectVideoState, (state) =>
-    Object.values(state.videos));
+  createSelector(selectVideoState, (state: VideoState) => state.videos);
 
 export const selectVideoById = (videoId: string) =>
   createSelector(
@@ -21,7 +20,7 @@ export const selectVideoById = (videoId: string) =>
   );
 
 export const selectCustomCardState =
-  createFeatureSelector<CardState>('customCard');
+  createFeatureSelector<CardState>('video');
 
 
 export const selectAllCustomCards =
