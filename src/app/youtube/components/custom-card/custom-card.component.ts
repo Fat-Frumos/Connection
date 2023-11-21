@@ -19,6 +19,6 @@ export class CustomCardComponent {
   }
 
   onDeleteClick(): void {
-    this.store.dispatch(deleteCustomCard({id: this.customCard.id}));
+    this.store.dispatch(deleteCustomCard({id: this.customCard.id.videoId}));
   }
 }

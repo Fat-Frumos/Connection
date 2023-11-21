@@ -2,17 +2,10 @@
 <div class="title">{{ video.snippet.title }}</div>
 <div class="image"
      [style.background-image]="'url(' + video.snippet.thumbnails.medium.url + ')'"></div>
-<div class="button">
-  <div class="button-background"></div>
-  <button
-    class="button-text"
-    (click)="saveDataAndRedirect()">More...
-  </button>
-  <button
-          class="button-favorite"
-          (click)="onFavoriteClick()">Favorite
-  </button>
-</div>
+
+<button class="button button-text-details"
+        (click)="showDetails()">More...
+</button>
 
 <div class="statistics">
   <div class="group">

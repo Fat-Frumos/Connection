@@ -1,23 +1,17 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, map, mergeMap, of} from 'rxjs';
+import {catchError, map, mergeMap, Observable, of, switchMap} from 'rxjs';
 import {VideoService} from '@app/youtube/services/video.service';
-import {loadVideos, loadVideosSuccess} from '@app/redux/actions/video-item.actions';
-import {VideoItem} from '@app/youtube/models/video-item-model';
+import {
+  fetchResult,
+  fetchVideosSuccess,
+  fetchVideoSuccess,
+  loadVideosFailure
+} from '@app/redux/actions/video-item.actions';
+import {Action} from '@ngrx/store';
 
 @Injectable()
 export class VideoEffects {
-
-  loadVideos$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadVideos),
-      mergeMap(() =>
-        this.videoService.videos$
-          .pipe(map((videos: VideoItem[]) => loadVideosSuccess({videos})),
-            catchError(() => of({type: 'LOAD_VIDEOS_ERROR'}))
-          )
-      )
-    ));
 
   constructor(
     private actions$: Actions,
@@ -25,4 +19,27 @@ export class VideoEffects {
   ) {
     console.log('Features');
   }
+
+  fetchVideo$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fetchVideoSuccess),
+      switchMap(() => this.videoService.fetchVideoData('').pipe(
+        map(videos => fetchVideosSuccess({videos})),
+        catchError(() => of(loadVideosFailure))
+      ))
+    )
+  );
+
+  search$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fetchResult),
+      mergeMap(
+        ({value}): Observable<Action> =>
+          this.videoService.fetchVideoData(value).pipe(
+            map((videos) => fetchVideosSuccess({videos})),
+            catchError(() => of(loadVideosFailure))
+          )
+      )
+    )
+  );
 }

@@ -5,10 +5,13 @@ export const videoAdapter =
   createEntityAdapter<VideoItem>();
 
 export interface VideoState extends EntityState<VideoItem> {
-  videos: VideoItem[];
+  video: VideoItem | null
+  isFetched: boolean
 }
 
 export const initialState: VideoState =
-  videoAdapter.getInitialState({videos: []});
+  videoAdapter.getInitialState({
+    video: null,
+    isFetched: false
+  });
 
-export const {selectAll: selectAllVideos} = videoAdapter.getSelectors();

@@ -1,7 +1,6 @@
 export const environment = {
   production: false,
-  baseUrl: 'https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/angular/response.json',
-  keyApi: 'AIzaSyANniBXxEr5lUbcXAEzYFsmX59-YU1aeLg',
-  urlApi: 'https://www.googleapis.com/youtube/v3/search',
+  keyApi: 'AIzaSyCyThSjI_ZUT1NwV9aQLtqklVcNj72gvo0',
+  baseUrl: 'https://www.googleapis.com/youtube/v3',
   itemSize: 20
 };

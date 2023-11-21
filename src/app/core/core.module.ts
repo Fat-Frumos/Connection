@@ -7,9 +7,10 @@ import {VideoService} from '@app/youtube/services/video.service';
 import {LoginService} from '@app/auth/services/login.service';
 import {SharedModule} from '@app/shared/shared.module';
 import {StoreModule} from '@ngrx/store';
-import {customCardReducer} from '@app/redux/reducers/custom-card.reducer';
+import {
+  CardsReducer
+} from '@app/redux/reducers/custom-card.reducer';
 import {videoItemReducer} from '@app/redux/reducers/video-item.reducer';
-import {favoriteReducer} from '@app/redux/reducers/favorite.reducer';
 import {reducer, userReducer} from '@app/redux/reducers/user.reducer';
 
 @NgModule({
@@ -20,9 +21,8 @@ import {reducer, userReducer} from '@app/redux/reducers/user.reducer';
     CoreRoutingModule,
     SharedModule,
     StoreModule.forRoot({
-      video: customCardReducer,
-      videoState: videoItemReducer,
-      favorite: favoriteReducer,
+      video: videoItemReducer,
+      customCard: CardsReducer,
       auth: userReducer,
       user: reducer
     }, {})],

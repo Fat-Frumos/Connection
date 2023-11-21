@@ -11,4 +11,3 @@ export const initialState: FavoriteState = {
   favoriteVideos: [],
   currentPage: 1
 };
-

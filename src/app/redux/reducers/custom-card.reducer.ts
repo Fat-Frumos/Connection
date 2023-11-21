@@ -9,14 +9,30 @@ import {
   initialState
 } from '@app/redux/states/custom-card.state';
 
-export const customCardReducer = createReducer(
-  initialState, on(saveCustomCards, (state, {customCards}) => {
-    return customCardAdapter.setAll(customCards, state);
-  }),
-  on(addCustomCard, (state, {customCard}) => {
-    return customCardAdapter.addOne(customCard, state);
-  }),
-  on(deleteCustomCard, (state, {id}) => {
-    return customCardAdapter.removeOne(id, state);
-  })
-);
+export const CardsReducer =
+  createReducer(
+    initialState,
+    on(
+      addCustomCard,
+      (state, action) => ({
+        ...state,
+        customCards: [...state.customCards, action.customCard]
+      })
+    ),
+    on(
+      saveCustomCards,
+      (state, action) => ({
+        ...state,
+        youtubeCards: [...action.customCards]
+      })
+    ),
+    on(saveCustomCards, (state, {customCards}) => {
+      return customCardAdapter.setAll(customCards, state);
+    }),
+    on(addCustomCard, (state, {customCard}) => {
+      return customCardAdapter.addOne(customCard, state);
+    }),
+    on(deleteCustomCard, (state, {id}) => {
+      return customCardAdapter.removeOne(id, state);
+    })
+  );

@@ -3,11 +3,9 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from '@app/auth/services/auth-interceptor.service';
 import {
   BASE_URL_TOKEN,
-  URL_API_TOKEN,
   KEY_URL_TOKEN,
-  baseUrl,
   keyApi,
-  urlApi,
+  baseUrl,
   itemSize, ITEM_SIZE_TOKEN
 } from '@app/config';
 
@@ -30,11 +28,6 @@ export class SharedModule {
         {
           provide: BASE_URL_TOKEN,
           useValue: baseUrl,
-          multi: true
-        },
-        {
-          provide: URL_API_TOKEN,
-          useValue: urlApi,
           multi: true
         },
         {

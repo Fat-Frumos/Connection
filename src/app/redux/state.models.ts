@@ -24,4 +24,5 @@ export interface UserState {
 export interface AppState {
   auth: AuthState;
   user: UserState;
+  video: VideoItem;
 }

@@ -10,7 +10,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {CoreModule} from '@app/core/core.module';
 import {AuthInterceptor} from '@app/auth/services/auth-interceptor.service';
-import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {
@@ -19,6 +18,7 @@ import {
 import {CustomCardEffect} from '@app/redux/effects/custom-card.effect';
 import {VideoEffects} from '@app/redux/effects/video-item.effect';
 import {UserEffects} from '@app/redux/effects/user.effect';
+import {VideoService} from '@app/youtube/services/video.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +47,7 @@ import {UserEffects} from '@app/redux/effects/user.effect';
     }),
     CustomCardModule
   ],
-  providers: [PreloadService,
+  providers: [PreloadService, VideoService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

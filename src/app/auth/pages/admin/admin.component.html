@@ -2,13 +2,13 @@
   | async; trackBy: trackByCustomCard">
   {{ customCard.title }}
   {{ customCard.description }}
-  <button (click)="deleteCustomCard(customCard.id)">
+  <button (click)="deleteCustomCard(customCard.id.videoId)">
     Delete
   </button>
   <button (click)="addCustomCard(customCard)">
     Add
   </button>
-  <button (click)="toggleFavorite(customCard.id)">
+  <button (click)="toggleFavorite(customCard.id.videoId)">
     Favorite
   </button>
 </div>
