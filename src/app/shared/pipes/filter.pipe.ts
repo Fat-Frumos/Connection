@@ -1,14 +1,17 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {VideoItem} from '@app/youtube/models/video-item-model';
+import {
+  CustomCard
+} from '@app/youtube/components/custom-card/custom-card-model';
 
 @Pipe({
   name: 'filterBy'
 })
 export class FilterByPipe implements PipeTransform {
 
-  transform(video: VideoItem[], search: string, criteria: string): VideoItem[] {
+  transform(video: CustomCard[], search: string, criteria: string): CustomCard[] {
 
-    return video.filter((item: VideoItem) => {
+    return video.filter((item: CustomCard) => {
       const title: string = item.snippet.title.toLowerCase();
       return this.match(search.toLowerCase(), title)
         && this.match(criteria.toLowerCase(), title);

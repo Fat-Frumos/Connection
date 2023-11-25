@@ -1,17 +1,18 @@
 import {
   Component,
   EventEmitter,
-  OnInit,
+  OnDestroy,
   Output,
   ViewEncapsulation
 } from '@angular/core';
-import {debounceTime, filter, Subject, switchMap} from 'rxjs';
-import {FormControl} from '@angular/forms';
+import {debounceTime, filter, Subscription, switchMap} from 'rxjs';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {VideoService} from '@app/youtube/services/video.service';
-import {YoutubeResponse} from '@app/youtube/models/youtube-response';
+import {Store} from '@ngrx/store';
+import {fetchResult} from '@app/redux/actions/custom-card.action';
 
 const DEBOUNCE = 500;
-const MIN_LEN = 3;
+const MIN_LENGTH = 3;
 
 @Component({
   selector: 'app-header',
@@ -19,7 +20,7 @@ const MIN_LEN = 3;
   styleUrls: ['./header.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnDestroy {
 
   @Output() searchClicked = new EventEmitter<void>();
 
@@ -27,41 +28,50 @@ export class HeaderComponent implements OnInit {
 
   @Output() sort = new EventEmitter<string>();
 
-  searchTerm$ = new Subject<string>();
-
   searchText = new FormControl();
 
-  constructor(private service: VideoService) {
+  public formData: FormData = new FormData();
+
+  public subscription: Subscription;
+
+  public formGroup: FormGroup = this.formBuilder.group({
+    searchInput: ['']
+  });
+
+  constructor(
+    private store: Store,
+    private service: VideoService,
+    private formBuilder: FormBuilder
+  ) {
+    this.subscription = this.formGroup.valueChanges
+      .subscribe((value: FormData): void => {
+        this.formData = value;
+        this.searchBy('');
+      });
+    this.fetchData();
+    this.store.subscribe(console.log);
+  }
+
+  private fetchData(): void {
     this.searchText.valueChanges.pipe(
       debounceTime(DEBOUNCE),
       filter((value: string | null): value is string =>
-        value !== null && value.length >= MIN_LEN),
-      switchMap(value => this.service.searchVideos(value))
-    ).subscribe(results => {
-      console.log(results);
-    });
-  }
-
-  searchAPI(value: string): Observable<YoutubeResponse> {
-    return this.service.findByCriteria(value);
-  }
-
-  search(searchText: string): void {
-    this.searchClicked.emit();
-    this.filter.emit(searchText);
-    this.service.setSearchText(searchText);
-  }
-
-  ngOnInit(): void {
-    this.searchTerm$.pipe(
-      filter(term => term.length > MIN_LEN),
-      debounceTime(DEBOUNCE))
-      .subscribe(value => {
-        this.service.searchVideos(value);
+        value !== null && value.length >= MIN_LENGTH),
+      switchMap(value =>
+        this.service.fetchCustomCards(value)))
+      .subscribe(results => {
+        this.service.updateVideos(results);
       });
   }
 
-  onSearch(term: string) {
-    this.searchTerm$.next(term);
+  searchBy(searchText: string): void {
+    this.searchClicked.emit();
+    this.filter.emit(searchText);
+    this.service.setSearchText(searchText);
+    this.store.dispatch(fetchResult({result: searchText}));
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

@@ -1,7 +1,8 @@
-import {VideoItem} from '@app/youtube/models/video-item-model';
+import {
+  CustomCard
+} from '@app/youtube/components/custom-card/custom-card-model';
 
 export interface YoutubeResponse {
-  kind: string;
-  etag: string;
-  items: VideoItem[];
+  items: CustomCard[];
+  id: string;
 }

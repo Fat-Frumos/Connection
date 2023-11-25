@@ -4,7 +4,6 @@ import {SortService} from '@app/youtube/services/sort.service';
 
 describe('SortPipe', () => {
   let pipe: SortPipe;
-  let sortService: jasmine.SpyObj<SortService>;
 
   beforeEach(() => {
     const spy = jasmine.createSpyObj(
@@ -19,7 +18,6 @@ describe('SortPipe', () => {
     });
 
     pipe = TestBed.inject(SortPipe);
-    sortService = TestBed.inject(SortService) as jasmine.SpyObj<SortService>;
   });
 
   it('create an instance', () => {

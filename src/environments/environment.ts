@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  keyApi: 'AIzaSyANniBXxEr5lUbcXAEzYFsmX59-YU1aeLg',
-  baseUrl: `https://www.googleapis.com/youtube/v3/videos`,
-  searchUrl: 'https://www.googleapis.com/youtube/v3/search'
+  keyApi: 'AIzaSyCyThSjI_ZUT1NwV9aQLtqklVcNj72gvo8',
+  baseUrl: 'https://www.googleapis.com/youtube/v3',
+  itemSize: 20
 };

@@ -1,16 +1,20 @@
 import {Router, UrlTree} from '@angular/router';
 import {LoginService} from '@app/auth/services/login.service';
-import {Observable} from 'rxjs';
 import {inject} from '@angular/core';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
-export function authGuard(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-  const router = inject(Router);
+export function authGuard(): Observable<boolean | UrlTree> {
   const loginService = inject(LoginService);
+  const router = inject(Router);
 
-  if (!loginService.isLoggedIn) {
-    void router.navigate(['/login']);
-    return false;
-  } else {
-    return true;
-  }
+  return loginService.getCurrentUser$().pipe(
+    map(isLoggedIn => {
+      if (!isLoggedIn) {
+        router.createUrlTree(['/login']);
+        return false;
+      }
+      return true;
+    })
+  );
 }
