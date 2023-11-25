@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     private validator: FormService,
     private formBuilder: FormBuilder,
     private router: Router) {
-    this.isLoggedIn = !!this.service.user;
+    this.isLoggedIn = !!this.service.getCurrentUser$();
   }
 
   onSubmit(): void {

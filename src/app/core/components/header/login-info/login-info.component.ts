@@ -1,5 +1,7 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {LoginService} from '@app/auth/services/login.service';
+import {Observable} from 'rxjs';
+import {User} from '@app/auth/models/user';
 
 @Component({
   selector: 'app-login-info',
@@ -9,10 +11,10 @@ import {LoginService} from '@app/auth/services/login.service';
 })
 export class LoginInfoComponent {
 
-  public email: string;
+  public user: Observable<User>;
 
   constructor(private loginService: LoginService) {
-    this.email = this.loginService.user.email;
+    this.user = this.loginService.getCurrentUser$();
   }
 
   logout(): void {

@@ -8,7 +8,7 @@ export function authGuard(): Observable<boolean | UrlTree> {
   const loginService = inject(LoginService);
   const router = inject(Router);
 
-  return loginService.isAuth$.pipe(
+  return loginService.getCurrentUser$().pipe(
     map(isLoggedIn => {
       if (!isLoggedIn) {
         router.createUrlTree(['/login']);

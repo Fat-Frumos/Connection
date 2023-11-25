@@ -14,6 +14,7 @@ import {SharedModule} from '@app/shared/shared.module';
 import {FeatureModule} from '@app/shared/feature.module';
 import {SortPipe} from '@app/shared/pipes/sort.pipe';
 import {FilterByPipe} from '@app/shared/pipes/filter.pipe';
+import {AuthModule} from '@app/auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {FilterByPipe} from '@app/shared/pipes/filter.pipe';
     FeatureModule,
     AsyncPipe,
     NgForOf,
-    NgIf
+    NgIf,
+    AuthModule
   ],
   exports: [
     SearchComponent,

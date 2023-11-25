@@ -8,10 +8,11 @@ import {LoginService} from '@app/auth/services/login.service';
 import {SharedModule} from '@app/shared/shared.module';
 import {StoreModule} from '@ngrx/store';
 import {
-  CardsReducer
+  createCardsReducer,
+  customCardsReducer
 } from '@app/redux/reducers/custom-card.reducer';
-import {videoItemReducer} from '@app/redux/reducers/video-item.reducer';
-import {reducer, userReducer} from '@app/redux/reducers/user.reducer';
+import {authReducer, userReducer} from '@app/redux/reducers/user.reducer';
+import {favoriteReducer} from '@app/redux/reducers/favorite.reducer';
 
 @NgModule({
   declarations: [FooterComponent],
@@ -21,10 +22,10 @@ import {reducer, userReducer} from '@app/redux/reducers/user.reducer';
     CoreRoutingModule,
     SharedModule,
     StoreModule.forRoot({
-      video: videoItemReducer,
-      customCard: CardsReducer,
-      auth: userReducer,
-      user: reducer
+      favorite: favoriteReducer,
+      customCard: customCardsReducer, createCardsReducer,
+      auth: authReducer,
+      user: userReducer
     }, {})],
   providers: [loggerServiceProvider]
 })

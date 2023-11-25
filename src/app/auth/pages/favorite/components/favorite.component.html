@@ -1,5 +1,5 @@
 <div *ngFor="let video of favoriteVideos$ | async">
-  <button (click)="toggleFavorite(video.id)">
+  <button (click)="toggleFavorite(video.id.videoId)">
     Favorite
   </button>
 </div>

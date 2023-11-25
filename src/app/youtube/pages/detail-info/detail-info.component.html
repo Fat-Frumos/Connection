@@ -14,7 +14,7 @@
     <p class="liked">{{ data.statistics.favoriteCount }}</p>
     <p class="comments"> {{ data.statistics.commentCount }}</p>
   </div>
-  <button (click)="toggleFavorite(data.id)" [class.favorite]="isFavorite$">
+  <button (click)="toggleFavorite(data.id.videoId)" [class.favorite]="isFavorite$">
   </button>
   <a class="back-button" [routerLink]="['/main']">
     <div class="Rectangle 17"></div>

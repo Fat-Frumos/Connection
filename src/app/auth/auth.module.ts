@@ -26,7 +26,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     NgForOf,
     AsyncPipe
   ],
-  exports: [LoginComponent],
+  exports: [LoginComponent, PaginationComponent],
   providers: [LoginService]
 })
 export class AuthModule {

@@ -1,12 +1,16 @@
 import {createReducer, on} from '@ngrx/store';
 import {initialState} from '@app/redux/states/favorite.state';
-import {addFavorite, removeFavorite} from '@app/redux/actions/favorite.actions';
+import {toggleFavorite} from '@app/redux/actions/favorite.actions';
 
 export const favoriteReducer = createReducer(
   initialState,
-  on(addFavorite, (state, {video}) =>
-    ({...state, favoriteVideos: [...state.favoriteVideos, video]})),
-  on(removeFavorite, (state, {videoId}) =>
-    ({...state, favoriteVideos: state.favoriteVideos
-      .filter(video => video.id.videoId !== videoId)}))
+  on(toggleFavorite, (state, {videoId}) => {
+    const isFavorite = state.favoriteVideos.some((favVideo) => favVideo.id.videoId === videoId);
+    return {
+      ...state,
+      favoriteVideos: isFavorite
+        ? state.favoriteVideos.filter((favVideo) => favVideo.id.videoId !== videoId)
+        : [...state.favoriteVideos]
+    };
+  })
 );

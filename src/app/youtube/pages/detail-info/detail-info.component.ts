@@ -1,9 +1,11 @@
 import {Component, Input} from '@angular/core';
-import {VideoDataModel} from '@app/youtube/models/video-data-model';
 import {Store} from '@ngrx/store';
 import {toggleFavorite} from '@app/redux/actions/favorite.actions';
 import {selectIsFavorite} from '@app/redux/selectors/favorite.selectors';
 import {Observable} from 'rxjs';
+import {
+  CustomCard
+} from '@app/youtube/components/custom-card/custom-card-model';
 
 @Component({
   selector: 'app-detail-info',
@@ -12,15 +14,15 @@ import {Observable} from 'rxjs';
 })
 export class DetailInfoComponent {
 
-  @Input() data: VideoDataModel = {} as VideoDataModel;
+  @Input() data: CustomCard = {} as CustomCard;
 
   isFavorite$: Observable<boolean>;
 
   constructor(private store: Store) {
-    this.isFavorite$ = this.store.select(selectIsFavorite(this.data.id));
+    this.isFavorite$ = this.store.select(selectIsFavorite(this.data.id.videoId));
   }
 
-  toggleFavorite(id: string) {
-    this.store.dispatch(toggleFavorite({videoId: id}));
+  toggleFavorite(videoId: string) {
+    this.store.dispatch(toggleFavorite({ videoId }));
   }
 }

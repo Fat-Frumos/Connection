@@ -21,6 +21,6 @@ export class FavoriteComponent {
   }
 
   toggleFavorite(videoId: string): void {
-    this.store.dispatch(toggleFavorite({ videoId }));
+    this.store.dispatch(toggleFavorite({videoId}));
   }
 }

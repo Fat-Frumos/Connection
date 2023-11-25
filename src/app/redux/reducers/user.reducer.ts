@@ -13,20 +13,14 @@ export const initialState: UserState = {
   isFetched: false
 };
 
-export const reducer =
+export const userReducer =
   createReducer(initialState,
     on(fetchUserSuccess, (state, {user}) => ({
-      ...state,
-      user,
-      isFetched: true
-    })),
+      ...state, user, isFetched: true})),
     on(fetchUserFailed, state => ({
-      ...state,
-      isFetched: true
-    }))
-  );
+      ...state, isFetched: true})));
 
-export const userReducer =
+export const authReducer =
   createReducer(initialState,
     on(login, (state, {user}) =>
       ({...state, user, isLoggedIn: true})),

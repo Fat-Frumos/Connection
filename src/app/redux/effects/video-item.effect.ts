@@ -2,13 +2,12 @@ import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {catchError, map, mergeMap, Observable, of, switchMap} from 'rxjs';
 import {VideoService} from '@app/youtube/services/video.service';
-import {
-  fetchResult,
-  fetchVideosSuccess,
-  fetchVideoSuccess,
-  loadVideosFailure
-} from '@app/redux/actions/video-item.actions';
 import {Action} from '@ngrx/store';
+import {
+  fetchCustomCardsSuccess,
+  fetchCustomCardSuccess, fetchResult,
+  fetchVideosFailure
+} from '@app/redux/actions/custom-card.action';
 
 @Injectable()
 export class VideoEffects {
@@ -22,10 +21,10 @@ export class VideoEffects {
 
   fetchVideo$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(fetchVideoSuccess),
-      switchMap(() => this.videoService.fetchVideoData('').pipe(
-        map(videos => fetchVideosSuccess({videos})),
-        catchError(() => of(loadVideosFailure))
+      ofType(fetchCustomCardSuccess),
+      switchMap(() => this.videoService.fetchCustomCards('').pipe(
+        map(videos => fetchCustomCardsSuccess({customCards: videos})),
+        catchError(() => of(fetchVideosFailure))
       ))
     )
   );
@@ -34,10 +33,10 @@ export class VideoEffects {
     this.actions$.pipe(
       ofType(fetchResult),
       mergeMap(
-        ({value}): Observable<Action> =>
-          this.videoService.fetchVideoData(value).pipe(
-            map((videos) => fetchVideosSuccess({videos})),
-            catchError(() => of(loadVideosFailure))
+        ({result}): Observable<Action> =>
+          this.videoService.fetchCustomCards(result).pipe(
+            map((videos) => fetchCustomCardsSuccess({customCards: videos})),
+            catchError(() => of(fetchVideosFailure))
           )
       )
     )

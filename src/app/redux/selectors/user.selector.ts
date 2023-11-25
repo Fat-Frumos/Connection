@@ -14,3 +14,12 @@ export const selectIsLoggedIn =
 export const selectError =
   createSelector(selectAuthState, (state: AuthState) =>
     state.error);
+
+export const getUserStore =
+  createFeatureSelector<UserState>('user');
+
+export const getCurrentUser =
+  createSelector(getUserStore, (state: UserState) => state.user);
+
+export const getIsFetched =
+  createSelector(getUserStore, (state: UserState) => state.isFetched);

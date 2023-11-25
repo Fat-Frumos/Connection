@@ -14,6 +14,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FeatureModule} from '@app/shared/feature.module';
 import {HiddenDirective} from '@app/shared/direcrives/hidden.directive';
 import {RouterLink} from '@angular/router';
+import {AsyncPipe} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {RouterLink} from '@angular/router';
     FormsModule,
     FeatureModule,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    AsyncPipe
   ], exports: [
     HeaderComponent,
     HiddenDirective

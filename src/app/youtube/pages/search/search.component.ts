@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {toggleFavorite} from '@app/redux/actions/favorite.actions';
+import {select, Store} from '@ngrx/store';
 import {
   CustomCard
 } from '@app/youtube/components/custom-card/custom-card-model';
@@ -11,9 +10,11 @@ import {
   SortField
 } from '@app/shared/models/criteria-model';
 import {Observable, Subscription} from 'rxjs';
-import {getIsFetched} from '@app/redux/reducers/video-item.reducer';
 import {fetchUser} from '@app/redux/actions/user.actions';
 import {SortService} from '@app/youtube/services/sort.service';
+import {itemSize} from '@app/config';
+import {selectCurrentPage} from '@app/redux/selectors/pagination.selector';
+import {setCurrentPage} from '@app/redux/actions/custom-card.action';
 
 @Component({
   selector: 'app-search',
@@ -23,6 +24,12 @@ import {SortService} from '@app/youtube/services/sort.service';
 })
 export class SearchComponent implements OnInit, OnDestroy {
 
+  totalPages = 0;
+
+  itemsPerPage = itemSize;
+
+  currentPage$: Observable<number>;
+
   criteria = '';
 
   searchText = '';
@@ -31,8 +38,6 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   videos$: Observable<CustomCard[]>;
 
-  private isFetched: Observable<boolean>;
-
   private subscriptions: Subscription [];
 
   constructor(
@@ -40,15 +45,11 @@ export class SearchComponent implements OnInit, OnDestroy {
     private sortService: SortService,
     private store: Store
   ) {
-    this.videos$ = this.service.videos$;
     this.subscriptions = [];
-    this.isFetched = this.store.select(getIsFetched);
+    this.videos$ = this.service.videos$;
+    // this.videos$ = this.store.select(selectAllCustomCards);
+    this.currentPage$ = this.store.pipe(select(selectCurrentPage));
     this.sortField = {order: Direction.ASC, field: SortField.DATE};
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription =>
-      subscription.unsubscribe());
   }
 
   ngOnInit(): void {
@@ -67,7 +68,12 @@ export class SearchComponent implements OnInit, OnDestroy {
     );
   }
 
-  toggleFavorite(videoId: string): void {
-    this.store.dispatch(toggleFavorite({videoId}));
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription =>
+      subscription.unsubscribe());
+  }
+
+  changePage(newPage: number): void {
+    this.store.dispatch(setCurrentPage({currentPage: newPage}));
   }
 }

@@ -1,41 +1,47 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {User} from '@app/auth/models/user';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, ReplaySubject, skip} from 'rxjs';
 import {StorageService} from '@app/youtube/services/storage.service';
 
 @Injectable()
 export class LoginService {
 
-  private _isLoggedIn: BehaviorSubject<boolean>;
+  private isUserFetched$: ReplaySubject<void>;
 
-  public isAuth$: Observable<boolean>;
+  private _currentUser$: BehaviorSubject<User>;
 
   constructor(
     private router: Router,
     private store: StorageService) {
-    this._isLoggedIn = new BehaviorSubject<boolean>(false);
-    this.isAuth$ = this._isLoggedIn.asObservable();
+    this.isUserFetched$ = new ReplaySubject<void>();
+    this._currentUser$ = new BehaviorSubject<User>({} as User);
+    this.fetchUser();
   }
 
-  get user(): User {
-    return this.store.getUser();
+  fetchUser() {
+    const user = JSON.parse(localStorage.getItem('user') ?? '') as User;
+    this.setCurrentUser$(user);
+    return this.getCurrentUser$();
+  }
+
+  getCurrentUser$() {
+    return this._currentUser$.pipe(skip(1));
+  }
+
+  setCurrentUser$(user: User): void {
+    this.isUserFetched$.next();
+    this._currentUser$.next(user);
   }
 
   login(user: User): void {
-    this._isLoggedIn.next(true);
     this.store.login(user);
-    console.log(this._isLoggedIn.getValue());
   }
 
   logout(): void {
-    this._isLoggedIn.next(false);
-    this.store.logout();
+    localStorage.removeItem('user');
+    this._currentUser$.next({} as User);
     void this.router.navigate(['/login']);
-  }
-
-  get isLoggedIn$(): Observable<boolean> {
-    return this._isLoggedIn.asObservable();
   }
 
   signup(): void {

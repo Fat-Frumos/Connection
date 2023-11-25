@@ -13,7 +13,9 @@
     </app-settings-button>
   </form>
   <app-login-info></app-login-info>
-  <a routerLink="/favorite"><i class="heart-icon"></i></a>
+  <a routerLink="/favorite">
+    <img src="assets/svg/items/star.svg" alt="Star">
+  </a>
 </header>
 <app-filter-setting
   [searchText]="searchText.value"

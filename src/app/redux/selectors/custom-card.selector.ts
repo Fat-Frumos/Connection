@@ -7,7 +7,6 @@ import {
 export const selectCustomCardState =
   createFeatureSelector<CardState>('customCard');
 
-
 export const selectAllCustomCards =
   createSelector(selectCustomCardState,
     (state: CardState) => state.customCards);

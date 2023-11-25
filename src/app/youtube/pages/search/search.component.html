@@ -9,12 +9,15 @@
     <div class="rectangle-10"
          [appBorderColor]="video.publishedAt">
     </div>
-    <button (click)="toggleFavorite(video.id.videoId)">
-      Favorite
-    </button>
   </div>
 </div>
 
 <ng-template #loading>
   Loading...
 </ng-template>
+
+<app-pagination
+  [totalPages]="totalPages"
+  [currentPage$]="currentPage$"
+  (pageChange)="changePage($event)">
+</app-pagination>

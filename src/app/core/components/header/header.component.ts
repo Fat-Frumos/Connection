@@ -9,7 +9,7 @@ import {debounceTime, filter, Subscription, switchMap} from 'rxjs';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {VideoService} from '@app/youtube/services/video.service';
 import {Store} from '@ngrx/store';
-import {fetchResult} from '@app/redux/actions/video-item.actions';
+import {fetchResult} from '@app/redux/actions/custom-card.action';
 
 const DEBOUNCE = 500;
 const MIN_LENGTH = 3;
@@ -48,7 +48,11 @@ export class HeaderComponent implements OnDestroy {
         this.formData = value;
         this.searchBy('');
       });
+    this.fetchData();
+    this.store.subscribe(console.log);
+  }
 
+  private fetchData(): void {
     this.searchText.valueChanges.pipe(
       debounceTime(DEBOUNCE),
       filter((value: string | null): value is string =>
@@ -64,7 +68,7 @@ export class HeaderComponent implements OnDestroy {
     this.searchClicked.emit();
     this.filter.emit(searchText);
     this.service.setSearchText(searchText);
-    this.store.dispatch(fetchResult({value: searchText}));
+    this.store.dispatch(fetchResult({result: searchText}));
   }
 
   ngOnDestroy() {

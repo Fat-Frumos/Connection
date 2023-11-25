@@ -10,8 +10,6 @@ import {Store} from '@ngrx/store';
 import {
   CustomCard
 } from '@app/youtube/components/custom-card/custom-card-model';
-import {updateVideosFromService} from '@app/redux/actions/video-item.actions';
-import {toVideoItems} from '@app/youtube/models/mappers';
 import {saveCustomCards} from '@app/redux/actions/custom-card.action';
 import {baseUrl} from '@app/config';
 import {VideoListResponse} from '@app/youtube/models/video-list-response-model';
@@ -40,14 +38,14 @@ export class VideoService {
     this._videosSubject.next(customCards);
   }
 
-  fetchVideoData(search: string): Observable<VideoItem[]> {
-    return this.findByCriteria(search).pipe(
-      map((response) => toVideoItems(response.items)),
-      tap((items) => this.store.dispatch(
-        updateVideosFromService({videoItems: items})
-      ))
-    );
-  }
+  // fetchVideoData(search: string): Observable<VideoItem[]> {
+  //   return this.findByCriteria(search).pipe(
+  //     map((response) => toVideoItems(response.items)),
+  //     tap((items) => this.store.dispatch(
+  //       updateVideosFromService({videoItems: items})
+  //     ))
+  //   );
+  // }
 
   setSearchText(searchText: string): void {
     this._sortService.setCriteria$(searchText);
