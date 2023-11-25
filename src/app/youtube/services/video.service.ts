@@ -38,15 +38,6 @@ export class VideoService {
     this._videosSubject.next(customCards);
   }
 
-  // fetchVideoData(search: string): Observable<VideoItem[]> {
-  //   return this.findByCriteria(search).pipe(
-  //     map((response) => toVideoItems(response.items)),
-  //     tap((items) => this.store.dispatch(
-  //       updateVideosFromService({videoItems: items})
-  //     ))
-  //   );
-  // }
-
   setSearchText(searchText: string): void {
     this._sortService.setCriteria$(searchText);
   }

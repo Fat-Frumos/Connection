@@ -18,9 +18,8 @@ export class AuthInterceptor implements HttpInterceptor {
     const authReq = req.clone({
       params: req.params.set('key', keyApi)
     });
-
     console.log('Intercepted Request: ', authReq.urlWithParams);
-
     return next.handle(authReq);
   }
 }
+
