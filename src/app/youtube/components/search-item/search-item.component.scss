@@ -60,38 +60,27 @@ $content-size: 238px;
   background-position: center;
 }
 
-.button {
-  position: absolute;
-  cursor: pointer;
-  top: 280px;
-  left: 72px;
-  width: 130px;
-  height: 32px;
-  filter: drop-shadow(2px 0px 4px $main-button-color);
-}
 
-.button-background {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+.button-text-details {
   border-radius: $round;
   background: $main-button-color;
-}
-
-.button-text {
   position: absolute;
+  justify-content: center;
   display: flex;
   align-items: center;
-  top: 20%;
   bottom: 20%;
-  left: 30%;
   right: 20%;
   font-size: $text-font-size;
   text-align: center;
   line-height: $text-line-height;
   color: $white-text-color;
+  border: none;
+  cursor: pointer;
+  top: $border-size;
+  left: 72px;
+  width: 130px;
+  height: 32px;
+  filter: drop-shadow(2px 0px 4px $main-button-color);
 }
 
 .viewed,

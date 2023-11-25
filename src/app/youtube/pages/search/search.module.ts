@@ -3,7 +3,7 @@ import {
   SearchRoutingModule
 } from '@app/youtube/pages/search/search-routing-module';
 import {SearchComponent} from '@app/youtube/pages/search/search.component';
-import {AsyncPipe, NgForOf} from '@angular/common';
+import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
 import {
   SearchItemComponent
 } from '@app/youtube/components/search-item/search-item.component';
@@ -12,18 +12,26 @@ import {
 } from '@app/shared/direcrives/border-color.directive';
 import {SharedModule} from '@app/shared/shared.module';
 import {FeatureModule} from '@app/shared/feature.module';
+import {SortPipe} from '@app/shared/pipes/sort.pipe';
+import {FilterByPipe} from '@app/shared/pipes/filter.pipe';
+import {AuthModule} from '@app/auth/auth.module';
 
 @NgModule({
   declarations: [
     BorderColorDirective,
     SearchComponent,
-    SearchItemComponent],
+    FilterByPipe,
+    SortPipe,
+    SearchItemComponent
+  ],
   imports: [
     SearchRoutingModule,
     SharedModule,
     FeatureModule,
     AsyncPipe,
-    NgForOf
+    NgForOf,
+    NgIf,
+    AuthModule
   ],
   exports: [
     SearchComponent,

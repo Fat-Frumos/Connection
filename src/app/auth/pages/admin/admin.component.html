@@ -1,0 +1,20 @@
+<div *ngFor="let customCard of customCards$
+  | async; trackBy: trackByCustomCard">
+  {{ customCard.title }}
+  {{ customCard.description }}
+  <button (click)="deleteCustomCard(customCard.id.videoId)">
+    Delete
+  </button>
+  <button (click)="addCustomCard(customCard)">
+    Add
+  </button>
+  <button (click)="toggleFavorite(customCard.id.videoId)">
+    Favorite
+  </button>
+</div>
+
+<app-pagination
+  [totalPages]="totalPages"
+  [currentPage$]="currentPage$"
+  (pageChange)="changePage($event)">
+</app-pagination>

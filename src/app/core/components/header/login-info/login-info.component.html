@@ -1,5 +1,5 @@
 <div class="login">
-  <div class="username">{{email}}</div>
+  <div class="username">{{(user | async)?.email}}</div>
   <img
     class="login-icon"
     src="assets/svg/header/login.svg"

@@ -7,21 +7,26 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {
   CardCreationComponent
 } from './pages/card-creation/card-creation.component';
-import {NgForOf, NgIf} from '@angular/common';
+import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
+import { AdminComponent } from './pages/admin/admin.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
-    CardCreationComponent
+    CardCreationComponent,
+    AdminComponent,
+    PaginationComponent
   ],
   imports: [
     SharedModule,
     AuthRoutingModule,
     ReactiveFormsModule,
     NgIf,
-    NgForOf
+    NgForOf,
+    AsyncPipe
   ],
-  exports: [LoginComponent],
+  exports: [LoginComponent, PaginationComponent],
   providers: [LoginService]
 })
 export class AuthModule {

@@ -1,15 +1,18 @@
 <div class="background"></div>
 <div class="title">{{ video.snippet.title }}</div>
+
 <div class="image"
      [style.background-image]="'url(' + video.snippet.thumbnails.medium.url + ')'"></div>
-<div class="button">
-  <div class="button-background"></div>
-  <button
-    class="button-text"
-    (click)="saveDataAndRedirect()">More...
-  </button>
 
+<button class="button button-text-details"
+        [routerLink]="['main', video.id.videoId]">More...
+</button>
+<div (click)="toggleFavorite(video.id.videoId)">
+  <img [src]="isFavorite$
+  ? 'assets/svg/items/star-fill.svg'
+  : 'assets/svg/items/star.svg'" alt="Favorite Icon">
 </div>
+
 
 <div class="statistics">
   <div class="group">

@@ -1,6 +1,7 @@
-import {Component, OnDestroy, ViewEncapsulation} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {LoginService} from '@app/auth/services/login.service';
-import {Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
+import {User} from '@app/auth/models/user';
 
 @Component({
   selector: 'app-login-info',
@@ -8,25 +9,15 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./login-info.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class LoginInfoComponent implements OnDestroy {
+export class LoginInfoComponent {
 
-  public email: string;
-
-  private subscription: Subscription;
-
+  public user: Observable<User>;
 
   constructor(private loginService: LoginService) {
-    this.email = '';
-    this.subscription = this.loginService.user$.subscribe(user => {
-      this.email = user.email;
-    });
+    this.user = this.loginService.getCurrentUser$();
   }
 
   logout(): void {
     this.loginService.logout();
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 }

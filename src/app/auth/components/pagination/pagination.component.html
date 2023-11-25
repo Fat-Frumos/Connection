@@ -1,0 +1,9 @@
+<button [disabled]="currentPage === 1"
+        (click)="changePage(currentPage - 1)"
+><
+</button>
+<span>{{ currentPage }} / {{ totalPages }}</span>
+<button [disabled]="currentPage === totalPages"
+        (click)="changePage(currentPage + 1)"
+>>
+</button>
