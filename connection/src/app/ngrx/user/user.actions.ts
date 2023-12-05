@@ -1,6 +1,21 @@
 import {createAction, props} from '@ngrx/store';
 import {User} from '@app/model/user.model';
 
+export const registerUser = createAction(
+  '[User] Register User',
+  props<{ user: User }>()
+);
+
+export const registerUserSuccess = createAction(
+  '[User] Register User Success',
+  props<{ message: string }>()
+);
+
+export const registerUserFailure = createAction(
+  '[User] Register User Failure',
+  props<{ error: string }>()
+);
+
 export const fetchUser =
   createAction('[User] Load User');
 

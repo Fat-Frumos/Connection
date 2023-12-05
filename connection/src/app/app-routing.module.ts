@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {PreloadService} from '@app/auth/service/preload.service';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {authGuard} from '@app/auth/service/auth.guard';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 const routes: Routes = [
 
@@ -32,6 +33,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     HttpClientModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot(routes,
       {preloadingStrategy: PreloadService})],
   exports: [RouterModule],

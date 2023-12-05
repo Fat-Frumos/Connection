@@ -1,4 +1,9 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ViewEncapsulation
+} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ValidatorService} from '@app/auth/service/validator.service';
 import {UserService} from '@app/auth/service/user.service';
@@ -8,13 +13,14 @@ import {ErrorMessage} from '@app/model/error-message.model';
 import {Store} from '@ngrx/store';
 import {showAlert} from '@app/ngrx/app/app.action';
 import {User} from '@app/model/user.model';
-import {beginRegister} from '@app/ngrx/user/user.actions';
+import {beginRegister, registerUser} from '@app/ngrx/user/user.actions';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss',
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegistrationComponent implements OnInit {
 
@@ -46,9 +52,10 @@ export class RegistrationComponent implements OnInit {
     }
     this.isSubmitting = true;
     const formUser = this.validator.getFormUser(this.registrationForm);
-    this.store.dispatch(beginRegister({user: formUser}));
-    // this.register(formUser);
+    console.log(formUser);
+    this.store.dispatch(registerUser({ user: formUser }));
   }
+    // this.register(formUser);
 
   private register(formUser: User) {
     this.userService.registration(formUser).subscribe({
@@ -79,8 +86,10 @@ export class RegistrationComponent implements OnInit {
   }
 
   enableSubmitButton(): void {
-    this.registrationForm.enable();
-    this.isEmailTaken = false;
+    if (!this.registrationForm.enabled) {
+      this.registrationForm.enable();
+      this.isEmailTaken = false;
+    }
   }
 
   disableSubmitButton(): void {
