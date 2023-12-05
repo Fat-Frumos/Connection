@@ -9,7 +9,7 @@ import {
 } from '@app/youtube/components/search-item/search-item.component';
 import {
   BorderColorDirective
-} from '@app/shared/direcrives/border-color.directive';
+} from '@app/shared/directives/border-color.directive';
 import {SharedModule} from '@app/shared/shared.module';
 import {FeatureModule} from '@app/shared/feature.module';
 import {SortPipe} from '@app/shared/pipes/sort.pipe';
@@ -34,6 +34,7 @@ import {AuthModule} from '@app/auth/auth.module';
     AuthModule
   ],
   exports: [
+    SortPipe,
     SearchComponent,
     BorderColorDirective
   ]

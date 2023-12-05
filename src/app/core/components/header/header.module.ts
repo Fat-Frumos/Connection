@@ -12,7 +12,7 @@ import {
 } from '@app/core/components/header/filter-setting/filter-setting.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FeatureModule} from '@app/shared/feature.module';
-import {HiddenDirective} from '@app/shared/direcrives/hidden.directive';
+import {HiddenDirective} from '@app/shared/directives/hidden.directive';
 import {RouterLink} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
 
@@ -26,11 +26,11 @@ import {AsyncPipe} from '@angular/common';
     HiddenDirective
   ],
   imports: [
-    FormsModule,
-    FeatureModule,
     ReactiveFormsModule,
+    FeatureModule,
     RouterLink,
-    AsyncPipe
+    AsyncPipe,
+    FormsModule
   ], exports: [
     HeaderComponent,
     HiddenDirective

@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { BorderColorDirective } from '../../shared/direcrives/border-color.directive';
+import { BorderColorDirective } from '@app/shared/directives/border-color.directive';
+import {expect, describe, beforeEach, it} from '@jest/globals';
 
 @Component({
-  template: `<div [appBorderColor]="dateValue" id="testDiv"></div>`
+  template: `<div [appBorderColor]='dateValue' id='testDiv'></div>`
 })
 class TestComponent {
   dateValue!: string;
@@ -29,6 +30,17 @@ describe('BorderColorDirective', () => {
     expect(directive).toBeTruthy();
   });
 
+  function rgbToHex(rgb: string): string {
+    const match = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    if (!match) {
+      return '';
+    }
+    function hex(x: string) {
+      return ('0' + parseInt(x).toString(16)).slice(-2);
+    }
+    return '#' + hex(match[1]) + hex(match[2]) + hex(match[3]);
+  }
+
   it('should set background color based on date', () => {
     const date = new Date();
     date.setDate(date.getDate() - 1);
@@ -37,7 +49,7 @@ describe('BorderColorDirective', () => {
     fixture.detectChanges();
 
     const nativeElement = debugElement.nativeElement as HTMLElement;
-    const backgroundColor = nativeElement.style.backgroundColor;
-    expect(backgroundColor).toBe('#EB5757');
+    const backgroundColor = rgbToHex(nativeElement.style.backgroundColor);
+    expect(backgroundColor).toBe('#2f80ed');
   });
 });

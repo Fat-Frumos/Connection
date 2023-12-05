@@ -19,6 +19,7 @@ import {CustomCardEffect} from '@app/redux/effects/custom-card.effect';
 import {VideoEffects} from '@app/redux/effects/video-item.effect';
 import {UserEffects} from '@app/redux/effects/user.effect';
 import {VideoService} from '@app/youtube/services/video.service';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {VideoService} from '@app/youtube/services/video.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
     CoreModule.forRoot(),
     SharedModule.forRoot(),
     BrowserAnimationsModule,

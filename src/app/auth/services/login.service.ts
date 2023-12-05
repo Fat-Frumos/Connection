@@ -20,10 +20,18 @@ export class LoginService {
   }
 
   fetchUser() {
-    const user = JSON.parse(localStorage.getItem('user') ?? '') as User;
-    this.setCurrentUser$(user);
+    const userJson = localStorage.getItem('user');
+    if (userJson) {
+      try {
+        const user = JSON.parse(userJson) as User;
+        this.setCurrentUser$(user);
+      } catch (error) {
+        console.error('Error parsing user JSON:', error);
+      }
+    }
     return this.getCurrentUser$();
   }
+
 
   getCurrentUser$() {
     return this._currentUser$.pipe(skip(1));

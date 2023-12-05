@@ -1,7 +1,7 @@
 import {
   Component,
   EventEmitter,
-  OnDestroy,
+  OnDestroy, OnInit,
   Output,
   ViewEncapsulation
 } from '@angular/core';
@@ -20,7 +20,7 @@ const MIN_LENGTH = 3;
   styleUrls: ['./header.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class HeaderComponent implements OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   @Output() searchClicked = new EventEmitter<void>();
 
@@ -32,24 +32,28 @@ export class HeaderComponent implements OnDestroy {
 
   public formData: FormData = new FormData();
 
-  public subscription: Subscription;
+  public subscription: Subscription = new Subscription();
 
-  public formGroup: FormGroup = this.formBuilder.group({
-    searchInput: ['']
-  });
+  public formGroup: FormGroup;
 
   constructor(
     private store: Store,
     private service: VideoService,
     private formBuilder: FormBuilder
   ) {
-    this.subscription = this.formGroup.valueChanges
-      .subscribe((value: FormData): void => {
+    this.formGroup = this.formBuilder.group({
+      searchInput: ['']
+    });
+    this.fetchData();
+    this.store.subscribe(console.log);
+  }
+
+  ngOnInit(): void {
+    this.subscription = this.formGroup.valueChanges.subscribe(
+      (value: FormData): void => {
         this.formData = value;
         this.searchBy('');
       });
-    this.fetchData();
-    this.store.subscribe(console.log);
   }
 
   private fetchData(): void {
@@ -58,8 +62,8 @@ export class HeaderComponent implements OnDestroy {
       filter((value: string | null): value is string =>
         value !== null && value.length >= MIN_LENGTH),
       switchMap(value =>
-        this.service.fetchCustomCards(value)))
-      .subscribe(results => {
+        this.service.fetchCustomCards(value))).subscribe(
+      results => {
         this.service.updateVideos(results);
       });
   }

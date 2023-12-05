@@ -35,7 +35,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   customCards$ = new Observable<CustomCard[]>();
 
-  private videosSubscription: Subscription;
+  private subscription: Subscription;
 
   constructor(
     private store: Store,
@@ -48,7 +48,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       )
     );
 
-    this.videosSubscription =
+    this.subscription =
       this.videoService.videos$.subscribe((customCards: CustomCard[]) => {
         this.store.dispatch(saveCustomCards({customCards}));
       });
@@ -63,7 +63,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.videosSubscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   toggleFavorite(videoId: string): void {

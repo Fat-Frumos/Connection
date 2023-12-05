@@ -78,7 +78,7 @@ export class VideoService {
     });
   }
 
-  private getCustomCardStatistics(ids: string[]): Observable<VideoListResponse> {
+  public getCustomCardStatistics(ids: string[]): Observable<VideoListResponse> {
     return this.http.get<VideoListResponse>(`${baseUrl}/videos?`,
       {
         params: {

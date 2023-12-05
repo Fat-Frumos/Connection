@@ -1,6 +1,9 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {VideoItem} from '@app/youtube/models/video-item-model';
-import {CriteriaModel, Direction, SortField} from '@app/shared/models/criteria-model';
+import {
+  CriteriaModel,
+  Direction,
+  SortField
+} from '@app/shared/models/criteria-model';
 import {
   CustomCard
 } from '@app/youtube/components/custom-card/custom-card-model';
@@ -19,14 +22,6 @@ export class SortPipe implements PipeTransform {
           new Date(b.snippet.publishedAt).getTime(), order);
       });
     }
-
-    // if (field === SortField.VIEW) {
-    //   videos.sort((a: CustomCard, b: CustomCard): number => {
-    //     return this.sorted(
-    //       a.statistics.viewCount,
-    //       b.statistics.viewCount, order);
-    //   });
-    // }
     return videos;
   }
 

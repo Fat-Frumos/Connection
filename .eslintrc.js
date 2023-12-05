@@ -21,7 +21,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:import/errors'
   ],
-  ignorePatterns: ['karma.conf.js', 'webpack.config.js', '*.html', 'projects/**/*'],
+  ignorePatterns: ['jest.conf.js', 'webpack.config.js', '*.html', 'projects/**/*'],
   rules: {
     '@angular-eslint/directive-selector': [
       'error',
@@ -37,6 +37,22 @@ module.exports = {
         type: 'element',
         prefix: 'app',
         style: 'kebab-case'
+      }
+    ],
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: [
+          '**/*.test.js',
+          '**/*.test.jsx',
+          '**/*.test.ts',
+          '**/*.test.tsx',
+          '**/*.spec.js',
+          '**/*.spec.jsx',
+          '**/*.spec.ts',
+          '**/*.spec.tsx',
+          'setup-jest.ts'
+        ]
       }
     ],
     '@typescript-eslint/indent': ['error', 2],

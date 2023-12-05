@@ -2,7 +2,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
 import {
   AbstractControl,
   FormArray,
-  FormBuilder,
+  FormBuilder, FormGroup,
   Validators
 } from '@angular/forms';
 import {VideoService} from '@app/youtube/services/video.service';
@@ -25,21 +25,21 @@ export class CardCreationComponent {
   textValidator = [Validators.required.bind(Validators),
     Validators.minLength(MIN_LEN), Validators.maxLength(MIDDLE_LEN)];
 
-  cardForm = this.formBuilder.group({
-    title: ['', this.textValidator],
-    description: ['', Validators.maxLength(MAX_LEN).bind(Validators)],
-    imageLink: ['', Validators.required.bind(Validators)],
-    videoLink: ['', Validators.required.bind(Validators)],
-    creationDate: ['', [Validators.required.bind(Validators),
-      this.formService.dateValidator.bind(this)]],
-    tags: this.formBuilder.array([])
-  });
+  public cardForm: FormGroup;
 
   constructor(
     private readonly service: VideoService,
     private readonly formService: FormService,
     private formBuilder: FormBuilder) {
-    console.log();
+    this.cardForm = this.formBuilder.group({
+      title: ['', this.textValidator],
+      description: ['', Validators.maxLength(MAX_LEN).bind(Validators)],
+      imageLink: ['', Validators.required.bind(Validators)],
+      videoLink: ['', Validators.required.bind(Validators)],
+      creationDate: ['', [Validators.required.bind(Validators),
+        this.formService.dateValidator.bind(this)]],
+      tags: this.formBuilder.array([])
+    });
   }
 
   get tags() {
@@ -49,11 +49,11 @@ export class CardCreationComponent {
   addTag(tag: string, input: HTMLInputElement): void {
     const alphanumericRegex = /^[0-9a-z]+$/;
     if (tag.trim() === '') {
-      this.tags.setErrors({ 'empty': true });
+      this.tags.setErrors({'empty': true});
     } else if (!alphanumericRegex.test(tag)) {
-      this.tags.setErrors({ 'invalid': true });
+      this.tags.setErrors({'invalid': true});
     } else if (this.tags.length >= TAGS_SIZE) {
-      this.tags.setErrors({ 'maxTags': true });
+      this.tags.setErrors({'maxTags': true});
     } else {
       this.tags.push(this.formBuilder.control(tag,
         Validators.required.bind(Validators)));

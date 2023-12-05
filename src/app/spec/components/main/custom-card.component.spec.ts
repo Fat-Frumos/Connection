@@ -1,6 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {Store} from '@ngrx/store';
+import {beforeEach, describe, expect, it} from '@jest/globals';
+import {
+  CustomCardComponent
+} from '@app/youtube/components/custom-card/custom-card.component';
 
-import { CustomCardComponent } from '@app/youtube/components/custom-card/custom-card.component';
+class MockStore {
+}
 
 describe('CustomCardComponent', () => {
   let component: CustomCardComponent;
@@ -8,7 +14,10 @@ describe('CustomCardComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CustomCardComponent]
+      declarations: [CustomCardComponent],
+      providers: [
+        {provide: Store, useClass: MockStore}
+      ]
     });
     fixture = TestBed.createComponent(CustomCardComponent);
     component = fixture.componentInstance;

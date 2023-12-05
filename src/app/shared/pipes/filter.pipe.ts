@@ -1,5 +1,4 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {VideoItem} from '@app/youtube/models/video-item-model';
 import {
   CustomCard
 } from '@app/youtube/components/custom-card/custom-card-model';

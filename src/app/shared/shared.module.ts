@@ -3,10 +3,11 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from '@app/auth/services/auth-interceptor.service';
 import {
   BASE_URL_TOKEN,
-  KEY_URL_TOKEN,
-  keyApi,
   baseUrl,
-  itemSize, ITEM_SIZE_TOKEN
+  ITEM_SIZE_TOKEN,
+  itemSize,
+  KEY_URL_TOKEN,
+  keyApi
 } from '@app/config';
 
 @NgModule({

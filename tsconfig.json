@@ -20,9 +20,15 @@
     "useDefineForClassFields": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "typeRoots": [
+      "src/types",
+      "node_modules/@types",
+      "node_modules/jest-preset-angular/types"
+    ],
     "types": [
-      "jasmine",
-      "node"
+      "jest",
+      "node",
+      "jest-preset-angular"
     ],
     "lib": [
       "ES2022",
@@ -30,8 +36,12 @@
     ],
     "baseUrl": "./src",
     "paths": {
-      "@app/*": ["app/*"],
-      "@interface/*": ["interface/*"]
+      "@app/*": [
+        "app/*"
+      ],
+      "@interface/*": [
+        "interface/*"
+      ]
     }
   },
   "angularCompilerOptions": {
@@ -43,7 +53,8 @@
   "include": [
     "src/**/*.ts",
     ".eslintrc.js",
-    "karma.conf.js"
+    "jest.config.js",
+    "setup-jest.ts"
   ],
   "files": [
     "src/main.ts"

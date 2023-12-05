@@ -26,7 +26,6 @@ export class StorageService {
 
   login(user: User): void {
     localStorage.setItem('user', JSON.stringify(user));
-    console.log('loginForm: ' + user.email);
   }
 
   logout(): void {

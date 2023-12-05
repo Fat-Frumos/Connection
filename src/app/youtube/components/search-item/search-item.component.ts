@@ -26,8 +26,9 @@ export class SearchItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isFavorite$ = this.store.select(selectIsFavorite(this.video.id.videoId));
-
+    if (this.video.id) {
+      this.isFavorite$ = this.store.select(selectIsFavorite(this.video.id.videoId));
+    }
   }
 
   toggleFavorite(id: string): void {

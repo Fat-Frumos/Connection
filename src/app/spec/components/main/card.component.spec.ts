@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import {expect, describe, beforeEach, it} from '@jest/globals';
 import { CardComponent } from '@app/youtube/components/card/card.component';
 
 describe('CardComponent', () => {
