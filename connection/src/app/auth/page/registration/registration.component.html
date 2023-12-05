@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="right-panel-active">
+    <div class="container__form container--signup">
+      <form class="form" id="form1" [formGroup]="registrationForm"
+            (ngSubmit)="onSubmit()">
+        <h2 class="form__title">Sign Up</h2>
+
+        <input type="text"
+               placeholder="User"
+               formControlName="name"
+               [ngClass]="{'invalid-border': !isValidName(),
+               'valid-border': isValidName()}"
+               autocomplete class="input"/>
+
+        <input #emailInput
+               type="email"
+               placeholder="Email"
+               formControlName="email"
+               (input)="onEmailChange(emailInput.value)"
+               [ngClass]="{'invalid-border': !isValidEmail(),
+               'valid-border': isValidEmail()}"
+               autocomplete class="input"/>
+
+        <input type="password"
+               placeholder="Password"
+               formControlName="password"
+               (input)="isEmailTaken = false"
+               [ngClass]="{'invalid-border': !isValidPassword(),
+               'valid-border': isValidPassword()}"
+               autocomplete class="input"/>
+
+        <app-form-message
+          [formGroup]="registrationForm">
+        </app-form-message>
+
+        <div *ngIf="isEmailTaken">
+          Email is already taken.
+        </div>
+
+        <button class="btn"
+                [ngClass]="{'disabled-btn': registrationForm.invalid}"
+                [disabled]="registrationForm.invalid || isSubmitting || isEmailTaken">
+          Register
+        </button>
+      </form>
+    </div>
+    <app-swiper></app-swiper>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="profile-card"
+     *ngIf="profileData; else loadingOrError">
+  <div class="img-area">
+    <div class="inner-area">
+      <img [src]="randomUserImage"
+           class="card-image" alt="">
+    </div>
+  </div>
+  <div class="name">{{ profileData.name.S }}</div>
+  <div class="social-icons">
+    <a href="#" class="fab"><img src="assets/email.svg" alt=""></a>
+    <div class="about">{{profileData.email.S }}</div>
+  </div>
+  <div class="about"> {{ profileData.createdAt.S | date:'medium' }}</div>
+  <div class="about">ID: {{ profileData.uid.S }}</div>
+
+
+  <div *ngIf="profileData as profile">
+    <input class="profile-input"
+           [readonly]="!isEditing"
+           [style.opacity]="isEditing ? 1 : 0"
+           [disabled]="!isEditing" formControlName="name" required>
+    <div class="buttons">
+      <button (click)="isEditing = true" *ngIf="!isEditing">Edit</button>
+      <button (click)="saveChanges()" *ngIf="isEditing">Save</button>
+      <button (click)="cancelEditing()" *ngIf="isEditing">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #loadingOrError>
+  <div id="loader-wrapper"
+       *ngIf="errorMessage$ | async; else loading">
+    <app-toast></app-toast>
+  </div>
+  <ng-template #loading>
+  </ng-template>
+</ng-template>

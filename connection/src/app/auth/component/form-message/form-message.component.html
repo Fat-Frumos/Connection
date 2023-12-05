@@ -1,0 +1,14 @@
+<div class="error-message"
+  *ngIf="formGroup.controls['name'].invalid
+       && formGroup.controls['name'].touched">
+  Name is required and can only contain letters and spaces.
+</div>
+<div class="error-message"
+  *ngIf="formGroup.controls['email'].invalid && formGroup.controls['email'].touched">
+  A valid email is required.
+</div>
+<div class="error-message"
+  *ngIf="formGroup.controls['password'].invalid && formGroup.controls['password'].touched">
+  Password must be at least 8 characters long, contain at
+  least one uppercase letter, number, and special character.
+</div>

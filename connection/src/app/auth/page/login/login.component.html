@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="right-panel-active">
+    <div class="container__form container--signin">
+      <form class="form" id="form2"
+            (ngSubmit)="onSubmit()"
+            [formGroup]="loginForm">
+        <h2 class="form__title">Sign In</h2>
+        <input type="email"
+               placeholder="Email"
+               formControlName="email"
+               [ngClass]="{'invalid-border': !isValidEmail(),
+               'valid-border': isValidEmail()}"
+               autocomplete class="input"/>
+
+        <input type="password"
+               placeholder="Password"
+               formControlName="password"
+               [ngClass]="{'invalid-border': !isValidPassword(),
+               'valid-border': isValidPassword()}"
+               autocomplete class="input"/>
+
+        <app-form-message
+          [formGroup]="loginForm">
+        </app-form-message>
+        <button class="btn"
+                [ngClass]="{'disabled-btn': !(this.isValidEmail() && this.isValidPassword())}"
+                [disabled]="!(this.isValidEmail() && this.isValidPassword())">
+          Login
+        </button>
+      </form>
+    </div>
+    <app-swiper></app-swiper>
+  </div>
+</div>

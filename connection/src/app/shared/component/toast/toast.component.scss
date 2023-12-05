@@ -1,0 +1,119 @@
+p {
+  position: absolute;
+  z-index: 2000;
+}
+
+.menu {
+  --front: #0094ca;
+  --back: #b80607;
+  --icon: white;
+  -webkit-perspective: 600px;
+  perspective: 600px;
+  width: 48px;
+  height: 48px;
+  position: relative;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu input {
+  display: none;
+}
+
+.menu input + div span {
+  --rotateY: 0deg;
+  --background: var(--front);
+  transform: rotateY(var(--rotateY));
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  background: var(--background);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transition: transform 0.6s cubic-bezier(0.2, 0.64, 0.48, 1.24);
+}
+
+.menu input + div span:before, .menu input + div span:after {
+  --rotate: 0deg;
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 2px;
+  border-radius: 1px;
+  top: 50%;
+  left: 50%;
+  background: var(--icon);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translate(-50%, -50%) rotate(var(--rotate)) translateZ(6px);
+}
+
+.menu input + div span:first-child {
+  --background: var(--back);
+}
+
+.menu input + div span:first-child:before {
+  --rotate: -45deg;
+}
+
+.menu input + div span:first-child:after {
+  --rotate: 45deg;
+}
+
+.menu input + div span:last-child {
+  --rotateY: 180deg;
+}
+
+.menu input + div span:last-child:before {
+  box-shadow: 0 -5px 0 var(--icon), 0 5px 0 var(--icon);
+}
+
+.menu input + div span:last-child:after {
+  display: none;
+}
+
+.menu input:checked + div span:first-child {
+  --rotateY: -180deg;
+}
+
+.menu input:checked + div span:last-child {
+  --rotateY: 0deg;
+}
+
+html {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+*:before, *:after {
+  box-sizing: inherit;
+}
+
+body .dribble {
+  position: fixed;
+  display: block;
+  right: 20px;
+  bottom: 20px;
+}
+
+body .dribble img {
+  display: block;
+  height: 28px;
+}
+
+.close {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  flex: none;
+  transform: scale(1);
+  transition: all 0.5s ease;
+}
