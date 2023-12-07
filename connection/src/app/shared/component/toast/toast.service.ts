@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 import {ToastMessage, ToastMessageType} from '@app/model/toast-message.model';
 
-const delay = 500;
+const DELAY = 2000;
 
 @Injectable()
 export class ToastService {
@@ -11,12 +11,12 @@ export class ToastService {
 
   toast$ = this.subject.asObservable();
 
-  show(message: string, toastType: ToastMessageType): void {
+  showMessage(message: string, toastType: ToastMessageType): void {
     const color = this.getColor(toastType);
-    this.subject.next({message, toastType, color} as ToastMessage);
+    this.show({message, toastType, color} as ToastMessage);
   }
 
-  clear(): void {
+  clear(delay: number): void {
     setTimeout(() => {
       this.subject.next({} as ToastMessage);
     }, delay);
@@ -33,5 +33,10 @@ export class ToastService {
       default:
         return 'black';
     }
+  }
+
+  show(toast: ToastMessage): void {
+    this.subject.next(toast);
+    this.clear(DELAY);
   }
 }

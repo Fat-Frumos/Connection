@@ -8,13 +8,13 @@ import {
   updateProfile,
   updateProfileFailed
 } from './profile.actions';
-import {ProfileService} from '@app/core/service/profile.service';
+import {UserService} from '@app/auth/service/user.service';
 
 @Injectable()
 export class ProfileEffects {
   loadProfile$ = createEffect(() => this.actions$.pipe(
     ofType(loadProfile),
-    mergeMap(() => this.profileService.profileData$
+    mergeMap(() => this.service.fetchUser()
       .pipe(
         map(profile => loadProfileSuccess({profile})),
         catchError(() => EMPTY)
@@ -26,7 +26,7 @@ export class ProfileEffects {
     this.actions$.pipe(
       ofType(updateProfile),
       mergeMap(({name}) =>
-        this.profileService.updateProfile(name).pipe(
+        this.service.update(name).pipe(
           map(() => updateProfile),
           catchError(() => of(updateProfileFailed()))
         )
@@ -34,7 +34,7 @@ export class ProfileEffects {
     )
   );
 
-  constructor(private actions$: Actions, private profileService: ProfileService) {
+  constructor(private actions$: Actions, private service: UserService) {
     console.log();
   }
 }

@@ -1,0 +1,38 @@
+<div class="group-list">
+
+  <div class="group-list-items">
+    <div class="group-list-item"
+         *ngFor="let group of groups"
+         (click)="goToGroup(group.id.S)">
+      {{ group.name }}
+      <button *ngIf="group.isOwned"
+              (click)="deleteGroup(group.id.S)">
+        Delete
+      </button>
+      <div>
+        <button (click)="updateGroups()">Update</button>
+        <input [(ngModel)]="createGroupModel.name"
+               placeholder="Enter group name"/>
+        <button (click)="createGroup()">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="create-group-modal">
+    <h2>Create Group</h2>
+
+    <form [formGroup]="groupForm">
+      <label for="groupName">Group Name:</label>
+      <input type="text" id="groupName" formControlName="groupName">
+      <span class="error"
+            *ngIf="groupForm.controls.groupName.errors?.required">
+        Group name is required.</span>
+      <span class="error"
+            *ngIf="groupForm.controls.groupName.errors?.maxlength">
+        Group name cannot be more than 30 characters.</span>
+      <span class="error" *ngIf="groupForm.controls.groupName.errors?.pattern">
+        Group name can only contain letters, digits, and spaces.</span>
+      <button type="submit" [disabled]="!groupForm.valid">Create Group</button>
+    </form>
+  </div>
+</div>

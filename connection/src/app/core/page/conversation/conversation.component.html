@@ -1,0 +1,10 @@
+<div *ngFor="let user of users">
+  <span [ngClass]="{ 'has-conversation': hasConversation(user.uid) }"
+        (click)="redirectToConversation(user.uid)">
+    {{ user.name }}
+  </span>
+</div>
+
+<div>
+  <button (click)="updatePeopleList()">Update</button>
+</div>

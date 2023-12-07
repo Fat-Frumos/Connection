@@ -22,6 +22,6 @@ export class ToastComponent {
   }
 
   closeModal() {
-    this.service.clear();
+    this.service.clear(500);
   }
 }

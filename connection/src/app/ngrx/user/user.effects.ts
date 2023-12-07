@@ -1,18 +1,19 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, exhaustMap, map, mergeMap} from 'rxjs/operators';
+import {catchError, map, mergeMap} from 'rxjs/operators';
 import {UserService} from '@app/auth/service/user.service';
 import {
-  beginRegister,
   fetchUser,
   fetchUserFailed,
-  fetchUserSuccess, registerUser, registerUserFailure, registerUserSuccess
+  fetchUserSuccess, loginFailure, loginSuccess, loginUser,
+  registerUser,
+  registerUserFailure,
+  registerUserSuccess
 } from '@app/ngrx/user/user.actions';
-import {of, tap} from 'rxjs';
-import {User} from '@app/model/user.model';
-import {Router} from '@angular/router';
-import {showAlert} from '@app/ngrx/app/app.action';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {EMPTY, of} from 'rxjs';
+import {AuthUser} from '@app/model/user/user-registration.model';
+import {ErrorMessage} from '@app/model/error-message.model';
+import {Store} from '@ngrx/store';
 
 @Injectable()
 export class UserEffects {
@@ -22,11 +23,40 @@ export class UserEffects {
       mergeMap((action) =>
         this.userService.registration(action.user).pipe(
           map(() => registerUserSuccess({message: 'User registered successfully'})),
-          tap(() => this.showSnackBar('User registered successfully')),
-          tap(() => this.router.navigate(['/signin'])),
-          catchError((error) => {
-            this.showSnackBar('Registration failed');
-            return of(registerUserFailure({error: 'Registration failed'}));
+          catchError((error: ErrorMessage) => {
+            this.store.dispatch(registerUserFailure({error: `Registration failed ${error.message}`}));
+            if (error.error.type === 'PrimaryDuplicationException') {
+              this.store.dispatch(registerUserFailure({error: 'Email is already taken'}));
+            } else {
+              this.store.dispatch(registerUserFailure({error: `Registration failed ${error.message}`}));
+            }
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+
+  login$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loginUser),
+      mergeMap((action) =>
+        this.userService.login(action.authUser).pipe(
+          map((user) => loginSuccess({ user })),
+          catchError(() => of(loginFailure({ error: 'Login failed' })))
+        )
+      )
+    )
+  );
+
+  loadUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fetchUser),
+      mergeMap(() =>
+        this.userService.getAuthUser$().pipe(
+          map((user: AuthUser) => fetchUserSuccess({user})),
+          catchError((error: ErrorMessage) => {
+            return of(fetchUserFailed({error: `Registration failed ${error.message}`}));
           })
         )
       )
@@ -34,57 +64,10 @@ export class UserEffects {
   );
 
   constructor(
+    private store: Store,
     private actions$: Actions,
-    private userService: UserService,
-    private snackBar: MatSnackBar,
-    private router: Router
+    private userService: UserService
   ) {
-    console.log();
+    console.log(this.loadUser$);
   }
-
-  private showSnackBar(message: string): void {
-    this.snackBar.open(message, 'Close', {
-      duration: 3000,
-      verticalPosition: 'top'
-    });
-  }
-
-  loadUser$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(fetchUser),
-      mergeMap(() =>
-        this.userService.getUser$().pipe(
-          map((user: User) => fetchUserSuccess({user})),
-          catchError(() => of(fetchUserFailed))
-        )
-      )
-    )
-  );
-
-  // userRegisterEffect = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(beginRegister),
-  //     exhaustMap((action) =>
-  //       this.userService.registration(action.user).pipe(
-  //         map(() => {
-  //           void this.route.navigate(['/signin']);
-  //           return showAlert({
-  //             message: 'Registered successfully',
-  //             resultType: 'pass'
-  //           });
-  //         }),
-  //         catchError((error: Error) =>
-  //           of(showAlert({
-  //             message: 'Registration failed: ' + error.message,
-  //             resultType: 'fail'
-  //           }))
-  //         )
-  //       )
-  //     )
-  //   )
-  // );
-
-  // constructor(private actions$: Actions, private userService: UserService, private route: Router) {
-  //   console.log(this.loadUser$);
-  // }
 }

@@ -5,11 +5,11 @@ import {
   updateProfile
 } from './profile.actions';
 import {ErrorMessage} from '@app/model/error-message.model';
-import {ProfileResponse} from '@app/model/profile-response.model';
+import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
 
 export interface ProfileState {
   name: string;
-  profile: ProfileResponse | null;
+  profile: UserProfileResponse | null;
   error: ErrorMessage | null;
 }
 

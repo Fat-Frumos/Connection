@@ -16,6 +16,7 @@ import {
   updateProfileReducer
 } from '@app/ngrx/profile/profile.reducer';
 import {ToastComponent} from '@app/shared/component/toast/toast.component';
+import {AppEffects} from '@app/ngrx/app/app.effects';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import {ToastComponent} from '@app/shared/component/toast/toast.component';
       user: UserReducer,
       profile: loadProfileReducer, updateProfileReducer
     }),
-    EffectsModule.forRoot([UserEffects]),
+    EffectsModule.forRoot([UserEffects, AppEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25, logOnly: !isDevMode(),
       features: {

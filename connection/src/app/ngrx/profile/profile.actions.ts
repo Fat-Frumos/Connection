@@ -1,13 +1,13 @@
 import {createAction, props} from '@ngrx/store';
 import {ErrorMessage} from '@app/model/error-message.model';
-import {ProfileResponse} from '@app/model/profile-response.model';
+import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
 
 export const loadProfile =
   createAction('[Profile] Load Profile');
 
 export const loadProfileSuccess =
   createAction('[Profile] Load Profile Success', props<{
-    profile: ProfileResponse
+    profile: UserProfileResponse
   }>());
 
 export const loadProfileFailure =
