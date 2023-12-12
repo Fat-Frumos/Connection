@@ -20,13 +20,6 @@ Form field `name` should obey the same validation rules as on Registration page.
 
 Edit profile data of current user.
 
-#### Request headers
-
-| Header          | Type     | Description                                                                               |
-| --------------- | -------- | ----------------------------------------------------------------------------------------- |
-| `rs-uid`        | `string` | user identifier received after successful authentication                                  |
-| `rs-email`      | `string` | user email                                                                                |
-| `Authorization` | `string` | `Bearer <TOKEN>`, where `<TOKEN>` is token value received after successful authentication |
 
 #### Request body
 
@@ -37,63 +30,6 @@ Edit profile data of current user.
 #### Response
 
 _status code_ **201**
-
-#### Exceptions
-
-###### Have not passed valid Authorization header parameter
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidTokenException",
-  "message": "Header should contain \"Authorization\" parameter with Bearer code."
-}
-```
-
-###### Sent form data is corrupted
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidFormDataException",
-  "message": "Invalid multipart/form-data request"
-}
-```
-
-###### Format of form data is unknown or cannot be read
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidFormDataException",
-  "message": "Invalid post data"
-}
-```
-
-###### Form data should contain required parameters
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidFormDataException",
-  "message": "You have to pass \"name\" field."
-}
-```
-
-###### User cannot be found by passed parameters
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidIDException",
-  "message": "User was not found. Check passed identificators."
-}
-```
 
 ## Examination
 

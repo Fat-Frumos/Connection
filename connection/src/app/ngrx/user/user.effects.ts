@@ -3,15 +3,14 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {catchError, map, mergeMap} from 'rxjs/operators';
 import {UserService} from '@app/auth/service/user.service';
 import {
-  fetchUser,
-  fetchUserFailed,
-  fetchUserSuccess, loginFailure, loginSuccess, loginUser,
+  loginFailure,
+  loginSuccess,
+  loginUser,
   registerUser,
   registerUserFailure,
   registerUserSuccess
 } from '@app/ngrx/user/user.actions';
 import {EMPTY, of} from 'rxjs';
-import {AuthUser} from '@app/model/user/user-registration.model';
 import {ErrorMessage} from '@app/model/error-message.model';
 import {Store} from '@ngrx/store';
 
@@ -49,25 +48,25 @@ export class UserEffects {
     )
   );
 
-  loadUser$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(fetchUser),
-      mergeMap(() =>
-        this.userService.getAuthUser$().pipe(
-          map((user: AuthUser) => fetchUserSuccess({user})),
-          catchError((error: ErrorMessage) => {
-            return of(fetchUserFailed({error: `Registration failed ${error.message}`}));
-          })
-        )
-      )
-    )
-  );
+  // loadUser$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(fetchUser),
+  //     mergeMap(() =>
+  //       this.userService.getAuthUser$().pipe(
+  //         map((user: AuthUser) => fetchUserSuccess({user})),
+  //         catchError((error: ErrorMessage) => {
+  //           return of(fetchUserFailed({error: `Registration failed ${error.message}`}));
+  //         })
+  //       )
+  //     )
+  //   )
+  // );
 
   constructor(
     private store: Store,
     private actions$: Actions,
     private userService: UserService
   ) {
-    console.log(this.loadUser$);
+    console.log(this.login$);
   }
 }

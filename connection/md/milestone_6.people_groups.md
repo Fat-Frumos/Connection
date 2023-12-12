@@ -4,16 +4,12 @@
 
 The **default page** for authorized user should be the one without extra path (root routing).
 Page is split into 2 vertical sections.
-Left side is [Group section](#milestone-61-group-list).
-Right side is [People section](#milestone-62-people-list).
+Left side is [Group section](./milestone_6_1.people_group.md)
+Right side is [People list](./milestone_6_2.people_list.md)
 
 > [!WARNING]
 > Please, do not use any timers or intervals to update Group or People list! Only manual triggers
 > are allowed.
-
-[People group](./milestone_6_1.people_group.md).
-
-[People list](./milestone_6_2.people_list.md).
 
 ## Examination
 

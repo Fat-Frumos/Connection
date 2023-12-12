@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component} from '@angular/core';
 import {ToastMessage} from '@app/model/toast-message.model';
 import {NgIf} from '@angular/common';
 import {ToastService} from '@app/shared/component/toast/toast.service';
@@ -8,8 +8,7 @@ import {ToastService} from '@app/shared/component/toast/toast.service';
   standalone: true,
   selector: 'app-toast',
   styleUrl: './toast.component.scss',
-  templateUrl: './toast.component.html',
-  encapsulation: ViewEncapsulation.None
+  templateUrl: './toast.component.html'
 })
 export class ToastComponent {
 
@@ -22,6 +21,6 @@ export class ToastComponent {
   }
 
   closeModal() {
-    this.service.clear(500);
+    this.service.clear(2500);
   }
 }

@@ -2,23 +2,19 @@ import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {ToastComponent} from '@app/shared/component/toast/toast.component';
 import {LoaderComponent} from '@app/shared/component/loader/loader.component';
-import {GroupComponent} from '@app/core/page/group/group.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NgClass, NgForOf, NgIf} from '@angular/common';
+import {AsyncPipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {GroupService} from '@app/core/service/group.service';
-import {
-  ConversationComponent
-} from '@app/core/page/conversation/conversation.component';
+import {ChatComponent} from '@app/core/component/chat/chat.component';
 
 
 const routes: Routes = [
-  {path: '', component: GroupComponent}
+  {path: '', component: ChatComponent}
 ];
 
 @NgModule({
   declarations: [
-    ConversationComponent,
-    GroupComponent],
+    ChatComponent],
   imports: [
     RouterModule.forChild(routes),
     ToastComponent,
@@ -27,10 +23,11 @@ const routes: Routes = [
     NgForOf,
     ReactiveFormsModule,
     NgClass,
-    FormsModule
+    FormsModule,
+    AsyncPipe
   ],
   providers: [GroupService],
   exports: [RouterModule]
 })
-export class GroupRoutingModule {
+export class ChatRoutingModule {
 }

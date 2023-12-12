@@ -1,7 +1,6 @@
 import {RouterLink, RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {LoginComponent} from '@app/auth/page/login/login.component';
-import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
   RegistrationComponent
@@ -10,6 +9,7 @@ import {SwiperComponent} from '@app/auth/component/swiper/swiper.component';
 import {
   FormMessageComponent
 } from '@app/auth/component/form-message/form-message.component';
+import {NgClass, NgIf} from '@angular/common';
 
 const routes: Routes = [
   {path: '', component: LoginComponent}
@@ -24,9 +24,10 @@ const routes: Routes = [
   ],
   imports: [
     RouterLink,
-    CommonModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    NgClass,
+    NgIf
   ],
   exports: [RouterModule]
 })

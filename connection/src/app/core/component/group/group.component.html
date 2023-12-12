@@ -1,0 +1,43 @@
+<button class="btn-update"
+        *ngIf="canUpdate"
+        (click)="updateGroups()"
+        [disabled]="!canUpdate">
+  Update
+</button>
+<span class="counter header-left"
+      *ngIf="!canUpdate">
+  {{ countdown }}</span>
+<div class="create-group-modal">
+  <form [formGroup]="groupForm">
+    <label for="groupName">Group Name:</label>
+    <input type="text" id="groupName" formControlName="groupName">
+    <button type="submit"
+            [disabled]="!groupForm.valid"
+            (click)="createGroup()">Create Group
+    </button>
+
+    <p class="error"
+       *ngIf="groupForm.controls['groupName'].errors">
+      Group name is required.</p>
+    <p class="error"
+       *ngIf="groupForm.controls['groupName'].errors">
+      Group name cannot be more than 30 characters.</p>
+    <p class="error" *ngIf="groupForm.controls['groupName'].errors">
+      Group name can only contain letters, digits, and spaces.</p>
+  </form>
+</div>
+
+<div class="group-list-items">
+  <ul>
+    <li class="participant-name"
+        *ngFor="let group of groups"
+        (click)="goToGroup(group.id.S)">
+      {{ group.name.S }}
+      <button class="btn-message"
+              [disabled]="!group.isOwned"
+              (click)="deleteGroup(group.id.S)">
+        Delete
+      </button>
+    </li>
+  </ul>
+</div>

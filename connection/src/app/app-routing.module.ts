@@ -27,6 +27,16 @@ const routes: Routes = [
     path: '', canActivate: [authGuard],
     loadChildren: () => import('@app/core/page/main/main.module')
       .then((module) => module.MainModule)
+  },
+  {
+    path: 'group', canActivate: [authGuard],
+    loadChildren: () => import('@app/core/component/chat/chat.module')
+      .then((module) => module.ChatModule)
+  },
+  {
+    path: 'conversation', canActivate: [authGuard],
+    loadChildren: () => import('@app/core/page/conversation/conversation.module')
+      .then((module) => module.ConversationModule)
   }
 ];
 

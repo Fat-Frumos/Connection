@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {beforeEach, describe, expect, it} from '@jest/globals';
-import { GroupComponent } from '@app/core/page/group/group.component';
+import { GroupComponent } from '@app/core/component/group/group.component';
 
 describe('ListComponent', () => {
   let component: GroupComponent;

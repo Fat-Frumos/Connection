@@ -9,26 +9,26 @@ import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
 
 export interface ProfileState {
   name: string;
-  profile: UserProfileResponse | null;
-  error: ErrorMessage | null;
+  profile: UserProfileResponse;
+  error: ErrorMessage;
 }
 
 export const initialState: ProfileState = {
   name: '',
-  profile: null,
-  error: null
+  profile: {} as UserProfileResponse,
+  error: {} as ErrorMessage
 };
 
 export const loadProfileReducer = createReducer(
   initialState,
   on(loadProfileSuccess, (state, {profile}) =>
-    ({...state, profile, error: null})),
+    ({...state, profile, error: {} as ErrorMessage})),
   on(loadProfileFailure, (state, {error}) =>
-    ({...state, profile: null, error}))
+    ({...state, profile: {} as UserProfileResponse, error}))
 );
 
 export const updateProfileReducer = createReducer(
   initialState,
-  on(updateProfile, (state, {name}) =>
-    ({...state, name}))
+  on(updateProfile, (state, {profile}) =>
+    ({...state, profile}))
 );

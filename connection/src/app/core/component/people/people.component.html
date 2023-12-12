@@ -1,0 +1,19 @@
+<button class="btn-update"
+        *ngIf="canUpdate"
+        (click)="updatePeople()"
+        [disabled]="!canUpdate">
+  Update
+</button>
+<span class="counter header-right"
+      *ngIf="!canUpdate">
+  {{ countdown }}</span>
+<ul>
+  <li *ngFor="let participant of users"
+      class="participant-name">
+    <div>{{ participant.name.S }}</div>
+    <button class="btn-message"
+            (click)="createConversation(participant.uid.S)">
+      Message
+    </button>
+  </li>
+</ul>

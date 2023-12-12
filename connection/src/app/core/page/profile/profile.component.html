@@ -1,4 +1,7 @@
-<div class="profile-card" *ngIf="profileData.name; else loadingOrError">
+<form [formGroup]="profileForm"
+      class="profile-card"
+      *ngIf="(profileData$ | async) as profileData;
+else loadingOrError">
   <div class="img-area">
     <div class="inner-area">
       <img [src]="randomUserImage" class="card-image" alt="">
@@ -15,17 +18,15 @@
   <input class="profile-input"
          [readonly]="!isEditing"
          [style.opacity]="isEditing ? 1 : 0"
-         [disabled]="!isEditing" formControlName="name" required>
+         [disabled]="!isEditing"
+         formControlName="name"
+         required>
   <div class="buttons">
     <button (click)="isEditing = true" *ngIf="!isEditing">Edit</button>
     <button (click)="saveChanges()" *ngIf="isEditing">Save</button>
     <button (click)="cancelEditing()" *ngIf="isEditing">Cancel</button>
   </div>
-</div>
-
-
-<button [disabled]="isLoggingOut" (click)="logout()">Logout</button>
-
+</form>
 
 <ng-template #loadingOrError>
   <div id="loader-wrapper"

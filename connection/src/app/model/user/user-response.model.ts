@@ -1,6 +1,6 @@
-import {User} from '@app/model/user/user.model';
+import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
 
 export interface UserResponse {
   Count: number;
-  Items: User[];
+  Items: UserProfileResponse[];
 }

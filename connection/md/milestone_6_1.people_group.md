@@ -52,14 +52,6 @@ name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs
 
 Retrieves list of available groups which can be used to broadcast messages.
 
-#### Request headers
-
-| Header          | Type     | Description                                                                               |
-| --------------- | -------- | ----------------------------------------------------------------------------------------- |
-| `rs-uid`        | `string` | user identifier received after successful authentication                                  |
-| `rs-email`      | `string` | user email                                                                                |
-| `Authorization` | `string` | `Bearer <TOKEN>`, where `<TOKEN>` is token value received after successful authentication |
-
 #### Response
 
 _status code_ **200**  
@@ -87,43 +79,12 @@ _json_ format
 }
 ```
 
-#### Exception
-
-###### Have not passed required headers in http-request
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidUserDataException",
-  "message": "Header should contain \"rs-uid\", \"rs-email\" and \"Authorization\" parameters."
-}
-```
-
-###### Have not passed valid Authorization header parameter
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidTokenException",
-  "message": "Header should contain \"Authorization\" parameter with Bearer code."
-}
-```
-
 ---
 
 > `POST` https://tasks.app.rs.school/angular/groups/create
 
 Creates new group with specific name. Owner will be able to delete created group.
 
-#### Request headers
-
-| Header          | Type     | Description                                                                               |
-| --------------- | -------- | ----------------------------------------------------------------------------------------- |
-| `rs-uid`        | `string` | user identifier received after successful authentication                                  |
-| `rs-email`      | `string` | user email                                                                                |
-| `Authorization` | `string` | `Bearer <TOKEN>`, where `<TOKEN>` is token value received after successful authentication |
 
 #### Request body
 
@@ -142,76 +103,11 @@ _json_ format
 }
 ```
 
-#### Exception
-
-###### Have not passed required headers in http-request
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidUserDataException",
-  "message": "Header should contain \"rs-uid\", \"rs-email\" and \"Authorization\" parameters."
-}
-```
-
-###### Have not passed valid Authorization header parameter
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidTokenException",
-  "message": "Header should contain \"Authorization\" parameter with Bearer code."
-}
-```
-
-###### Sent form data is corrupted
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidFormDataException",
-  "message": "Invalid multipart/form-data request"
-}
-```
-
-###### Format of form data is unknown or cannot be read
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidFormDataException",
-  "message": "Invalid post data"
-}
-```
-
-###### Form data should contain required parameters
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidFormDataException",
-  "message": "Parameter \"name\" should define conversation name."
-}
-```
-
 ---
 
 > `DELETE` https://tasks.app.rs.school/angular/groups/delete?groupID={:groupID}
 
 Deletes group by owner.
-
-#### Request headers
-
-| Header          | Type     | Description                                                                               |
-| --------------- | -------- | ----------------------------------------------------------------------------------------- |
-| `rs-uid`        | `string` | user identifier received after successful authentication                                  |
-| `rs-email`      | `string` | user email                                                                                |
-| `Authorization` | `string` | `Bearer <TOKEN>`, where `<TOKEN>` is token value received after successful authentication |
 
 #### Request query
 
@@ -223,48 +119,3 @@ Deletes group by owner.
 
 _status code_ **200**
 
-#### Exception
-
-###### Have not passed required headers in http-request
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidUserDataException",
-  "message": "Header should contain \"rs-uid\", \"rs-email\" and \"Authorization\" parameters."
-}
-```
-
-###### Have not passed valid Authorization header parameter
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidTokenException",
-  "message": "Header should contain \"Authorization\" parameter with Bearer code."
-}
-```
-
-###### Query string should contain required parameters
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidFormDataException",
-  "message": "\"groupID\" parameter should be in query list."
-}
-```
-
-###### Group does not exist
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidIDException",
-  "message": "Group with id \"${groupID}\" does not exist or was removed before."
-}
-```

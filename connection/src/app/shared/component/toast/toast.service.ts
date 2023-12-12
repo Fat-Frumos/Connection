@@ -39,4 +39,14 @@ export class ToastService {
     this.subject.next(toast);
     this.clear(DELAY);
   }
+
+  upload(countdown: number): boolean {
+    const interval = setInterval(() => {
+      countdown--;
+      if (countdown === 0) {
+        clearInterval(interval);
+      }
+    }, 1000);
+    return false;
+  }
 }

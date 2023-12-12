@@ -1,1 +1,13 @@
-<app-loader></app-loader>
+<!--<app-loader *ngIf="!isLoaded()"></app-loader>-->
+<main>
+  <div class="main-container">
+    <h2 class="header-left">Groups</h2>
+    <div class="group-section">
+      <app-group></app-group>
+    </div>
+    <h2 class="header-right">People</h2>
+    <div class="people-section">
+      <app-people></app-people>
+    </div>
+  </div>
+</main>

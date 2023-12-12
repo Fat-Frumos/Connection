@@ -35,6 +35,6 @@ export class ProfileEffects {
   );
 
   constructor(private actions$: Actions, private service: UserService) {
-    console.log();
+    console.log(this.updateProfile$);
   }
 }

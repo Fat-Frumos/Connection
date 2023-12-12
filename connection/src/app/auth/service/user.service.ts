@@ -1,10 +1,9 @@
 import {inject, Injectable} from '@angular/core';
-import {first, Observable, of, tap} from 'rxjs';
+import {Observable, of, tap} from 'rxjs';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {AuthUser} from '@app/model/user/user-registration.model';
 import {UserLoginResponse} from '@app/model/user/user-login-response.model';
 import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
-import {selectUser} from '@app/ngrx/user/user.selectors';
 import {Store} from '@ngrx/store';
 import {AppState} from '@app/ngrx/app/app.state';
 import {baseUrl} from '@app/config';
@@ -28,7 +27,7 @@ export class UserService {
 
   registration(user: AuthUser): Observable<UserLoginResponse> {
     return this.http.post<UserLoginResponse>(`${baseUrl}/registration`, user).pipe(
-      tap(response => this.handleResponse(response, user)),
+      tap(response => this.handleResponse(response)),
       tap(() => {
         this.toast.showMessage('User registered successfully', 'success');
         void this.router.navigate(['/signin']);
@@ -39,7 +38,8 @@ export class UserService {
   login(user: AuthUser): Observable<UserLoginResponse> {
     return this.http.post<UserLoginResponse>(`${baseUrl}/login`, user).pipe(
       tap((response: UserLoginResponse): void => {
-        this.handleResponse(response, user);
+        this.handleResponse(response);
+        this.saveUserToStorage(user);
       })
     );
   }
@@ -57,28 +57,31 @@ export class UserService {
     return this.http.get<UserProfileResponse>(`${baseUrl}/profile`);
   }
 
-  getAuthUser$(): Observable<AuthUser> {
+  getAuthUser$(): Observable<UserProfileResponse> {
     const userString = localStorage.getItem('user');
     console.log(userString);
-    return userString ? of(JSON.parse(userString) as AuthUser) : of({} as AuthUser);
+    return userString ? of(JSON.parse(userString) as UserProfileResponse) : of({} as UserProfileResponse);
   }
 
-  getCurrentUser(): AuthUser {
-    let currentUser = {} as AuthUser;
-    this.store.select(selectUser).pipe(first()).subscribe((user) => {
+  getCurrentUser(): UserProfileResponse {
+    let currentUser = {} as UserProfileResponse;
+    this.getAuthUser$().subscribe(user => {
       currentUser = user;
     });
     return currentUser;
   }
 
-  update(name: string) {
+  update(name: string): Observable<UserProfileResponse> {
     return this.http.put<UserProfileResponse>(`${baseUrl}/profile`, {name});
   }
 
-  handleResponse(response: UserLoginResponse, user: AuthUser): void {
-    localStorage.setItem('email', user.email);
+  handleResponse(response: UserLoginResponse): void {
     localStorage.setItem('uid', response.uid);
     localStorage.setItem('token', response.token);
+  }
+
+  private saveUserToStorage(user: AuthUser) {
+    localStorage.setItem('email', user.email);
     localStorage.setItem('user', JSON.stringify(user));
   }
 
@@ -95,9 +98,8 @@ export class UserService {
     localStorage.removeItem('email');
     sessionStorage.clear();
     document.cookie.split(';').forEach((c) => {
-      document.cookie = c.replace(/^ +/, '')
-        .replace(/=.*/,
-          `=;expires=${new Date().toUTCString()};path=/`);
+      document.cookie = c.replace(/^ +/, '').replace(/=.*/,
+        `=;expires=${new Date().toUTCString()};path=/`);
     });
   }
 

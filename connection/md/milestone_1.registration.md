@@ -37,55 +37,19 @@ If user already have an account he is able to login.
 | `name`     | `string` | first name             |
 | `password` | `string` | authorization password |
 
+#### Request headers
+
+| Header          | Type     | Description                                                                               |
+| --------------- | -------- | ----------------------------------------------------------------------------------------- |
+| `rs-uid`        | `string` | user identifier received after successful authentication                                  |
+| `rs-email`      | `string` | user email                                                                                |
+| `Authorization` | `string` | `Bearer <TOKEN>`, where `<TOKEN>` is token value received after successful authentication |
+
 #### Response
 
 _status code_ **201**
 
-#### Exception
-
-###### Sent form data is corrupted
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidFormDataException",
-  "message": "Invalid multipart/form-data request"
-}
-```
-
-###### Format of form data is unknown or cannot be read
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidFormDataException",
-  "message": "Invalid post data"
-}
-```
-
-###### Form data should contain required parameters
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidFormDataException",
-  "message": "Parameters \"email\", \"name\" and \"password\" are required"
-}
-```
-
-###### User already exists in the platform
-
-_status code_ **400**
-
-```json
-{
-  "type": "PrimaryDuplicationException",
-  "message": "User {email} already exists"
-}
-```
+[Exception](exception.md)
 
 ## Examination
 

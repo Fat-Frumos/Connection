@@ -1,6 +1,6 @@
 {
-  "/": {
-    "target": "",
+  "/angular": {
+    "target": "https://tasks.app.rs.school",
     "secure": false,
     "changeOrigin": true
   }

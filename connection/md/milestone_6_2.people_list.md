@@ -19,8 +19,7 @@ with special color and not to re-create already existing conversation.
 
 Right half of the primary page consist of:
 
-**_Update_ button**  
-_Update_ button refreshes the people list by sending http-request and renders obtained list.
+**_Update_ button** refreshes the people list by sending http-request and renders obtained list.
 
 User can update the list no more than once a minute! Countdown must be present near the _Update_
 button till the next update is possible. If time is out countdown disappears.
@@ -58,14 +57,6 @@ Mateo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb
 
 Retrieves list of participants.
 
-#### Request headers
-
-| Header          | Type     | Description                                                                               |
-| --------------- | -------- | ----------------------------------------------------------------------------------------- |
-| `rs-uid`        | `string` | user identifier received after successful authentication                                  |
-| `rs-email`      | `string` | user email                                                                                |
-| `Authorization` | `string` | `Bearer <TOKEN>`, where `<TOKEN>` is token value received after successful authentication |
-
 #### Response
 
 _status code_ **200**  
@@ -87,43 +78,11 @@ _json_ format
 }
 ```
 
-#### Exceptions
-
-###### Have not passed required headers in http-request
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidUserDataException",
-  "message": "Header should contain \"rs-uid\", \"rs-email\" and \"Authorization\" parameters."
-}
-```
-
-###### Have not passed valid Authorization header parameter
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidTokenException",
-  "message": "Header should contain \"Authorization\" parameter with Bearer code."
-}
-```
-
 ---
 
 > `GET` https://tasks.app.rs.school/angular/conversations/list
 
 Retrieves list of active conversations of current user.
-
-#### Request headers
-
-| Header          | Type     | Description                                                                               |
-| --------------- | -------- | ----------------------------------------------------------------------------------------- |
-| `rs-uid`        | `string` | user identifier received after successful authentication                                  |
-| `rs-email`      | `string` | user email                                                                                |
-| `Authorization` | `string` | `Bearer <TOKEN>`, where `<TOKEN>` is token value received after successful authentication |
 
 #### Response
 
@@ -146,43 +105,11 @@ _json_ format
 }
 ```
 
-#### Exception
-
-###### Have not passed required headers in http-request
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidUserDataException",
-  "message": "Header should contain \"rs-uid\", \"rs-email\" and \"Authorization\" parameters."
-}
-```
-
-###### Have not passed valid Authorization header parameter
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidTokenException",
-  "message": "Header should contain \"Authorization\" parameter with Bearer code."
-}
-```
-
 ---
 
 > `POST` https://tasks.app.rs.school/angular/conversations/create
 
 Creates conversation with the user.
-
-#### Request headers
-
-| Header          | Type     | Description                                                                               |
-| --------------- | -------- | ----------------------------------------------------------------------------------------- |
-| `rs-uid`        | `string` | user identifier received after successful authentication                                  |
-| `rs-email`      | `string` | user email                                                                                |
-| `Authorization` | `string` | `Bearer <TOKEN>`, where `<TOKEN>` is token value received after successful authentication |
 
 #### Request body
 
@@ -198,73 +125,5 @@ _json_ format
 ```json
 {
   "conversationID": "string"
-}
-```
-
-#### Exception
-
-###### Have not passed required headers in http-request
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidUserDataException",
-  "message": "Header should contain \"rs-uid\", \"rs-email\" and \"Authorization\" parameters."
-}
-```
-
-###### Have not passed valid Authorization header parameter
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidTokenException",
-  "message": "Header should contain \"Authorization\" parameter with Bearer code."
-}
-```
-
-###### Sent form data is corrupted
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidFormDataException",
-  "message": "Invalid multipart/form-data request"
-}
-```
-
-###### Format of form data is unknown or cannot be read
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidFormDataException",
-  "message": "Invalid post data"
-}
-```
-
-###### Companion identifier is not defined
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidFormDataException",
-  "message": "Parameter \"companion\" should be defined."
-}
-```
-
-###### Conversation already exist
-
-_status code_ **400**
-
-```json
-{
-  "type": "DuplicationNotAllowedException",
-  "message": "Conversation already exists."
 }
 ```

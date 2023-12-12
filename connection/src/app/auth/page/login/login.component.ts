@@ -6,8 +6,6 @@ import {ToastService} from '@app/shared/component/toast/toast.service';
 import {ErrorMessage} from '@app/model/error-message.model';
 import {RouterService} from '@app/auth/service/router.service';
 import {AuthUser} from '@app/model/user/user-registration.model';
-import {loginUser} from '@app/ngrx/user/user.actions';
-import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +23,6 @@ export class LoginComponent {
 
   constructor(
     private popup: ToastService,
-    private store: Store,
     private router: RouterService,
     private userService: UserService,
     private validator: ValidatorService,
@@ -37,9 +34,8 @@ export class LoginComponent {
     const formUser = this.validator.getFormUser(this.loginForm);
     this.isSubmitting = true;
     console.log(formUser);
-    this.store.dispatch(loginUser({authUser: formUser}));
+    this.login(formUser);
   }
- // this.login(formUser);
 
   private login(formUser: AuthUser) {
     this.userService.login(formUser).subscribe({
