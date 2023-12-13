@@ -1,20 +1,25 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ViewEncapsulation
+} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ValidatorService} from '@app/auth/service/validator.service';
-import {UserService} from '@app/auth/service/user.service';
 import {RouterService} from '@app/auth/service/router.service';
 import {ToastService} from '@app/shared/component/toast/toast.service';
-import {ErrorMessage} from '@app/model/error-message.model';
 import {Store} from '@ngrx/store';
 import {showAlert} from '@app/ngrx/app/app.action';
-import {User} from '@app/model/user.model';
-import {beginRegister} from '@app/ngrx/user/user.actions';
+import {AuthUser} from '@app/model/user/user-registration.model';
+import {ErrorMessage} from '@app/model/error-message.model';
+import {UserService} from '@app/auth/service/user.service';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss',
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegistrationComponent implements OnInit {
 
@@ -30,9 +35,9 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private store: Store,
+    private userService: UserService,
     private toast: ToastService,
     private router: RouterService,
-    private userService: UserService,
     private validator: ValidatorService,
     private formBuilder: FormBuilder) {
     this.lastRegistrationError = {} as ErrorMessage;
@@ -41,32 +46,35 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit(): void {
     if (this.isSubmitting || this.registrationForm.invalid) {
-      this.store.dispatch(showAlert({message: 'Password invalid', resultType: 'fail'}));
+      this.store.dispatch(showAlert({
+        message: 'Password invalid',
+        resultType: 'fail'
+      }));
       return;
     }
     this.isSubmitting = true;
     const formUser = this.validator.getFormUser(this.registrationForm);
-    this.store.dispatch(beginRegister({user: formUser}));
-    // this.register(formUser);
+    this.register(formUser);
   }
 
-  private register(formUser: User) {
+  private register(formUser: AuthUser) {
     this.userService.registration(formUser).subscribe({
       next: () => {
         this.isSubmitting = false;
-        this.toast.show('Registration successful', 'success');
+        this.toast.showMessage('Registration successful', 'success');
         this.router.navigate(['/sign-in']);
       },
       error: (error: ErrorMessage) => {
-        if (error.error.type === 'PrimaryDuplicationException') {
+        // === 'PrimaryDuplicationException'
+        if (error.error) {
           this.isEmailTaken = true;
           this.disableSubmitButton();
           this.lastEmail = formUser.email;
           this.setLastRegistrationError(error);
-          this.toast.show('Email is already taken', 'warning');
+          this.toast.showMessage('Email is already taken', 'warning');
         } else {
           this.isSubmitting = false;
-          this.toast.show(error.message, 'error');
+          this.toast.showMessage(error.message, 'error');
         }
       }
     });
@@ -79,8 +87,10 @@ export class RegistrationComponent implements OnInit {
   }
 
   enableSubmitButton(): void {
-    this.registrationForm.enable();
-    this.isEmailTaken = false;
+    if (!this.registrationForm.enabled) {
+      this.registrationForm.enable();
+      this.isEmailTaken = false;
+    }
   }
 
   disableSubmitButton(): void {
@@ -111,11 +121,36 @@ export class RegistrationComponent implements OnInit {
   }
 
   clearRegistrationError(): void {
-    this.toast.clear();
+    this.toast.clear(500);
     this.lastRegistrationError = {} as ErrorMessage;
   }
 
   setLastRegistrationError(error: ErrorMessage): void {
     this.lastRegistrationError = error;
   }
+
+  // dispatch() {
+  //   this.store.dispatch(registerUser({user: formUser}));
+  //   this.actions$.pipe(
+  //     ofType(registerUserSuccess, registerUserFailure)
+  //   ).subscribe(action => {
+  //     if (action.type === registerUserSuccess.type) {
+  //       this.isSubmitting = false;
+  //       this.toast.showMessage('Registration successful', 'success');
+  //       this.router.navigate(['/sign-in']);
+  //     } else if (action.type === registerUserFailure.type) {
+  //       const error: string = action.error;
+  //       if (error === 'PrimaryDuplicationException') {
+  //         this.isEmailTaken = true;
+  //         this.disableSubmitButton();
+  //         this.lastEmail = formUser.email;
+  //         this.setLastRegistrationError(error);
+  //         this.toast.showMessage('Email is already taken', 'warning');
+  //       } else {
+  //         this.isSubmitting = false;
+  //         this.toast.showMessage(error, 'error');
+  //       }
+  //     }
+  //   });
+  // }
 }

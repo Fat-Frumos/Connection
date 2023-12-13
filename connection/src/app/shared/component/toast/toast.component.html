@@ -1,5 +1,7 @@
-<div *ngIf="message.message" >
-  <div class="modal-content" (click)="closeModal()">
+<div class="wrapper"
+     *ngIf="message.message">
+  <div class="modal-content"
+       (click)="closeModal()">
     <label class="menu">
       <input type="checkbox" checked>
       <div class="close">
@@ -7,6 +9,6 @@
         <span></span>
       </div>
     </label>
-        <p>{{ message.message }}</p>
+    <p>{{ message.message }}</p>
   </div>
 </div>

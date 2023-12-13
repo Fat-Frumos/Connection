@@ -5,9 +5,7 @@ import {UserService} from '@app/auth/service/user.service';
 import {ToastService} from '@app/shared/component/toast/toast.service';
 import {ErrorMessage} from '@app/model/error-message.model';
 import {RouterService} from '@app/auth/service/router.service';
-import {User} from '@app/model/user.model';
-import {beginLogin} from '@app/ngrx/user/user.actions';
-import {Store} from '@ngrx/store';
+import {AuthUser} from '@app/model/user/user-registration.model';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +23,6 @@ export class LoginComponent {
 
   constructor(
     private popup: ToastService,
-    private store: Store,
     private router: RouterService,
     private userService: UserService,
     private validator: ValidatorService,
@@ -36,23 +33,23 @@ export class LoginComponent {
   onSubmit(): void {
     const formUser = this.validator.getFormUser(this.loginForm);
     this.isSubmitting = true;
-    this.store.dispatch(beginLogin({authUser: formUser}));
-    // this.login(formUser);
+    console.log(formUser);
+    this.login(formUser);
   }
 
-  private login(formUser: User) {
+  private login(formUser: AuthUser) {
     this.userService.login(formUser).subscribe({
       next: (response) => {
-        this.popup.show(response.statusText, 'success');
+        this.popup.showMessage(response.statusText, 'success');
         this.router.navigate(['/']);
       },
       error: (error: ErrorMessage) => {
         this.isSubmitting = false;
         if (error.error.type === 'NotFoundException') {
           this.isEmailTaken = true;
-          this.popup.show(error.message, 'warning');
+          this.popup.showMessage(error.message, 'warning');
         } else {
-          this.popup.show(error.message, 'error');
+          this.popup.showMessage(error.message, 'error');
         }
       }
     });

@@ -1,56 +1,72 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, exhaustMap, map, mergeMap} from 'rxjs/operators';
+import {catchError, map, mergeMap} from 'rxjs/operators';
 import {UserService} from '@app/auth/service/user.service';
 import {
-  beginRegister,
-  fetchUser,
-  fetchUserFailed,
-  fetchUserSuccess
+  loginFailure,
+  loginSuccess,
+  loginUser,
+  registerUser,
+  registerUserFailure,
+  registerUserSuccess
 } from '@app/ngrx/user/user.actions';
-import {of} from 'rxjs';
-import {User} from '@app/model/user.model';
-import {Router} from '@angular/router';
-import {showAlert} from '@app/ngrx/app/app.action';
+import {EMPTY, of} from 'rxjs';
+import {ErrorMessage} from '@app/model/error-message.model';
+import {Store} from '@ngrx/store';
 
 @Injectable()
 export class UserEffects {
-  loadUser$ = createEffect(() =>
+  registerUser$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(fetchUser),
-      mergeMap(() =>
-        this.userService.getUser$().pipe(
-          map((user: User) => fetchUserSuccess({user})),
-          catchError(() => of(fetchUserFailed))
-        )
-      )
-    )
-  );
-
-  userRegister = createEffect(() =>
-    this.actions$.pipe(
-      ofType(beginRegister),
-      exhaustMap((action) =>
+      ofType(registerUser),
+      mergeMap((action) =>
         this.userService.registration(action.user).pipe(
-          map(() => {
-            void this.route.navigate(['/signin']);
-            return showAlert({
-              message: 'Registered successfully',
-              resultType: 'pass'
-            });
-          }),
-          catchError((_error: Error) =>
-            of(showAlert({
-              message: 'Registration failed: ' + _error.message,
-              resultType: 'fail'
-            }))
-          )
+          map(() => registerUserSuccess({message: 'User registered successfully'})),
+          catchError((error: ErrorMessage) => {
+            this.store.dispatch(registerUserFailure({error: `Registration failed ${error.message}`}));
+            if (error.error.type === 'PrimaryDuplicationException') {
+              this.store.dispatch(registerUserFailure({error: 'Email is already taken'}));
+            } else {
+              this.store.dispatch(registerUserFailure({error: `Registration failed ${error.message}`}));
+            }
+            return EMPTY;
+          })
         )
       )
     )
   );
 
-  constructor(private actions$: Actions, private userService: UserService, private route: Router) {
-    console.log(this.loadUser$);
+  login$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loginUser),
+      mergeMap((action) =>
+        this.userService.login(action.authUser).pipe(
+          map((user) => loginSuccess({ user })),
+          catchError(() => of(loginFailure({ error: 'Login failed' })))
+        )
+      )
+    )
+  );
+
+  // loadUser$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(fetchUser),
+  //     mergeMap(() =>
+  //       this.userService.getAuthUser$().pipe(
+  //         map((user: AuthUser) => fetchUserSuccess({user})),
+  //         catchError((error: ErrorMessage) => {
+  //           return of(fetchUserFailed({error: `Registration failed ${error.message}`}));
+  //         })
+  //       )
+  //     )
+  //   )
+  // );
+
+  constructor(
+    private store: Store,
+    private actions$: Actions,
+    private userService: UserService
+  ) {
+    console.log(this.login$);
   }
 }

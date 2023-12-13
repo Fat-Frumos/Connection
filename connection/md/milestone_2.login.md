@@ -58,52 +58,6 @@ _json_ format
 }
 ```
 
-#### Exceptions
-
-###### Sent form data is corrupted
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidFormDataException",
-  "message": "Invalid multipart/form-data request"
-}
-```
-
-###### Format of form data is unknown or cannot be read
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidFormDataException",
-  "message": "Invalid post data"
-}
-```
-
-###### Form data should contain required parameters
-
-_status code_ **400**
-
-```json
-{
-  "type": "InvalidFormDataException",
-  "message": "Parameters \"email\" and \"password\" are required."
-}
-```
-
-###### User is not found
-
-_status code_ **400**
-
-```json
-{
-  "type": "NotFoundException",
-  "message": "Email and/or password doesn't exist in the system."
-}
-```
-
 ## Examination
 
 _Submit_ word is just the name of the button, you can use whatever label for the button you want.
@@ -126,5 +80,4 @@ _Submit_ word is just the name of the button, you can use whatever label for the
 ### Fines
 
 - redirection to sign-in page after failed registration: **-20 points**
-- user can click _Submit_ button more than once even if previous http-request
-  is not completed: **-20 points**
+- user can click _Submit_ button more than once even if previous http-request is not completed: **-20 points**

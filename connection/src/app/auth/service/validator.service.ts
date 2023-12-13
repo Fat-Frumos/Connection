@@ -5,7 +5,7 @@ import {
   FormControl, FormGroup,
   ValidationErrors, Validators
 } from '@angular/forms';
-import {User} from '@app/model/user.model';
+import {AuthUser} from '@app/model/user/user-registration.model';
 
 const MIN_LENGTH = 8;
 const MAX_LENGTH = 40;
@@ -40,11 +40,11 @@ export class ValidatorService {
     return hasMax || hasLetter ? { 'maxLength': hasMax, 'pattern': hasLetter } : null;
   };
 
-  getFormUser(loginForm: FormGroup): User {
+  getFormUser(loginForm: FormGroup): AuthUser {
     return {
-      name: (loginForm.get('name') as FormControl).value as User['name'],
-      email: (loginForm.get('email') as FormControl).value as User['email'],
-      password: (loginForm.get('password') as FormControl).value as User['password']
+      name: (loginForm.get('name') as FormControl).value as AuthUser['name'],
+      email: (loginForm.get('email') as FormControl).value as AuthUser['email'],
+      password: (loginForm.get('password') as FormControl).value as AuthUser['password']
     };
   }
 

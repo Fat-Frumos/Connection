@@ -1,7 +1,6 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {ProfileComponent} from '@app/core/page/profile/profile.component';
-import {ProfileService} from '@app/core/service/profile.service';
 import {AsyncPipe, DatePipe, NgClass, NgIf} from '@angular/common';
 import {ToastComponent} from '@app/shared/component/toast/toast.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -23,7 +22,7 @@ const routes: Routes = [
     FormsModule,
     NgClass
   ],
-  providers:[ProfileService],
+  providers:[],
   exports: [RouterModule]
 })
 export class ProfileRoutingModule {

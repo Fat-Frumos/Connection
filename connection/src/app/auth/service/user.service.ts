@@ -1,58 +1,88 @@
 import {inject, Injectable} from '@angular/core';
-import {first, Observable, of, tap} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-import {User} from '@app/model/user.model';
-import {AuthResponse} from '@app/model/auth-response.model';
-import {ProfileResponse} from '@app/model/profile-response.model';
-import {selectUser} from '@app/ngrx/user/user.selectors';
+import {Observable, of, tap} from 'rxjs';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {AuthUser} from '@app/model/user/user-registration.model';
+import {UserLoginResponse} from '@app/model/user/user-login-response.model';
+import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
 import {Store} from '@ngrx/store';
 import {AppState} from '@app/ngrx/app/app.state';
 import {baseUrl} from '@app/config';
+import {ToastService} from '@app/shared/component/toast/toast.service';
+import {HttpStatusService} from '@app/auth/service/http-status.service';
+import {registerUserFailure} from '@app/ngrx/user/user.actions';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
+  router: Router = inject(Router);
+
   http: HttpClient = inject(HttpClient);
+
+  toast: ToastService = inject(ToastService);
 
   store: Store<AppState> = inject<Store<AppState>>(Store);
 
-  fetchUser(): Observable<ProfileResponse> {
-    return this.http.get<ProfileResponse>(baseUrl + '/profile');
-  }
-
-  registration(user: User) {
-    return this.http.post<AuthResponse>(baseUrl + '/registration', user).pipe(
-      tap(response =>
-        this.handleResponse(response, user)));
-  }
-
-  login(user: User): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(baseUrl + '/login', user).pipe(
-      tap((response: AuthResponse): void => {
-        this.handleResponse(response, user);
+  registration(user: AuthUser): Observable<UserLoginResponse> {
+    return this.http.post<UserLoginResponse>(`${baseUrl}/registration`, user).pipe(
+      tap(response => this.handleResponse(response)),
+      tap(() => {
+        this.toast.showMessage('User registered successfully', 'success');
+        void this.router.navigate(['/signin']);
       })
     );
   }
 
-  getUser$(): Observable<User> {
+  login(user: AuthUser): Observable<UserLoginResponse> {
+    return this.http.post<UserLoginResponse>(`${baseUrl}/login`, user).pipe(
+      tap((response: UserLoginResponse): void => {
+        this.handleResponse(response);
+        this.saveUserToStorage(user);
+      })
+    );
+  }
+
+  logout(): Observable<void> {
+    return this.http.delete<void>(`${baseUrl}/logout`).pipe(
+      tap(() => {
+        this.clearUserData();
+        void this.router.navigate(['/login']);
+      })
+    );
+  }
+
+  fetchUser(): Observable<UserProfileResponse> {
+    return this.http.get<UserProfileResponse>(`${baseUrl}/profile`);
+  }
+
+  getAuthUser$(): Observable<UserProfileResponse> {
     const userString = localStorage.getItem('user');
     console.log(userString);
-    return userString ? of(JSON.parse(userString) as User) : of({} as User);
+    return userString ? of(JSON.parse(userString) as UserProfileResponse) : of({} as UserProfileResponse);
   }
 
-  handleResponse(response: AuthResponse, user: User): void {
-    localStorage.setItem('email', user.email);
+  getCurrentUser(): UserProfileResponse {
+    let currentUser = {} as UserProfileResponse;
+    this.getAuthUser$().subscribe(user => {
+      currentUser = user;
+    });
+    return currentUser;
+  }
+
+  update(name: string): Observable<UserProfileResponse> {
+    return this.http.put<UserProfileResponse>(`${baseUrl}/profile`, {name});
+  }
+
+  handleResponse(response: UserLoginResponse): void {
     localStorage.setItem('uid', response.uid);
     localStorage.setItem('token', response.token);
-    localStorage.setItem('user', JSON.stringify(user));
   }
 
-  logout() {
-    localStorage.removeItem('uid');
-    localStorage.removeItem('token');
-    localStorage.removeItem('email');
+  private saveUserToStorage(user: AuthUser) {
+    localStorage.setItem('email', user.email);
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   isAuthenticated(): boolean {
@@ -62,16 +92,20 @@ export class UserService {
     return !!(token && uid && email);
   }
 
-  getCurrentUser(): User {
-    let currentUser: User = {} as User;
-    this.store.select(selectUser).pipe(first()).subscribe((user) => {
-      currentUser = user ?? ({} as User);
+  private clearUserData() {
+    localStorage.removeItem('uid');
+    localStorage.removeItem('token');
+    localStorage.removeItem('email');
+    sessionStorage.clear();
+    document.cookie.split(';').forEach((c) => {
+      document.cookie = c.replace(/^ +/, '').replace(/=.*/,
+        `=;expires=${new Date().toUTCString()};path=/`);
     });
-    return currentUser;
   }
 
-  update(name: string) {
-    const url = `/profile`;
-    return this.http.put<ProfileResponse>(url, {name});
+  private handleError(error: HttpErrorResponse): void {
+    const toastMessage = HttpStatusService.getStatus(error.status, error.statusText);
+    this.store.dispatch(registerUserFailure({error: 'Registration failed'}));
+    this.toast.showMessage(toastMessage.message, toastMessage.toastType);
   }
 }

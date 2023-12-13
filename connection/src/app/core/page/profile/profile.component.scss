@@ -6,7 +6,7 @@ $input-width: 200px;
 $button-width: 70px;
 
 $color-background: #F2F2F2;
-$color-paper: #F5F5F5;
+$color-paper: #ecf0f3;
 
 $animation-duration-spin: 1.5s;
 
@@ -166,7 +166,7 @@ $shadow-off: 0 0 0 $button-spread $button-black,
   color: #ff0000
 }
 
-.profile-input{
+.profile-input {
   margin-top: 10px;
   font-size: 1.2rem;
   text-align: right;
@@ -180,6 +180,11 @@ $shadow-off: 0 0 0 $button-spread $button-black,
   padding: 1px 10px;
   overflow: hidden;
   @include shadow-hover();
+}
+
+.profile-input:focus {
+  outline: none;
+  border: none;
 }
 
 .profile-card .buttons {

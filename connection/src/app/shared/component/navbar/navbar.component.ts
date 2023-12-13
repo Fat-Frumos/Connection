@@ -1,4 +1,9 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component, inject, ViewEncapsulation} from '@angular/core';
+import {catchError} from 'rxjs/operators';
+import {ToastService} from '@app/shared/component/toast/toast.service';
+import {UserService} from '@app/auth/service/user.service';
+import {ErrorMessage} from '@app/model/error-message.model';
+import {EMPTY} from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -8,4 +13,20 @@ import {Component, ViewEncapsulation} from '@angular/core';
 })
 export class NavbarComponent {
 
+  userService: UserService = inject(UserService);
+
+  toast: ToastService = inject(ToastService);
+
+  logout(): void {
+    this.userService.logout().pipe(
+      catchError((error: ErrorMessage) => {
+        this.toast.showMessage(`Logout failed${error.message}`, 'error');
+        return EMPTY;
+      })
+    ).subscribe({
+      next: () => {
+        this.toast.showMessage('Logout successful', 'success');
+      }
+    });
+  }
 }

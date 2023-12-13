@@ -4,6 +4,7 @@ import {LoginComponent} from '@app/auth/page/login/login.component';
 import {ActivatedRoute} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {ToastService} from '@app/shared/component/toast/toast.service';
 
 describe('SignupComponent', () => {
   let component: LoginComponent;
@@ -15,7 +16,7 @@ describe('SignupComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule,
         HttpClientTestingModule],
-      providers: [
+      providers: [ToastService,
         { provide: ActivatedRoute, useValue: activatedRouteStub }
 
       ]
