@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-form-message',
@@ -8,6 +8,9 @@ import {FormGroup} from '@angular/forms';
 })
 export class FormMessageComponent {
 
-  @Input() formGroup: FormGroup = {} as FormGroup;
-
+  @Input() formGroup: FormGroup = new FormGroup({
+    name: new FormControl(''),
+    email: new FormControl(''),
+    password: new FormControl('')
+  });
 }

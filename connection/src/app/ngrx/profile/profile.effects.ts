@@ -25,8 +25,8 @@ export class ProfileEffects {
   updateProfile$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateProfile),
-      mergeMap(({name}) =>
-        this.service.update(name).pipe(
+      mergeMap(({profile}) =>
+        this.service.update(profile.name.S).pipe(
           map(() => updateProfile),
           catchError(() => of(updateProfileFailed()))
         )

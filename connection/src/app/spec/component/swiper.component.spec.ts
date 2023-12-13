@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {beforeEach, describe, expect, it} from '@jest/globals';
 import { SwiperComponent } from '@app/auth/component/swiper/swiper.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('SwiperComponent', () => {
   let component: SwiperComponent;
@@ -9,7 +10,7 @@ describe('SwiperComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [SwiperComponent],
-      imports: [SwiperComponent]
+      imports: [HttpClientTestingModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SwiperComponent);

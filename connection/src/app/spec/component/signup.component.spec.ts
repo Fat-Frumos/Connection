@@ -5,6 +5,13 @@ import {ActivatedRoute} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ToastService} from '@app/shared/component/toast/toast.service';
+import {
+  ActionsSubject,
+  ReducerManager, ReducerManagerDispatcher,
+  StateObservable,
+  Store, StoreModule
+} from '@ngrx/store';
+import {UserReducer} from '@app/ngrx/user/user.reducer';
 
 describe('SignupComponent', () => {
   let component: LoginComponent;
@@ -14,12 +21,12 @@ describe('SignupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule,
-        HttpClientTestingModule],
-      providers: [ToastService,
-        { provide: ActivatedRoute, useValue: activatedRouteStub }
-
-      ]
+      providers: [ToastService, Store,
+        StateObservable, ActionsSubject,
+        ReducerManager, ReducerManagerDispatcher,
+        {provide: ActivatedRoute, useValue: activatedRouteStub}],
+      imports: [HttpClientTestingModule, ReactiveFormsModule,
+        StoreModule.forRoot(UserReducer)]
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);

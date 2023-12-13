@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {beforeEach, describe, expect, it} from '@jest/globals';
 import { MessageComponent } from '@app/core/component/message/message.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('MessageComponent', () => {
   let component: MessageComponent;
@@ -8,7 +9,8 @@ describe('MessageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MessageComponent]
+      imports: [HttpClientTestingModule],
+      declarations: [MessageComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(MessageComponent);
