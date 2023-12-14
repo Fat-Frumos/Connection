@@ -39,8 +39,8 @@ Detailed information about each part of the application is presented in the sect
 5. [Logout](md/milestone_5.logout.md) 40 points
 6. [People and group sections](md/milestone_6.people_groups.md) 175 points
 7. [Group dialog](md/milestone_7.group_dialog.md) 140 points
-8. [People conversation](./milestone_8.conversation.md) 140 points
-9. [404 page](./milestone_9.404_page.md) 30 points
+8. [People conversation](md/milestone_8.conversation.md) 140 points
+9. [404 page](md/milestone_9.404_page.md) 30 points
 10. Bonus: [Style theme](./milestone_10.theme.md) 50 points
 
 Total score: **800 points**

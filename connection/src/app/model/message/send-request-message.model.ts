@@ -1,4 +1,4 @@
-export interface MessageSendRequest {
+export interface SendRequestMessage {
   recipient: string;
   message: string;
 }

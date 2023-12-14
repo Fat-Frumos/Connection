@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {UserResponse} from '@app/model/user/user-response.model';
 import {baseUrl} from '@app/config';
 import {
@@ -26,11 +26,17 @@ export class ConversationService {
   }
 
   createConversation(companion: string): Observable<Conversation> {
-    this.conversations.set(companion, { messages: [], participants: [] });
-    return this.http.post<Conversation>(`${baseUrl}/conversations/create`, { companion });
+    this.conversations.set(companion, {
+      conversationID: companion,
+      messages: [],
+      participants: []
+    });
+    return this.http.post<Conversation>(`${baseUrl}/conversations/create`, {companion});
   }
 
   sendMessage(uid: string, newMessage: string): Observable<string> {
+    const url = `${baseUrl}/append`;
+    const body = {uid, newMessage};
     const conversation = this.conversations.get(uid);
 
     if (conversation) {
@@ -45,10 +51,20 @@ export class ConversationService {
     } else {
       this.createConversation(uid);
     }
-    return of(newMessage);
+    return this.http.post<string>(url, body);
   }
 
   checkConversation(id: string) {
     return this.conversations.has(id);
+  }
+
+  getConversationMessages(conversationID: string, since?: number): Observable<ConversationResponse> {
+    const url = `${baseUrl}/read?conversationID=${conversationID}${since ? `&since=${since}` : ''}`;
+    return this.http.get<ConversationResponse>(url);
+  }
+
+  deleteConversation(conversationID: string): Observable<void> {
+    const url = `${baseUrl}/delete?conversationID=${conversationID}`;
+    return this.http.delete<void>(url);
   }
 }

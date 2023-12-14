@@ -1,5 +1,5 @@
 import {createAction, props} from '@ngrx/store';
-import {ErrorMessage} from '@app/model/error-message.model';
+import {ErrorMessage} from '@app/model/message/error-message.model';
 import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
 
 export const loadProfile =

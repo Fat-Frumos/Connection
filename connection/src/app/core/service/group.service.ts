@@ -5,7 +5,7 @@ import {Group} from '@app/model/conversation/group.model';
 import {GroupCreate} from '@app/model/conversation/group-create.model';
 import {GroupResponse} from '@app/model/conversation/group-response.model';
 import {baseUrl} from '@app/config';
-import {Message} from '@app/model/conversation/message.model';
+import {Message} from '@app/model/message/message.model';
 
 @Injectable()
 export class GroupService {

@@ -1,5 +1,5 @@
 import {createAction, props} from '@ngrx/store';
-import {ToastMessage} from '@app/model/toast-message.model';
+import {ToastMessage} from '@app/model/message/toast-message.model';
 
 export const showAlert =
   createAction('[App Toast] show alert',

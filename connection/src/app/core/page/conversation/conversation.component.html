@@ -1,5 +1,4 @@
 <app-loader *ngIf="isLoading"></app-loader>
-
 <div class="row-table" *ngIf="!isLoading">
   <div class="col-4 py-3 px-0 shadow">
     <table>
@@ -12,11 +11,10 @@
         <tr *ngIf="user">
           <td>
             <div class="box">
-              <img [src]="'https://picsum.photos/50/50/?random=' + (user.uid?.S)"
-                   alt="">
-              <div class="header-name">
-                <p>{{ user.name?.S}}</p>
-                <p>{{ user.email?.S}}</p>
+              <img [src]="'https://picsum.photos/50/50/?random=' + (user.uid?.S)" alt="">
+              <div class="header-name" (click)="onSelectConversation(user.uid.S)">
+                <p>{{ user.name?.S }}</p>
+                <p>{{ user.email?.S }}</p>
               </div>
             </div>
           </td>
@@ -30,65 +28,46 @@
         </td>
       </tr>
     </table>
+  </div>
+  <div *ngIf="countdown > 0">{{ countdown }}</div>
+</div>
 
-  </div>
-  <div class="col-6 px-0 shadow">
-    <table>
-      <tr>
-        <td>
-          <div class="name text-dark">
-            <h6 class="mb-0"><span>Maine Coon</span><i
-              class="fas fa-volume-down"></i></h6>
-            <div class="ic">
-              <i class="fa fa-search"></i>
-              <i class="fas fa-phone-alt"></i>
-              <i class="fas fa-bars"></i>
-            </div>
+<div class="col-6 px-0 shadow">
+  <a [routerLink]="['/main']">Return back</a>
+  <table>
+    <tr>
+      <td>
+        <div class="name text-dark">
+          <h6 class="mb-0"></h6>
+<!--            <span>{{ message.authorID === 'currentUserId' ? 'Me' : message.authorID }}</span><i class="fas fa-volume-down"></i></h6>-->
+          <div class="ic">
+            <button (click)="updateConversation()" [disabled]="updateDisabled">{{ updateButtonText }}</button>
+            <button (click)="deleteConversation()">Delete</button>
           </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div class="chat">
-            <div class="other">
-              <img src="https://picsum.photos/50/50/?random=1">
-              <div class="dialog">Lorem ipsum dolor, sit amet consectetur
-                adipisicing elit. Error, dolore?
-              </div>
-              <p>12:34</p>
-            </div>
-            <div class="self">
-              <div class="dialog">Lorem ipsum dolor, sit amet consectetur
-                adipisicing elit. Error, dolore?
-              </div>
-              <p>12:34</p>
-              <span class="read">read</span>
-            </div>
-            <div class="other">
-              <img src="https://picsum.photos/50/50/?random=1">
-              <div class="dialog">Lorem ipsum dolor, sit amet consectetur
-                adipisicing elit. Error, dolore?
-              </div>
-              <p>12:34</p>
-            </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="chat" *ngFor="let message of messages">
+          <div [ngClass]="{ 'self': message.authorID === 'currentUserId', 'other': message.authorID !== 'currentUserId' }">
+            <img [src]="'https://picsum.photos/50/50/?random=' + message.authorID" alt="User Avatar">
+            <div class="dialog">{{ message.message }}</div>
+            <p>{{ message.createdAt | date: 'yyyy/MM/dd HH:mm' }}</p>
+            <span class="read" *ngIf="message.authorID === 'currentUserId'">read</span>
           </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div class="msg">
-            <input type="text"
-                   placeholder="you can type something right here, try it!"
-                   class="form-control" onchange="(this.value)">
-            <div class="ic">
-              <i class="fas fa-plus"></i>
-              <i class="fas fa-camera"></i>
-              <i class="far fa-image"></i>
-              <span class="float-end"><i class="far fa-smile"></i></span>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="msg">
+          <form (ngSubmit)="sendMessage()">
+            <input type="text" [(ngModel)]="newMessage" name="newMessage" required class="form-control" />
+            <button type="submit" [disabled]="!newMessage">Send new message</button>
+          </form>
+        </div>
+      </td>
+    </tr>
+  </table>
 </div>

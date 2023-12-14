@@ -1,19 +1,36 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Conversation} from '@app/model/conversation/conversation.model';
 import {RouterService} from '@app/auth/service/router.service';
 import {ToastService} from '@app/shared/component/toast/toast.service';
-import {ErrorMessage} from '@app/model/error-message.model';
+import {ErrorMessage} from '@app/model/message/error-message.model';
 import {BehaviorSubject, Observable, of, tap} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {ConversationService} from '@app/core/service/conversation.service';
 import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
+import {Message} from '@app/model/message/message.model';
+import {ActivatedRoute} from '@angular/router';
+import {
+  ConversationResponse
+} from '@app/model/conversation/conversation-response.model';
 
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
   styleUrl: './conversation.component.scss'
 })
-export class ConversationComponent {
+export class ConversationComponent implements OnInit {
+
+  conversationID: string;
+
+  updateDisabled: boolean = false;
+
+  countdown: number = 0;
+
+  updateButtonText: string = 'Update';
+
+  messages: Message[] = [];
+
+  newMessage: string = '';
 
   @Input() conversations: Conversation[] = [];
 
@@ -31,9 +48,33 @@ export class ConversationComponent {
 
   constructor(
     private toast: ToastService,
+    private route: ActivatedRoute,
     private service: ConversationService,
     private router: RouterService) {
+    this.conversationID = '';
     this.updatePeopleList();
+  }
+
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.conversationID = params['conversationID'] as string;
+      this.loadMessages();
+    });
+  }
+
+  loadMessages(): void {
+    this.service.getConversationMessages(this.conversationID).subscribe((response: ConversationResponse) => {
+      this.messages = response.Items.find(
+        conversation => conversation.conversationID === this.conversationID)?.messages ?? [];
+    });
+  }
+
+
+  sendMessage(): void {
+    this.service.sendMessage(this.conversationID, this.newMessage).subscribe(() => {
+      this.loadMessages();
+      this.newMessage = '';
+    });
   }
 
   private updateUsers() {
@@ -53,6 +94,34 @@ export class ConversationComponent {
     });
   }
 
+  updateConversation(): void {
+    if (!this.updateDisabled) {
+      this.countdown = 60;
+      this.updateButtonText = 'Updating...';
+      this.updateDisabled = true;
+
+      const interval = setInterval(() => {
+        this.countdown--;
+        if (this.countdown === 0) {
+          this.updateButtonText = 'Update';
+          this.updateDisabled = false;
+          clearInterval(interval);
+          this.loadMessages();
+        }
+      }, 1000);
+    }
+  }
+
+  deleteConversation(): void {
+    const confirmDelete = confirm('Are you sure you want to delete this conversation?');
+    if (confirmDelete) {
+      this.service.deleteConversation(this.conversationID).subscribe(() => {
+        this.router.navigate(['/main']);
+      });
+    }
+  }
+
+
   nextPage() {
     this.currentPage++;
     this.updateUsers();
@@ -65,8 +134,8 @@ export class ConversationComponent {
     }
   }
 
-  onSelectConversation(item: Conversation): void { //TODO
-    this.router.navigate(['/', 'conversation', item.participants[0].uid.S]);
+  onSelectConversation(uid: string): void {
+    this.router.navigate(['/', 'conversation', uid]);
   }
 
   updatePeopleList(): void {
@@ -101,9 +170,5 @@ export class ConversationComponent {
     } else {
       this.router.navigate(['/conversation']);
     }
-  }
-
-  startChat(user: UserProfileResponse) {
-    this.router.navigate(['chat', user.uid.S]);
   }
 }

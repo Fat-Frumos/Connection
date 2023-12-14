@@ -11,7 +11,7 @@ import {
   registerUserSuccess
 } from '@app/ngrx/user/user.actions';
 import {EMPTY, of} from 'rxjs';
-import {ErrorMessage} from '@app/model/error-message.model';
+import {ErrorMessage} from '@app/model/message/error-message.model';
 import {Store} from '@ngrx/store';
 
 @Injectable()

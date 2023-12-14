@@ -4,6 +4,12 @@ import {PreloadService} from '@app/auth/service/preload.service';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {authGuard} from '@app/auth/service/auth.guard';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {
+  ConversationComponent
+} from '@app/core/page/conversation/conversation.component';
+import {
+  NotFoundComponent
+} from '@app/core/component/not-found/not-found.component';
 
 const routes: Routes = [
 
@@ -37,6 +43,12 @@ const routes: Routes = [
     path: 'conversation', canActivate: [authGuard],
     loadChildren: () => import('@app/core/page/conversation/conversation.module')
       .then((module) => module.ConversationModule)
+  },
+  {
+    path: 'conversation/:id', component: ConversationComponent, canActivate: [authGuard]
+  },
+  {
+    path: '**', component: NotFoundComponent
   }
 ];
 

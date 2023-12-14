@@ -4,7 +4,7 @@ import {
   loadProfileSuccess,
   updateProfile
 } from './profile.actions';
-import {ErrorMessage} from '@app/model/error-message.model';
+import {ErrorMessage} from '@app/model/message/error-message.model';
 import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
 
 export interface ProfileState {

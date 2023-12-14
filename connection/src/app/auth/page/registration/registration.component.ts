@@ -11,7 +11,7 @@ import {ToastService} from '@app/shared/component/toast/toast.service';
 import {Store} from '@ngrx/store';
 import {showAlert} from '@app/ngrx/app/app.action';
 import {AuthUser} from '@app/model/user/user-registration.model';
-import {ErrorMessage} from '@app/model/error-message.model';
+import {ErrorMessage} from '@app/model/message/error-message.model';
 import {UserService} from '@app/auth/service/user.service';
 
 @Component({

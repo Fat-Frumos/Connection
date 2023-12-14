@@ -2,8 +2,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {
   SelectedConversation
 } from '@app/model/conversation/selected-conversation.model';
-import {Message} from '@app/model/conversation/message.model';
-import {MessageSendRequest} from '@app/model/conversation/message-send-request';
+import {Message} from '@app/model/message/message.model';
+import {SendRequestMessage} from '@app/model/message/send-request-message.model';
 import {ConversationService} from '@app/core/service/conversation.service';
 import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
 
@@ -18,7 +18,7 @@ export class ChatComponent {
 
   @Input() currentUser: UserProfileResponse;
 
-  @Output() postMessage = new EventEmitter<MessageSendRequest>();
+  @Output() postMessage = new EventEmitter<SendRequestMessage>();
 
   newMessage: string;
 

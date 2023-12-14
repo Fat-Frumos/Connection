@@ -2,7 +2,7 @@ import {Component, inject, ViewEncapsulation} from '@angular/core';
 import {catchError} from 'rxjs/operators';
 import {ToastService} from '@app/shared/component/toast/toast.service';
 import {UserService} from '@app/auth/service/user.service';
-import {ErrorMessage} from '@app/model/error-message.model';
+import {ErrorMessage} from '@app/model/message/error-message.model';
 import {EMPTY} from 'rxjs';
 
 @Component({

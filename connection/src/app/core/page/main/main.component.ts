@@ -4,7 +4,7 @@ import {
 } from '@app/model/conversation/selected-conversation.model';
 import {Conversation} from '@app/model/conversation/conversation.model';
 import {UserService} from '@app/auth/service/user.service';
-import {MessageSendRequest} from '@app/model/conversation/message-send-request';
+import {SendRequestMessage} from '@app/model/message/send-request-message.model';
 import {RouterService} from '@app/auth/service/router.service';
 import {ConversationService} from '@app/core/service/conversation.service';
 import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
@@ -37,7 +37,7 @@ export class MainComponent implements OnDestroy {
     this.selectedConversation = {} as SelectedConversation;
   }
 
-  onPostMessage(message: MessageSendRequest) {
+  onPostMessage(message: SendRequestMessage) {
     this.selectedConversation?.messages.push({
       recipient: message.recipient,
       sender: this.currentUser?.email.S,

@@ -44,6 +44,28 @@ _status code_ **400**
 }
 ```
 
+###### Query string should contain required parameters
+
+_status code_ **400**
+
+```json
+{
+  "type": "InvalidFormDataException",
+  "message": "\"conversationID\" parameter should be in query list."
+}
+```
+
+###### Sent form data is corrupted
+
+_status code_ **400**
+
+```json
+{
+  "type": "InvalidFormDataException",
+  "message": "Invalid multipart/form-data request"
+}
+```
+
 ###### User already exists in the platform
 
 _status code_ **400**
@@ -129,5 +151,60 @@ _status code_ **400**
 {
   "type": "InvalidIDException",
   "message": "Group with id \"${groupID}\" does not exist or was removed before."
+}
+```
+
+###### Conversation does not exist
+
+_status code_ **400**
+
+```json
+{
+  "type": "InvalidIDException",
+  "message": "Conversation with id \"{conversationID}\" does not exist or was deleted before."
+}
+```
+
+###### Format of form data is unknown or cannot be read
+
+_status code_ **400**
+
+```json
+{
+  "type": "InvalidFormDataException",
+  "message": "Invalid post data"
+}
+```
+
+###### Form data should contain required parameters
+
+_status code_ **400**
+
+```json
+{
+  "type": "InvalidPostData",
+  "message": "Post data should contain valid \"conversationID\", \"message\" parameters."
+}
+```
+
+###### Conversation is not ready to be used
+
+_status code_ **400**
+
+```json
+{
+  "type": "RoomReadyException",
+  "message": "Conversation with id \"{conversationID}\" seems not ready yet"
+}
+```
+
+###### Conversation does not exist
+
+_status code_ **400**
+
+```json
+{
+  "type": "InvalidIDException",
+  "message": "Conversation with id \"{conversationID}\" does not exist or was deleted before."
 }
 ```

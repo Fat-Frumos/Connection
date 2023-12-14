@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ToastMessage} from '@app/model/toast-message.model';
+import {ToastMessage} from '@app/model/message/toast-message.model';
 import {NgIf} from '@angular/common';
 import {ToastService} from '@app/shared/component/toast/toast.service';
 

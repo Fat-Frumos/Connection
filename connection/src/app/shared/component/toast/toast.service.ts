@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
-import {ToastMessage, ToastMessageType} from '@app/model/toast-message.model';
+import {ToastMessage, ToastMessageType} from '@app/model/message/toast-message.model';
 
 const DELAY = 2000;
 

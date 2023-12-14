@@ -4,8 +4,9 @@ import {GroupService} from '@app/core/service/group.service';
 import {
   ConversationComponent
 } from '@app/core/page/conversation/conversation.component';
-import {AsyncPipe, NgClass, NgForOf, NgIf} from '@angular/common';
+import {AsyncPipe, DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {LoaderComponent} from '@app/shared/component/loader/loader.component';
+import {FormsModule} from '@angular/forms';
 
 
 const routes: Routes = [
@@ -21,7 +22,9 @@ const routes: Routes = [
     NgClass,
     AsyncPipe,
     NgIf,
-    LoaderComponent
+    LoaderComponent,
+    DatePipe,
+    FormsModule
   ],
   providers: [GroupService],
   exports: [RouterModule, ConversationComponent]

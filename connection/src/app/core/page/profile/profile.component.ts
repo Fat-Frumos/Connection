@@ -1,14 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
 import {Observable, Subject, takeUntil} from 'rxjs';
-import {ToastMessage} from '@app/model/toast-message.model';
+import {ToastMessage} from '@app/model/message/toast-message.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '@app/auth/service/user.service';
 import {ValidatorService} from '@app/auth/service/validator.service';
 import {ToastService} from '@app/shared/component/toast/toast.service';
 import {Store} from '@ngrx/store';
 import {updateProfile} from '@app/ngrx/profile/profile.actions';
-import {ErrorMessage} from '@app/model/error-message.model';
+import {ErrorMessage} from '@app/model/message/error-message.model';
 
 @Component({
   selector: 'app-profile',

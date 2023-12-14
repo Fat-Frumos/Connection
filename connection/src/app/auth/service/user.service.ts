@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {Observable, of, tap} from 'rxjs';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {AuthUser} from '@app/model/user/user-registration.model';
 import {UserLoginResponse} from '@app/model/user/user-login-response.model';
 import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
@@ -8,8 +8,6 @@ import {Store} from '@ngrx/store';
 import {AppState} from '@app/ngrx/app/app.state';
 import {baseUrl} from '@app/config';
 import {ToastService} from '@app/shared/component/toast/toast.service';
-import {HttpStatusService} from '@app/auth/service/http-status.service';
-import {registerUserFailure} from '@app/ngrx/user/user.actions';
 import {Router} from '@angular/router';
 
 @Injectable({
@@ -27,7 +25,7 @@ export class UserService {
 
   registration(user: AuthUser): Observable<UserLoginResponse> {
     return this.http.post<UserLoginResponse>(`${baseUrl}/registration`, user).pipe(
-      tap(response => this.handleResponse(response)),
+      tap(response => this.saveTokenToStorage(response)),
       tap(() => {
         this.toast.showMessage('User registered successfully', 'success');
         void this.router.navigate(['/signin']);
@@ -38,7 +36,7 @@ export class UserService {
   login(user: AuthUser): Observable<UserLoginResponse> {
     return this.http.post<UserLoginResponse>(`${baseUrl}/login`, user).pipe(
       tap((response: UserLoginResponse): void => {
-        this.handleResponse(response);
+        this.saveTokenToStorage(response);
         this.saveUserToStorage(user);
       })
     );
@@ -75,7 +73,7 @@ export class UserService {
     return this.http.put<UserProfileResponse>(`${baseUrl}/profile`, {name});
   }
 
-  handleResponse(response: UserLoginResponse): void {
+  saveTokenToStorage(response: UserLoginResponse): void {
     localStorage.setItem('uid', response.uid);
     localStorage.setItem('token', response.token);
   }
@@ -101,11 +99,5 @@ export class UserService {
       document.cookie = c.replace(/^ +/, '').replace(/=.*/,
         `=;expires=${new Date().toUTCString()};path=/`);
     });
-  }
-
-  private handleError(error: HttpErrorResponse): void {
-    const toastMessage = HttpStatusService.getStatus(error.status, error.statusText);
-    this.store.dispatch(registerUserFailure({error: 'Registration failed'}));
-    this.toast.showMessage(toastMessage.message, toastMessage.toastType);
   }
 }
