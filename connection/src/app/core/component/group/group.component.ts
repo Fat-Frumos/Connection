@@ -8,6 +8,8 @@ import {Router} from '@angular/router';
 import {AppState} from '@app/ngrx/app/app.state';
 import {Store} from '@ngrx/store';
 
+const MINUTE = 60;
+
 @Component({
   selector: 'app-group',
   templateUrl: './group.component.html',
@@ -22,7 +24,7 @@ export class GroupComponent implements OnInit {
 
   canUpdate: boolean = true;
 
-  countdown: number = 60;
+  countdown: number = MINUTE;
 
   groupForm: FormGroup;
 
@@ -68,20 +70,24 @@ export class GroupComponent implements OnInit {
       this.groupService.getGroups().subscribe(() => {
         this.loadGroups();
         this.isLoading = false;
-        this.canUpdate = false;
-        this.countdown = 60;
-        const interval = setInterval(() => {
-          this.countdown--;
-          if (this.countdown === 0) {
-            clearInterval(interval);
-            this.canUpdate = true;
-          }
-        }, 1000);
+        this.countdown = MINUTE;
+        this.canUpdate = this.toast.count(this.countdown);
+        // this.count();
       });
     }
     // this.store.dispatch(updateGroup({ group }));
   }
 
+  private count() {
+    this.countdown = MINUTE;
+    const interval = setInterval(() => {
+      this.countdown--;
+      if (this.countdown === 0) {
+        clearInterval(interval);
+        this.canUpdate = true;
+      }
+    }, 1000);
+  }
 
   createGroup(): void {
     if (this.groupForm.valid) {

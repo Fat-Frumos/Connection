@@ -1,7 +1,7 @@
 import {Action, createReducer, on} from '@ngrx/store';
 import {
   userAdapter,
-  UserModel,
+  UserState,
   initialUserState
 } from '@app/ngrx/user/user.state';
 import {
@@ -25,6 +25,6 @@ const userReducer = createReducer(
   })
 );
 
-export function UserReducer(state: UserModel | undefined, action: Action) {
+export function UserReducer(state: UserState | undefined, action: Action) {
   return userReducer(state ?? initialUserState, action);
 }

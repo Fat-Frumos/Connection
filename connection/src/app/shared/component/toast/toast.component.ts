@@ -12,7 +12,7 @@ import {ToastService} from '@app/shared/component/toast/toast.service';
 })
 export class ToastComponent {
 
-  message = {} as ToastMessage;
+  message: ToastMessage = {} as ToastMessage;
 
   constructor(private service: ToastService) {
     this.service.toast$.subscribe(message => {
@@ -21,6 +21,6 @@ export class ToastComponent {
   }
 
   closeModal() {
-    this.service.clear(2500);
+    this.service.clear();
   }
 }

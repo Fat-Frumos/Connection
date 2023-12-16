@@ -16,10 +16,10 @@ export class ToastService {
     this.show({message, toastType, color} as ToastMessage);
   }
 
-  clear(delay: number): void {
+  clear(): void {
     setTimeout(() => {
       this.subject.next({} as ToastMessage);
-    }, delay);
+    }, DELAY);
   }
 
   getColor(toastType: ToastMessageType): string {
@@ -37,16 +37,16 @@ export class ToastService {
 
   show(toast: ToastMessage): void {
     this.subject.next(toast);
-    this.clear(DELAY);
+    this.clear();
   }
 
-  upload(countdown: number): boolean {
+  count(countdown: number): boolean {
     const interval = setInterval(() => {
       countdown--;
       if (countdown === 0) {
         clearInterval(interval);
       }
-    }, 1000);
+    }, DELAY / 2);
     return false;
   }
 }

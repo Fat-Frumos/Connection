@@ -8,28 +8,25 @@ import {Store} from '@ngrx/store';
 import {AppState} from '@app/ngrx/app/app.state';
 import {baseUrl} from '@app/config';
 import {ToastService} from '@app/shared/component/toast/toast.service';
-import {Router} from '@angular/router';
+import {RouterService} from '@app/auth/service/router.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  router: Router = inject(Router);
-
   http: HttpClient = inject(HttpClient);
 
   toast: ToastService = inject(ToastService);
+
+  router: RouterService = inject(RouterService);
 
   store: Store<AppState> = inject<Store<AppState>>(Store);
 
   registration(user: AuthUser): Observable<UserLoginResponse> {
     return this.http.post<UserLoginResponse>(`${baseUrl}/registration`, user).pipe(
       tap(response => this.saveTokenToStorage(response)),
-      tap(() => {
-        this.toast.showMessage('User registered successfully', 'success');
-        void this.router.navigate(['/signin']);
-      })
+      tap(() => this.router.navigate(['/signin']))
     );
   }
 
@@ -46,7 +43,7 @@ export class UserService {
     return this.http.delete<void>(`${baseUrl}/logout`).pipe(
       tap(() => {
         this.clearUserData();
-        void this.router.navigate(['/login']);
+        this.router.navigate(['/login']);
       })
     );
   }
@@ -57,7 +54,6 @@ export class UserService {
 
   getAuthUser$(): Observable<UserProfileResponse> {
     const userString = localStorage.getItem('user');
-    console.log(userString);
     return userString ? of(JSON.parse(userString) as UserProfileResponse) : of({} as UserProfileResponse);
   }
 
@@ -99,5 +95,9 @@ export class UserService {
       document.cookie = c.replace(/^ +/, '').replace(/=.*/,
         `=;expires=${new Date().toUTCString()};path=/`);
     });
+  }
+
+  togglePanels(isSignUp: boolean, container: Element) {
+    this.router.togglePanels(isSignUp, container);
   }
 }

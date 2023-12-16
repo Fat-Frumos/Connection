@@ -32,7 +32,7 @@ export class PeopleComponent implements OnInit {
     private store: Store<AppState>,
     private service: ConversationService) {
     this.users = [];
-    this.people$ = store.select(state => state.people);
+    this.people$ = store.select(state => state.people.people);
   }
 
   ngOnInit(): void {
@@ -47,7 +47,7 @@ export class PeopleComponent implements OnInit {
   }
 
   loadPeople(): void {
-    this.service.getUsers().subscribe(people => {
+    this.service.getUsers$().subscribe(people => {
       this.users = people.Items;
     });
   }
@@ -55,7 +55,7 @@ export class PeopleComponent implements OnInit {
   updatePeople(): void {
     if (this.canUpdate) {
       this.isLoading = true;
-      this.service.getUsers().subscribe(() => {
+      this.service.getUsers$().subscribe(() => {
         this.loadPeople();
         this.isLoading = false;
         this.canUpdate = false;

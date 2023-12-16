@@ -41,6 +41,6 @@ export class AppEffects {
       this.action$.pipe(
         ofType(clearToast),
         tap(() => {
-          this.toast.clear(0);
+          this.toast.clear();
         })));
 }

@@ -79,7 +79,7 @@ export class ConversationComponent implements OnInit {
 
   private updateUsers() {
     this.isLoading = true;
-    this.service.getUsers().subscribe({
+    this.service.getUsers$().subscribe({
       next: (response) => {
         const startIndex = this.currentPage * this.pageSize;
         const endIndex = startIndex + this.pageSize;
@@ -121,7 +121,6 @@ export class ConversationComponent implements OnInit {
     }
   }
 
-
   nextPage() {
     this.currentPage++;
     this.updateUsers();
@@ -151,7 +150,7 @@ export class ConversationComponent implements OnInit {
   }
 
   hasConversation(id: string): Observable<boolean> {
-    return this.service.getUsers().pipe(
+    return this.service.getUsers$().pipe(
       map(users => users.Items.some(user => user.uid.S === id))
     );
   }

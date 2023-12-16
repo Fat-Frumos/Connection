@@ -1,7 +1,6 @@
 <form [formGroup]="profileForm"
       class="profile-card"
-      *ngIf="(profileData$ | async) as profileData;
-else loadingOrError">
+      *ngIf="(profileData$ | async) as profileData;">
   <div class="img-area">
     <div class="inner-area">
       <img [src]="randomUserImage" class="card-image" alt="">
@@ -28,11 +27,3 @@ else loadingOrError">
   </div>
 </form>
 
-<ng-template #loadingOrError>
-  <div id="loader-wrapper"
-       *ngIf="errorMessage$ | async; else loading">
-    <app-toast></app-toast>
-  </div>
-  <ng-template #loading>
-  </ng-template>
-</ng-template>

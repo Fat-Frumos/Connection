@@ -10,6 +10,7 @@ import {
 import {
   NotFoundComponent
 } from '@app/core/component/not-found/not-found.component';
+import {MessageService} from '@app/core/service/message.service';
 
 const routes: Routes = [
 
@@ -59,7 +60,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes,
       {preloadingStrategy: PreloadService})],
   exports: [RouterModule],
-  providers: [HttpClient, PreloadService]
+  providers: [HttpClient, PreloadService, MessageService]
 })
 export class AppRoutingModule {
 }

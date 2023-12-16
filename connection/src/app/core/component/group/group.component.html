@@ -2,8 +2,8 @@
         *ngIf="canUpdate"
         (click)="updateGroups()"
         [disabled]="!canUpdate">
-  Update
 </button>
+
 <span class="counter header-left"
       *ngIf="!canUpdate">
   {{ countdown }}</span>

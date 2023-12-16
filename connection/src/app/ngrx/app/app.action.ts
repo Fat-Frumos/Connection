@@ -6,7 +6,7 @@ export const showAlert =
     props<{ message: string, resultType: string; }>());
 
 export const emptyAction =
-  createAction('[App Toast] empty');
+  createAction('[App Toast] show empty');
 
 export const showToast =
   createAction('[App Toast] Show Toast',

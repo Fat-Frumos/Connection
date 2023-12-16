@@ -9,3 +9,12 @@ export const selectProfileData =
 
 export const selectProfileError =
   createSelector(selectProfileState, (state) => state.error);
+
+export const getProfileState =
+  createFeatureSelector<ProfileState>('profile');
+
+export const getProfile =
+  createSelector(getProfileState, state => state.profile);
+
+export const getError =
+  createSelector(getProfileState, state => state.error);

@@ -1,14 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
-import {Observable, Subject, takeUntil} from 'rxjs';
-import {ToastMessage} from '@app/model/message/toast-message.model';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Observable, Subject} from 'rxjs';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {UserService} from '@app/auth/service/user.service';
 import {ValidatorService} from '@app/auth/service/validator.service';
 import {ToastService} from '@app/shared/component/toast/toast.service';
-import {Store} from '@ngrx/store';
-import {updateProfile} from '@app/ngrx/profile/profile.actions';
+import {select, Store} from '@ngrx/store';
+import {loadProfile, updateProfile} from '@app/ngrx/profile/profile.actions';
 import {ErrorMessage} from '@app/model/message/error-message.model';
+import {selectProfileData} from '@app/ngrx/profile/profile.selectors';
 
 @Component({
   selector: 'app-profile',
@@ -19,13 +19,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   randomUserImage = 'https://picsum.photos/50/50/?random=1';
 
-  profileData: UserProfileResponse = {} as UserProfileResponse;
-
-  profileData$: Observable<UserProfileResponse>;
+  profileData$ = new Observable<UserProfileResponse>();
 
   private readonly unsubscribe$: Subject<void>;
-
-  errorMessage$: Observable<ToastMessage>;
 
   currentUserName: string = '';
 
@@ -40,25 +36,35 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private validator: ValidatorService) {
     this.unsubscribe$ = new Subject<void>();
-    this.errorMessage$ = new Observable<ToastMessage>();
     this.profileForm = this.validator.getFormGroup(this.formBuilder);
-    this.profileData$ = this.userService.fetchUser();
+    this.currentUserName = this.userService.getCurrentUser().name.S;
   }
 
   ngOnInit(): void {
-    this.profileData$.pipe(takeUntil(this.unsubscribe$)).subscribe(profile => {
-      this.profileData = profile;
-      this.currentUserName = profile.name.S;
-      this.profileForm = this.formBuilder.group({
-        name: [this.currentUserName || '', [Validators.required.bind(Validators)]]
-      });
-    });
+    this.store.dispatch(loadProfile());
+    this.profileData$ = this.store.pipe(select(selectProfileData));
+
+    // this.loadUserProfile();
+    // this.profileData$ = this.userService.fetchUser();
   }
 
+  // profileData: UserProfileResponse = {} as UserProfileResponse;
+
+  // private loadUserProfile() {
+  //   this.profileData$.pipe(takeUntil(this.unsubscribe$)).subscribe(profile => {
+  //     this.profileData = profile;
+  //     this.profileForm.setValue({
+  //       name: profile.name.S
+  //     });
+  //     this.currentUserName = profile.name.S;
+  //     this.profileForm = this.formBuilder.group({
+  //       name: [this.currentUserName || '', [Validators.required.bind(Validators)]]
+  //     });
+  //   });
+  // }
+
   cancelEditing(): void {
-    this.profileForm.reset({
-      name: this.userService.getCurrentUser().name
-    });
+    this.profileForm.reset({name: this.currentUserName});
     this.profileForm.get('name')!.disable();
     this.isEditing = false;
   }
@@ -70,7 +76,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         next: (updatedProfile: UserProfileResponse) => {
           this.isEditing = false;
           this.toast.showMessage('Profile updated successfully', 'success');
-          this.store.dispatch(updateProfile({ profile: updatedProfile }));
+          this.store.dispatch(updateProfile({profile: updatedProfile}));
         },
         error: (error: ErrorMessage) => {
           this.toast.showMessage(`Failed to update profile: ${error.message}`, 'error');

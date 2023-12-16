@@ -6,9 +6,10 @@ import {
   loadProfile,
   loadProfileSuccess,
   updateProfile,
-  updateProfileFailed
+  updateProfileFailure
 } from './profile.actions';
 import {UserService} from '@app/auth/service/user.service';
+import {ErrorMessage} from '@app/model/message/error-message.model';
 
 @Injectable()
 export class ProfileEffects {
@@ -28,7 +29,8 @@ export class ProfileEffects {
       mergeMap(({profile}) =>
         this.service.update(profile.name.S).pipe(
           map(() => updateProfile),
-          catchError(() => of(updateProfileFailed()))
+          catchError((error: ErrorMessage) =>
+            of(updateProfileFailure({error})))
         )
       )
     )

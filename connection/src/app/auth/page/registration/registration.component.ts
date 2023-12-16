@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ValidatorService} from '@app/auth/service/validator.service';
-import {RouterService} from '@app/auth/service/router.service';
 import {ToastService} from '@app/shared/component/toast/toast.service';
 import {Store} from '@ngrx/store';
 import {showAlert} from '@app/ngrx/app/app.action';
@@ -31,21 +30,32 @@ export class RegistrationComponent implements OnInit {
 
   registrationForm: FormGroup;
 
-  lastEmail = '';
+  lastEmail: string = '';
 
   constructor(
     private store: Store,
-    private userService: UserService,
     private toast: ToastService,
-    private router: RouterService,
+    private userService: UserService,
     private validator: ValidatorService,
     private formBuilder: FormBuilder) {
     this.lastRegistrationError = {} as ErrorMessage;
     this.registrationForm = this.validator.getFormGroup(this.formBuilder);
   }
 
+  ngOnInit(): void {
+    const container = document.querySelector('.container');
+    if (container) {
+      this.userService.togglePanels(true, container);
+    }
+    this.registrationForm.valueChanges.subscribe(() => {
+      this.clearRegistrationError();
+      this.enableSubmitButton();
+      this.formChanges();
+    });
+  }
+
   onSubmit(): void {
-    if (this.isSubmitting || this.registrationForm.invalid) {
+    if (!this.isSubmitting || this.registrationForm.invalid) {
       this.store.dispatch(showAlert({
         message: 'Password invalid',
         resultType: 'fail'
@@ -53,31 +63,33 @@ export class RegistrationComponent implements OnInit {
       return;
     }
     this.isSubmitting = true;
-    const formUser = this.validator.getFormUser(this.registrationForm);
-    this.register(formUser);
+    this.register(this.validator.getFormUser(this.registrationForm));
   }
 
-  private register(formUser: AuthUser) {
+  private register(formUser: AuthUser): void {
     this.userService.registration(formUser).subscribe({
       next: () => {
         this.isSubmitting = false;
         this.toast.showMessage('Registration successful', 'success');
-        this.router.navigate(['/sign-in']);
       },
       error: (error: ErrorMessage) => {
-        // === 'PrimaryDuplicationException'
-        if (error.error) {
-          this.isEmailTaken = true;
-          this.disableSubmitButton();
-          this.lastEmail = formUser.email;
-          this.setLastRegistrationError(error);
-          this.toast.showMessage('Email is already taken', 'warning');
-        } else {
-          this.isSubmitting = false;
-          this.toast.showMessage(error.message, 'error');
-        }
+        this.handleError(error, formUser);
       }
     });
+  }
+
+  private handleError(error: ErrorMessage, formUser: AuthUser): void {
+    if (error.error) {
+      if (error.error.type === 'PrimaryDuplicationException') {
+        this.isEmailTaken = true;
+        this.disableSubmitButton();
+        this.lastEmail = formUser.email;
+        this.lastRegistrationError = error;
+        this.toast.showMessage(`Email ${this.lastEmail} is already taken`, 'warning');
+      }
+      this.isSubmitting = false;
+      this.toast.showMessage(error.message, 'error');
+    }
   }
 
   onEmailChange(email: string): void {
@@ -97,17 +109,6 @@ export class RegistrationComponent implements OnInit {
     this.registrationForm.disable();
   }
 
-  ngOnInit(): void {
-    const container = document.querySelector('.container');
-    if (container) {
-      this.router.togglePanels(true, container);
-    }
-    this.registrationForm.valueChanges.subscribe(() => {
-      this.clearRegistrationError();
-      this.enableSubmitButton();
-    });
-  }
-
   isValidName(): boolean {
     return this.registrationForm.get('name')?.valid ?? false;
   }
@@ -121,36 +122,14 @@ export class RegistrationComponent implements OnInit {
   }
 
   clearRegistrationError(): void {
-    this.toast.clear(500);
+    this.toast.clear();
     this.lastRegistrationError = {} as ErrorMessage;
   }
 
-  setLastRegistrationError(error: ErrorMessage): void {
-    this.lastRegistrationError = error;
+  private formChanges(): void {
+    if (this.isEmailTaken) {
+      this.isEmailTaken = false;
+      this.registrationForm.get('email')?.setErrors(null);
+    }
   }
-
-  // dispatch() {
-  //   this.store.dispatch(registerUser({user: formUser}));
-  //   this.actions$.pipe(
-  //     ofType(registerUserSuccess, registerUserFailure)
-  //   ).subscribe(action => {
-  //     if (action.type === registerUserSuccess.type) {
-  //       this.isSubmitting = false;
-  //       this.toast.showMessage('Registration successful', 'success');
-  //       this.router.navigate(['/sign-in']);
-  //     } else if (action.type === registerUserFailure.type) {
-  //       const error: string = action.error;
-  //       if (error === 'PrimaryDuplicationException') {
-  //         this.isEmailTaken = true;
-  //         this.disableSubmitButton();
-  //         this.lastEmail = formUser.email;
-  //         this.setLastRegistrationError(error);
-  //         this.toast.showMessage('Email is already taken', 'warning');
-  //       } else {
-  //         this.isSubmitting = false;
-  //         this.toast.showMessage(error, 'error');
-  //       }
-  //     }
-  //   });
-  // }
 }

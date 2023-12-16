@@ -1,12 +1,12 @@
 import {inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {UserResponse} from '@app/model/user/user-response.model';
 import {baseUrl} from '@app/config';
 import {
   ConversationResponse
 } from '@app/model/conversation/conversation-response.model';
 import {Conversation} from '@app/model/conversation/conversation.model';
 import {HttpClient} from '@angular/common/http';
+import {UserResponse} from '@app/model/user/user-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class ConversationService {
 
   private conversations: Map<string, Conversation> = new Map();
 
-  getUsers(): Observable<UserResponse> {
+  getUsers$(): Observable<UserResponse> {
     return this.http.get<UserResponse>(`${baseUrl}/users`);
   }
 
