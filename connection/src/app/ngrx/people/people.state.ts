@@ -1,13 +1,13 @@
 import {createEntityAdapter, EntityState} from '@ngrx/entity';
-import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
+import {People} from '@app/model/user/user-profile-response.model';
 
-export interface PeopleState extends EntityState<UserProfileResponse []> {
-  people: UserProfileResponse[];
+export interface PeopleState extends EntityState<People []> {
+  people: People[];
   error: string;
 }
 
 export const peopleAdapter =
-  createEntityAdapter<UserProfileResponse[]>();
+  createEntityAdapter<People[]>();
 
 export const initialPeopleState: PeopleState =
   peopleAdapter.getInitialState({

@@ -1,6 +1,6 @@
-import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
+import {People} from '@app/model/user/user-profile-response.model';
 
-export interface UserResponse {
+export interface PeopleResponse {
   Count: number;
-  Items: UserProfileResponse[];
+  Items: People[];
 }

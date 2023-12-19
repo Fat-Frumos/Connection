@@ -1,14 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
-import {Observable, Subject} from 'rxjs';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {People} from '@app/model/user/user-profile-response.model';
+import {EMPTY, Observable, Subject, takeUntil, tap} from 'rxjs';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '@app/auth/service/user.service';
 import {ValidatorService} from '@app/auth/service/validator.service';
 import {ToastService} from '@app/shared/component/toast/toast.service';
-import {select, Store} from '@ngrx/store';
-import {loadProfile, updateProfile} from '@app/ngrx/profile/profile.actions';
 import {ErrorMessage} from '@app/model/message/error-message.model';
-import {selectProfileData} from '@app/ngrx/profile/profile.selectors';
+import {catchError} from 'rxjs/operators';
+import {AuthUser} from '@app/model/user/user-registration.model';
 
 @Component({
   selector: 'app-profile',
@@ -19,7 +18,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   randomUserImage = 'https://picsum.photos/50/50/?random=1';
 
-  profileData$ = new Observable<UserProfileResponse>();
+  profileData$ = new Observable<People>();
 
   private readonly unsubscribe$: Subject<void>;
 
@@ -30,38 +29,31 @@ export class ProfileComponent implements OnInit, OnDestroy {
   profileForm: FormGroup;
 
   constructor(
-    private store: Store,
     private toast: ToastService,
     public userService: UserService,
     private formBuilder: FormBuilder,
     private validator: ValidatorService) {
     this.unsubscribe$ = new Subject<void>();
-    this.profileForm = this.validator.getFormGroup(this.formBuilder);
+    this.profileForm = this.formBuilder.group({name: ['', [this.validator.nameValidator]]});
     this.currentUserName = this.userService.getCurrentUser().name.S;
   }
 
   ngOnInit(): void {
-    this.store.dispatch(loadProfile());
-    this.profileData$ = this.store.pipe(select(selectProfileData));
-
-    // this.loadUserProfile();
-    // this.profileData$ = this.userService.fetchUser();
+    this.loadUserProfile();
+    this.profileData$ = this.userService.fetchUser();
   }
 
-  // profileData: UserProfileResponse = {} as UserProfileResponse;
-
-  // private loadUserProfile() {
-  //   this.profileData$.pipe(takeUntil(this.unsubscribe$)).subscribe(profile => {
-  //     this.profileData = profile;
-  //     this.profileForm.setValue({
-  //       name: profile.name.S
-  //     });
-  //     this.currentUserName = profile.name.S;
-  //     this.profileForm = this.formBuilder.group({
-  //       name: [this.currentUserName || '', [Validators.required.bind(Validators)]]
-  //     });
-  //   });
-  // }
+  private loadUserProfile() {
+    this.profileData$.pipe(takeUntil(this.unsubscribe$)).subscribe(profile => {
+      this.profileForm.setValue({
+        name: profile.name.S
+      });
+      this.currentUserName = profile.name.S;
+      this.profileForm = this.formBuilder.group({
+        name: [this.currentUserName || '', [Validators.required.bind(Validators)]]
+      });
+    });
+  }
 
   cancelEditing(): void {
     this.profileForm.reset({name: this.currentUserName});
@@ -69,19 +61,23 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.isEditing = false;
   }
 
+
   saveChanges() {
     if (this.profileForm.valid) {
-      const newName = (this.profileForm.value as UserProfileResponse).name.S;
-      this.userService.update(newName).subscribe({
-        next: (updatedProfile: UserProfileResponse) => {
+      const newName = this.profileForm.value as AuthUser;
+      this.userService.update(newName).pipe(
+        tap((name) => {
+          this.currentUserName = name.name;
           this.isEditing = false;
           this.toast.showMessage('Profile updated successfully', 'success');
-          this.store.dispatch(updateProfile({profile: updatedProfile}));
-        },
-        error: (error: ErrorMessage) => {
+          localStorage.setItem('name', this.currentUserName);
+        }),
+        catchError((error: ErrorMessage) => {
+          console.error(error);
           this.toast.showMessage(`Failed to update profile: ${error.message}`, 'error');
-        }
-      });
+          return EMPTY;
+        })
+      ).subscribe();
     }
   }
 

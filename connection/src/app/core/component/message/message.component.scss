@@ -1,0 +1,71 @@
+.messages-wrapper {
+  height: 88vh;
+  overflow-y: auto;
+  width: 30vw;
+}
+
+img {
+  width: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.chat {
+  height: auto;
+}
+
+.chat img {
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+}
+
+.dialog {
+  padding: 3%;
+  margin-right: 10px;
+  max-width: 250px;
+  border-radius: 0.5rem;
+  position: relative;
+  background: #ccc;
+  color: black;
+}
+
+.dialog::before {
+  content: "";
+  position: absolute;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}
+
+.other, .self {
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.other .dialog::before {
+  left: -5%;
+  border-right: 15px solid #ccc;
+}
+
+.self .dialog::before {
+  right: -5%;
+  border-left: 15px solid #9eea9e;
+}
+
+.self {
+  flex-direction: row-reverse;
+}
+
+.self .dialog {
+  background: #9eea9e;
+  margin: 0 15px;
+}
+
+.chat p {
+  align-self: flex-end;
+  margin-bottom: 0;
+}
+
+.read {
+  transform: translate(30px, 30px);
+}

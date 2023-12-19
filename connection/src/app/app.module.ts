@@ -14,6 +14,7 @@ import {ToastComponent} from '@app/shared/component/toast/toast.component';
 import {AppEffects} from '@app/ngrx/app/app.effects';
 import {reducers} from '@app/ngrx/app/app.reducer';
 import {MessageEffects} from '@app/ngrx/message/message.effects';
+import {PeopleEffects} from '@app/ngrx/people/people.effects';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {MessageEffects} from '@app/ngrx/message/message.effects';
     EffectsModule.forRoot([
       AppEffects,
       UserEffects,
+      PeopleEffects,
       MessageEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25, logOnly: !isDevMode(),

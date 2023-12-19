@@ -17,13 +17,20 @@ export class ValidatorService {
 
   emailValidator = (control: AbstractControl): ValidationErrors | null => {
     const value = control.value as string;
+    if (value === null || value === undefined) {
+      return { invalidUsername: true };
+    }
     const hasAtSign = value.includes('@');
     const hasDot = value.includes('.');
-    return hasAtSign && hasDot ? null : {invalidUsername: true};
+    return hasAtSign && hasDot ? null : { invalidUsername: true };
   };
+
 
   passwordValidator = (control: AbstractControl): ValidationErrors | null => {
     const value = control.value as string;
+    if (value === null || value === undefined) {
+      return { invalidUsername: true };
+    }
     const hasUpperCase = /[A-Z]/.test(value);
     const hasLowerCase = /[a-z]/.test(value);
     const hasNumeric = /\d/.test(value);
@@ -35,10 +42,15 @@ export class ValidatorService {
 
   nameValidator = (control: AbstractControl): ValidationErrors | null => {
     const value = control.value as string;
+    if (value === null || value === undefined) {
+      return null;
+    }
     const hasMax = value.length > MAX_LENGTH;
     const hasLetter = !/^[a-zA-Z ]*$/.test(value);
     return hasMax || hasLetter ? { 'maxLength': hasMax, 'pattern': hasLetter } : null;
   };
+
+
 
   getFormUser(loginForm: FormGroup): AuthUser {
     return {

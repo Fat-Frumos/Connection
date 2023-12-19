@@ -7,6 +7,7 @@ import {
 import {AsyncPipe, DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {LoaderComponent} from '@app/shared/component/loader/loader.component';
 import {FormsModule} from '@angular/forms';
+import {MessageModule} from '@app/core/component/message/message.module';
 
 
 const routes: Routes = [
@@ -24,7 +25,8 @@ const routes: Routes = [
     NgIf,
     LoaderComponent,
     DatePipe,
-    FormsModule
+    FormsModule,
+    MessageModule
   ],
   providers: [GroupService],
   exports: [RouterModule, ConversationComponent]

@@ -11,6 +11,7 @@ Right side is [People list](./milestone_6_2.people_list.md)
 > Please, do not use any timers or intervals to update Group or People list! Only manual triggers
 > are allowed.
 
+
 ## Examination
 
 ### Profit
@@ -36,7 +37,8 @@ Right side is [People list](./milestone_6_2.people_list.md)
 - submit button in modal window should be disabled until form is valid: **5 points**
 - clicking on submit button in modal window the appropriate http-request is sent to create new
   group. Modal window is closed only if http-request succeeded: **15 points**
-- [toast messages](../README.md#toast) with appropriate text are displayed if http-request fails or succeed: **10 points**
+- [toast messages](../README.md#toast) with appropriate text are displayed if http-request fails or
+  succeed: **10 points**
 - clicking on list item the user is redirected to group dialog page: **5 points**
 
 #### People list (right)
@@ -57,14 +59,19 @@ Right side is [People list](./milestone_6_2.people_list.md)
 
 #### Group section
 
-- list of groups is loaded automatically every time if user returns back into main page (until
-  browser page is reloaded): **-25 points**
-- list of groups is loaded automatically after successful created new group or
-  deleted group: **-25 points**
+- list of groups via `/groups/list` is automatically loaded more than once during 1 browser
+  session (until the user refreshes the page) if user do not click _Update_ button. For instance,
+  when user navigates through the pages, sends new messages, deletes or creates
+  group(s): **-30 points**
 
 #### People list
 
-- list of people is loaded automatically every time if user returns back into main page (until
-  browser page is reloaded): **-25 points**
-- list of people is loaded automatically after successful created new conversation or
-  deleted it: **-25 points**
+- list of conversations via `/conversations/list` is automatically loaded more than once during 1
+  browser session (until the user refreshes the page) if user do not click _Update_ button. For
+  instance, when user navigates through the pages, sends new messages, deletes or creates
+  conversation(s): **-20 points**
+- list of users via `/users` is automatically loaded more than once during 1 browser session (until
+  the user refreshes the page) if user do not click _Update_ button. For instance, when user
+  navigates through the pages, sends new messages, deletes or creates
+  conversation(s): **-20 points**
+

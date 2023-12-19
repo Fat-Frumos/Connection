@@ -3,7 +3,7 @@ import {Observable, of, tap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {AuthUser} from '@app/model/user/user-registration.model';
 import {UserLoginResponse} from '@app/model/user/user-login-response.model';
-import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
+import {People} from '@app/model/user/user-profile-response.model';
 import {Store} from '@ngrx/store';
 import {AppState} from '@app/ngrx/app/app.state';
 import {baseUrl} from '@app/config';
@@ -48,25 +48,25 @@ export class UserService {
     );
   }
 
-  fetchUser(): Observable<UserProfileResponse> {
-    return this.http.get<UserProfileResponse>(`${baseUrl}/profile`);
+  fetchUser(): Observable<People> {
+    return this.http.get<People>(`${baseUrl}/profile`);
   }
 
-  getAuthUser$(): Observable<UserProfileResponse> {
+  getAuthUser$(): Observable<People> {
     const userString = localStorage.getItem('user');
-    return userString ? of(JSON.parse(userString) as UserProfileResponse) : of({} as UserProfileResponse);
+    return userString ? of(JSON.parse(userString) as People) : of({} as People);
   }
 
-  getCurrentUser(): UserProfileResponse {
-    let currentUser = {} as UserProfileResponse;
+  getCurrentUser(): People {
+    let currentUser = {} as People;
     this.getAuthUser$().subscribe(user => {
       currentUser = user;
     });
     return currentUser;
   }
 
-  update(name: string): Observable<UserProfileResponse> {
-    return this.http.put<UserProfileResponse>(`${baseUrl}/profile`, {name});
+  update(name: AuthUser): Observable<AuthUser> {
+    return this.http.put<AuthUser>(`${baseUrl}/profile`, {name});
   }
 
   saveTokenToStorage(response: UserLoginResponse): void {

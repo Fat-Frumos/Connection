@@ -11,6 +11,8 @@ import {
   NotFoundComponent
 } from '@app/core/component/not-found/not-found.component';
 import {MessageService} from '@app/core/service/message.service';
+import {GroupService} from '@app/core/service/group.service';
+import {ChatComponent} from '@app/core/component/chat/chat.component';
 
 const routes: Routes = [
 
@@ -36,21 +38,13 @@ const routes: Routes = [
       .then((module) => module.MainModule)
   },
   {
-    path: 'group', canActivate: [authGuard],
-    loadChildren: () => import('@app/core/component/chat/chat.module')
-      .then((module) => module.ChatModule)
-  },
-  {
     path: 'conversation', canActivate: [authGuard],
     loadChildren: () => import('@app/core/page/conversation/conversation.module')
       .then((module) => module.ConversationModule)
   },
-  {
-    path: 'conversation/:id', component: ConversationComponent, canActivate: [authGuard]
-  },
-  {
-    path: '**', component: NotFoundComponent
-  }
+  { path: 'group/:id', component: ConversationComponent },
+  { path: 'conversation/:id', component: ChatComponent},
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
@@ -60,7 +54,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes,
       {preloadingStrategy: PreloadService})],
   exports: [RouterModule],
-  providers: [HttpClient, PreloadService, MessageService]
+  providers: [HttpClient, PreloadService, MessageService, GroupService]
 })
 export class AppRoutingModule {
 }

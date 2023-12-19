@@ -16,6 +16,16 @@ User can update the list no more than once a minute! Countdown must be present n
 button till the next update is possible. If time is out countdown disappears.
 This state should be preserved even after transition to other pages and back.
 
+> [!NOTE]
+> Countdown(timer) and disabled _Update_ button is applied only after clicking on _Update_ button.  
+> First visit on the page should not have any effect on timer.
+
+> [!NOTE]
+> Countdown(timer) should display the actual number of seconds remaining until the end of one minute
+> after the _Update_ button is pressed, even if the user navigates across pages. That is, if the user
+> presses the _Update_ button, goes to other pages, and returns to the list page after 35 seconds, he
+> should see the timer showing 25, 24, 23...
+
 **_Create_ button**  
 _Create_ button opens modal window with a reactive form where user can enter `name`. Using
 endpoint (below) application creates new group and append it into the list **without** retrieving
@@ -41,7 +51,7 @@ _rough example of group list_:
 `|` Someone's Group name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `|`  
 `---------------------------------`  
 `|` My Group
-name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#10006; `|`  
+name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#10006; `|`  
 `---------------------------------`  
 `|` Someone's Group name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `|`  
 `---------------------------------`
@@ -84,7 +94,6 @@ _json_ format
 > `POST` https://tasks.app.rs.school/angular/groups/create
 
 Creates new group with specific name. Owner will be able to delete created group.
-
 
 #### Request body
 

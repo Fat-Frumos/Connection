@@ -1,7 +1,13 @@
-.row-table {
-  width: 100vw;
+.conversation-wrapper{
   height: 100vh;
-  background: antiquewhite;
+  width: 15vw;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.row-table {
+  height: 100vh;
+  background: #f6f6f6;
   display: flex;
   justify-content: center;
   margin: auto;
@@ -20,7 +26,7 @@ td {
   padding: 15px;
   line-height: 200%;
   color: #aaa;
-  font-size: 0.5rem;
+  font-size: 0.8rem;
   position: relative;
 }
 
@@ -58,7 +64,6 @@ img {
   background: green;
   border-radius: 50%;
   padding: 2px 5px;
-  //color: #fff;
 }
 
 .col-6 {
@@ -84,67 +89,6 @@ img {
   border-bottom: 1px solid #ccc;
 }
 
-.chat {
-  height: 400px;
-  overflow-y: auto;
-}
-
-.chat img {
-  width: 40px;
-  height: 40px;
-  margin-right: 20px;
-}
-
-.dialog {
-  padding: 3%;
-  margin-right: 10px;
-  max-width: 250px;
-  border-radius: 0.5rem;
-  position: relative;
-  background: #ccc;
-  color: black;
-}
-
-.dialog::before {
-  content: "";
-  position: absolute;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-}
-
-.other, .self {
-  margin-bottom: 20px;
-  display: flex;
-}
-
-.other .dialog::before {
-  left: -5%;
-  border-right: 15px solid #ccc;
-}
-
-.self .dialog::before {
-  right: -5%;
-  border-left: 15px solid #9eea9e;
-}
-
-.self {
-  flex-direction: row-reverse;
-}
-
-.self .dialog {
-  background: #9eea9e;
-  margin: 0 15px;
-}
-
-.chat p {
-  align-self: flex-end;
-  margin-bottom: 0;
-}
-
-.read {
-  transform: translate(30px, 30px);
-}
-
 .msg {
   height: 80px;
   display: flex;
@@ -153,7 +97,7 @@ img {
 }
 
 .msg input {
-  //background-color: #f6f6f6 !important;
+  margin: 10px;
+  margin-top: 50px;
   border: 0 !important;
-  font-size: 0.2rem;
 }

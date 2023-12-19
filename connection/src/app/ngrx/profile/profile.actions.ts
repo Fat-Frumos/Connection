@@ -1,6 +1,6 @@
 import {createAction, props} from '@ngrx/store';
 import {ErrorMessage} from '@app/model/message/error-message.model';
-import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
+import {People} from '@app/model/user/user-profile-response.model';
 
 const profileLoad = '[Profile] Load Profile';
 const profileUpdate = '[Profile] Update Profile';
@@ -10,7 +10,7 @@ export const loadProfile =
 
 export const loadProfileSuccess =
   createAction(`${profileLoad} Success`,
-    props<{ profile: UserProfileResponse }>());
+    props<{ profile: People }>());
 
 export const loadProfileFailure =
   createAction(`${profileLoad} Failure`,
@@ -18,11 +18,11 @@ export const loadProfileFailure =
 
 export const updateProfile =
   createAction(`${profileUpdate}`,
-    props<{ profile: UserProfileResponse }>());
+    props<{ profile: People }>());
 
 export const updateProfileSuccess =
   createAction(`${profileUpdate} Success`,
-    props<{ updatedProfile: UserProfileResponse }>());
+    props<{ updatedProfile: People }>());
 
 export const updateProfileFailure =
   createAction(`${profileUpdate} Failed`,

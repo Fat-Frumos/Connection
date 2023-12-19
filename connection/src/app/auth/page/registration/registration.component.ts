@@ -7,11 +7,10 @@ import {
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ValidatorService} from '@app/auth/service/validator.service';
 import {ToastService} from '@app/shared/component/toast/toast.service';
-import {Store} from '@ngrx/store';
-import {showAlert} from '@app/ngrx/app/app.action';
 import {AuthUser} from '@app/model/user/user-registration.model';
 import {ErrorMessage} from '@app/model/message/error-message.model';
 import {UserService} from '@app/auth/service/user.service';
+import {RouterService} from '@app/auth/service/router.service';
 
 @Component({
   selector: 'app-registration',
@@ -33,8 +32,8 @@ export class RegistrationComponent implements OnInit {
   lastEmail: string = '';
 
   constructor(
-    private store: Store,
     private toast: ToastService,
+    private router: RouterService,
     private userService: UserService,
     private validator: ValidatorService,
     private formBuilder: FormBuilder) {
@@ -55,18 +54,12 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (!this.isSubmitting || this.registrationForm.invalid) {
-      this.store.dispatch(showAlert({
-        message: 'Password invalid',
-        resultType: 'fail'
-      }));
-      return;
-    }
-    this.isSubmitting = true;
     this.register(this.validator.getFormUser(this.registrationForm));
+    this.router.navigate(['/signin']);
   }
 
   private register(formUser: AuthUser): void {
+    console.log(formUser);
     this.userService.registration(formUser).subscribe({
       next: () => {
         this.isSubmitting = false;

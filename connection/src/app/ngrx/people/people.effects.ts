@@ -7,8 +7,8 @@ import {
   loadPeopleFailure,
   loadPeopleSuccess
 } from '@app/ngrx/people/people.action';
-import {ConversationService} from '@app/core/service/conversation.service';
-import {UserResponse} from '@app/model/user/user-response.model';
+import {GroupService} from '@app/core/service/group.service';
+import {PeopleResponse} from '@app/model/user/user-response.model';
 
 @Injectable()
 export class PeopleEffects {
@@ -16,9 +16,9 @@ export class PeopleEffects {
     this.actions$.pipe(
       ofType(loadPeople),
       switchMap(() =>
-        this.peopleService.getUsers$().pipe(
-          map((user: UserResponse) => user.Items),
-          map((people) => loadPeopleSuccess({ people })),
+        this.peopleService.getPeople$().pipe(
+          map((user: PeopleResponse) => user.Items),
+          map((people) => loadPeopleSuccess({people})),
           catchError((error) => of(loadPeopleFailure({
             error: error instanceof Error ? error.message : 'Unknown error'
           })))
@@ -27,8 +27,7 @@ export class PeopleEffects {
     )
   );
 
-
-  constructor(private actions$: Actions, private peopleService: ConversationService) {
+  constructor(private actions$: Actions, private peopleService: GroupService) {
     console.log(this.loadPeople$);
   }
 }

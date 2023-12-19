@@ -1,73 +1,23 @@
 <app-loader *ngIf="isLoading"></app-loader>
 <div class="row-table" *ngIf="!isLoading">
-  <div class="col-4 py-3 px-0 shadow">
+  <div class="col-4 py-3 px-0 shadow conversation-wrapper">
     <table>
-      <tr>
-        <td>
-          <input type="text" placeholder="search" class="form-control">
-        </td>
-      </tr>
-      <ng-container *ngFor="let user of users | async">
+      <ng-container *ngFor="let user of groups | async">
         <tr *ngIf="user">
           <td>
             <div class="box">
-              <img [src]="'https://picsum.photos/50/50/?random=' + (user.uid?.S)" alt="">
-              <div class="header-name" (click)="onSelectConversation(user.uid.S)">
+              <img
+                [src]="'https://picsum.photos/50/50/?random=' + (user.id?.S)"
+                alt="">
+              <div class="header-name"
+                   (click)="onSelectConversation(user.id.S)">
                 <p>{{ user.name?.S }}</p>
-                <p>{{ user.email?.S }}</p>
               </div>
             </div>
           </td>
         </tr>
       </ng-container>
-      <tr>
-        <td>
-          <button (click)="previousPage()">Previous</button>
-          <button (click)="nextPage()">Next</button>
-          <button (click)="updatePeopleList()">Update</button>
-        </td>
-      </tr>
     </table>
   </div>
-  <div *ngIf="countdown > 0">{{ countdown }}</div>
-</div>
-
-<div class="col-6 px-0 shadow">
-  <a [routerLink]="['/main']">Return back</a>
-  <table>
-    <tr>
-      <td>
-        <div class="name text-dark">
-          <h6 class="mb-0"></h6>
-<!--            <span>{{ message.authorID === 'currentUserId' ? 'Me' : message.authorID }}</span><i class="fas fa-volume-down"></i></h6>-->
-          <div class="ic">
-            <button (click)="updateConversation()" [disabled]="updateDisabled">{{ updateButtonText }}</button>
-            <button (click)="deleteConversation()">Delete</button>
-          </div>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <div class="chat" *ngFor="let message of messages">
-          <div [ngClass]="{ 'self': message.authorID === 'currentUserId', 'other': message.authorID !== 'currentUserId' }">
-            <img [src]="'https://picsum.photos/50/50/?random=' + message.authorID" alt="User Avatar">
-            <div class="dialog">{{ message.message }}</div>
-            <p>{{ message.createdAt | date: 'yyyy/MM/dd HH:mm' }}</p>
-            <span class="read" *ngIf="message.authorID === 'currentUserId'">read</span>
-          </div>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <div class="msg">
-          <form (ngSubmit)="sendMessage()">
-            <input type="text" [(ngModel)]="newMessage" name="newMessage" required class="form-control" />
-            <button type="submit" [disabled]="!newMessage">Send new message</button>
-          </form>
-        </div>
-      </td>
-    </tr>
-  </table>
+  <app-message [currentUserName]="selectedUserId"></app-message>
 </div>

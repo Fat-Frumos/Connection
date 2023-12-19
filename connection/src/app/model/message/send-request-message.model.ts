@@ -1,4 +1,5 @@
 export interface SendRequestMessage {
-  recipient: string;
+  since: number;
+  groupID: string;
   message: string;
 }

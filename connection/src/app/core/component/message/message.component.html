@@ -1,1 +1,32 @@
-<p>message works!</p>
+<div class="name text-dark">
+  <h6 class="mb-0"><span>User: {{currentUserName}}</span>
+    <button [disabled]="updateDisabled" (click)="updateMessages()">Update
+    </button>
+    <span *ngIf="countdown">Countdown: {{ countdown }} seconds</span>
+    <button (click)="deleteConversation()">Delete</button>
+
+    <i class="fas fa-volume-down"></i></h6>
+</div>
+<div class="col-6 px-0 shadow messages-wrapper">
+  <table>
+    <tr>
+      <td>
+        <div class="chat" *ngFor="let message of messages; let i = index;">
+          <div [ngClass]="{ 'other': i % 2 === 0, 'self': i % 2 === 1 }">
+            <img
+                    src="https://picsum.photos/50/50/?random={{message.authorID.S}}"
+                    alt="">
+            <div class="dialog">{{message.message.S}}
+            </div>
+            <p>{{ message.createdAt.S | date:'medium' }}</p>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="msg">
+  <input type="text"
+         placeholder="you can type something!"
+         class="form-control" (submit)="sendMessage()">
+</div>

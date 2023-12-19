@@ -1,11 +1,12 @@
-import {createFeatureSelector, createSelector} from '@ngrx/store';
-import {peopleAdapter, PeopleState} from '@app/ngrx/people/people.state';
+import {createFeatureSelector} from '@ngrx/store';
+import {PeopleState} from '@app/ngrx/people/people.state';
+import {
+  PeopleConversationState
+} from '@app/model/message/message-response.models';
 
 export const selectPeopleState =
   createFeatureSelector<PeopleState>('people');
 
-export const selectAllPeople =
-  createSelector(selectPeopleState, peopleAdapter.getSelectors().selectAll);
+export const selectPeopleConversationState =
+  createFeatureSelector<PeopleConversationState>('peopleConversation');
 
-export const selectPeopleError =
-  createSelector(selectPeopleState, (state) => state.error);

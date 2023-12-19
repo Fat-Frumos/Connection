@@ -30,9 +30,10 @@
 <div class="group-list-items">
   <ul>
     <li class="participant-name"
-        *ngFor="let group of groups"
-        (click)="goToGroup(group.id.S)">
+        *ngFor="let group of groups">
+      <a (click)="goToGroup(group)">
       {{ group.name.S }}
+      </a>
       <button class="btn-message"
               [disabled]="!group.isOwned"
               (click)="deleteGroup(group.id.S)">

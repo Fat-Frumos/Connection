@@ -1,90 +1,84 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Conversation} from '@app/model/conversation/conversation.model';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation
+} from '@angular/core';
+import {Conversation} from '@app/model/conversation/conversation.models';
 import {RouterService} from '@app/auth/service/router.service';
-import {ToastService} from '@app/shared/component/toast/toast.service';
-import {ErrorMessage} from '@app/model/message/error-message.model';
-import {BehaviorSubject, Observable, of, tap} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
-import {ConversationService} from '@app/core/service/conversation.service';
-import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {People} from '@app/model/user/user-profile-response.model';
 import {Message} from '@app/model/message/message.model';
 import {ActivatedRoute} from '@angular/router';
-import {
-  ConversationResponse
-} from '@app/model/conversation/conversation-response.model';
+import {GroupService} from '@app/core/service/group.service';
+import {MessageResponse} from '@app/model/message/message-response.models';
+import {Group} from '@app/model/conversation/group.model';
 
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
-  styleUrl: './conversation.component.scss'
+  styleUrl: './conversation.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class ConversationComponent implements OnInit {
 
-  conversationID: string;
+  users: BehaviorSubject<People[]> = new BehaviorSubject<People[]>([]);
 
-  updateDisabled: boolean = false;
+  groups: BehaviorSubject<Group[]> = new BehaviorSubject<Group[]>([]);
 
-  countdown: number = 0;
-
-  updateButtonText: string = 'Update';
-
-  messages: Message[] = [];
-
-  newMessage: string = '';
+  @Output() selectUser = new EventEmitter<People>();
 
   @Input() conversations: Conversation[] = [];
 
-  @Input() selectedUserId: string | undefined;
+  @Input() selectedUserId: string = '';
 
-  @Output() selectUser = new EventEmitter<UserProfileResponse>();
+  updateButtonText: string = 'Update';
 
-  users: BehaviorSubject<UserProfileResponse[]> = new BehaviorSubject<UserProfileResponse[]>([]);
-
-  currentPage = 0;
-
-  pageSize = 8;
+  updateDisabled: boolean = false;
 
   isLoading = false;
 
+  messages: Message[] = [];
+
+  countdown: number = 0;
+
+  groupID: string = '';
+
   constructor(
-    private toast: ToastService,
     private route: ActivatedRoute,
-    private service: ConversationService,
+    private service: GroupService,
     private router: RouterService) {
-    this.conversationID = '';
     this.updatePeopleList();
   }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.conversationID = params['conversationID'] as string;
+      this.groupID = params['id'] as string;
       this.loadMessages();
     });
+    this.getGroups();
+  }
+
+  getGroups() {
+    this.service.getGroups().subscribe(group =>
+      this.groups.next(group.Items));
   }
 
   loadMessages(): void {
-    this.service.getConversationMessages(this.conversationID).subscribe((response: ConversationResponse) => {
-      this.messages = response.Items.find(
-        conversation => conversation.conversationID === this.conversationID)?.messages ?? [];
-    });
-  }
-
-
-  sendMessage(): void {
-    this.service.sendMessage(this.conversationID, this.newMessage).subscribe(() => {
-      this.loadMessages();
-      this.newMessage = '';
-    });
+    this.service.getMessages(this.groupID).subscribe(
+      (response: MessageResponse) => {
+        this.messages = response.Items;
+      });
   }
 
   private updateUsers() {
     this.isLoading = true;
-    this.service.getUsers$().subscribe({
+    this.service.getPeople$().subscribe({
       next: (response) => {
-        const startIndex = this.currentPage * this.pageSize;
-        const endIndex = startIndex + this.pageSize;
-        const usersToDisplay = response.Items.slice(startIndex, endIndex);
-        this.users.next(usersToDisplay);
+        this.users.next(response.Items);
         this.isLoading = false;
       },
       error: (err) => {
@@ -94,47 +88,18 @@ export class ConversationComponent implements OnInit {
     });
   }
 
-  updateConversation(): void {
-    if (!this.updateDisabled) {
-      this.countdown = 60;
-      this.updateButtonText = 'Updating...';
-      this.updateDisabled = true;
-
-      const interval = setInterval(() => {
-        this.countdown--;
-        if (this.countdown === 0) {
-          this.updateButtonText = 'Update';
-          this.updateDisabled = false;
-          clearInterval(interval);
-          this.loadMessages();
-        }
-      }, 1000);
-    }
-  }
-
   deleteConversation(): void {
     const confirmDelete = confirm('Are you sure you want to delete this conversation?');
     if (confirmDelete) {
-      this.service.deleteConversation(this.conversationID).subscribe(() => {
+      this.service.deleteConversation(this.groupID).subscribe(() => {
         this.router.navigate(['/main']);
       });
     }
   }
 
-  nextPage() {
-    this.currentPage++;
-    this.updateUsers();
-  }
-
-  previousPage() {
-    if (this.currentPage > 0) {
-      this.currentPage--;
-      this.updateUsers();
-    }
-  }
-
-  onSelectConversation(uid: string): void {
-    this.router.navigate(['/', 'conversation', uid]);
+  onSelectConversation(id: string): void {
+    this.groupID = id;
+    this.router.navigate(['/', 'group', id]);
   }
 
   updatePeopleList(): void {
@@ -144,30 +109,28 @@ export class ConversationComponent implements OnInit {
 
   private updatedConversations() {
     this.service.getConversations$().subscribe(conversations => {
+      if (!this.updateDisabled) {
+        this.countdown = 60;
+        this.updateButtonText = 'Updating...';
+        this.updateDisabled = true;
+
+        const interval = setInterval(() => {
+          this.countdown--;
+          if (this.countdown === 0) {
+            this.updateButtonText = 'Update';
+            this.updateDisabled = false;
+            clearInterval(interval);
+            this.loadMessages();
+          }
+        }, 1000);
+      }
       this.conversations = conversations.Items;
-      console.log(this.conversations);
     });
   }
 
   hasConversation(id: string): Observable<boolean> {
-    return this.service.getUsers$().pipe(
+    return this.service.getPeople$().pipe(
       map(users => users.Items.some(user => user.uid.S === id))
     );
-  }
-
-  redirectToConversation(companionID: string): void {
-    if (!this.conversations.find(conversation => conversation.participants[1].uid.S === companionID)) {
-      this.service.createConversation(companionID).pipe(
-        tap(() => {
-          this.router.navigate(['/group']);
-        }),
-        catchError((error: ErrorMessage) => {
-          this.toast.showMessage(error.message, 'error');
-          return of(null);
-        })
-      ).subscribe();
-    } else {
-      this.router.navigate(['/conversation']);
-    }
   }
 }

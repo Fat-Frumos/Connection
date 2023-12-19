@@ -1,8 +1,11 @@
 import {UserState} from '@app/ngrx/user/user.state';
 import {ProfileState} from '@app/ngrx/profile/profile.reducer';
-import {PeopleState} from '@app/ngrx/people/people.state';
 import {MessageState} from '@app/ngrx/message/message.state';
 import {GroupState} from '@app/ngrx/group/group.state';
+import {
+  PeopleConversationState
+} from '@app/model/message/message-response.models';
+import {PeopleState} from '@app/ngrx/people/people.state';
 
 export interface AppState {
   people: PeopleState;

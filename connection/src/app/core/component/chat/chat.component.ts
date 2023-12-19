@@ -1,45 +1,91 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {
-  SelectedConversation
-} from '@app/model/conversation/selected-conversation.model';
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import {People} from '@app/model/user/user-profile-response.model';
+import {BehaviorSubject, of, Subject, tap} from 'rxjs';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 import {Message} from '@app/model/message/message.model';
-import {SendRequestMessage} from '@app/model/message/send-request-message.model';
-import {ConversationService} from '@app/core/service/conversation.service';
-import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
+import {GroupService} from '@app/core/service/group.service';
+import {ToastService} from '@app/shared/component/toast/toast.service';
+import {catchError} from 'rxjs/operators';
+import {ErrorMessage} from '@app/model/message/error-message.model';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
-export class ChatComponent {
+export class ChatComponent implements OnInit, OnDestroy {
 
-  @Input() selectedConversation: SelectedConversation;
+  @ViewChild('scrollContainer', {static: true}) scrollContainer!: ElementRef<HTMLDivElement>;
 
-  @Input() currentUser: UserProfileResponse;
+  users: BehaviorSubject<People[]> = new BehaviorSubject<People[]>([]);
 
-  @Output() postMessage = new EventEmitter<SendRequestMessage>();
+  private subject = new Subject<void>();
 
-  newMessage: string;
+  @Input() selectedUserId: string = '';
 
-  constructor(private chatService: ConversationService) {
-    this.newMessage = '';
-    this.currentUser = {} as UserProfileResponse;
-    this.selectedConversation = {} as SelectedConversation;
+  conversationID: string = '';
+
+  newMessageForm: FormGroup;
+
+  messages: Message[] = [];
+
+  constructor(
+    private service: GroupService,
+    private toast: ToastService,
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    this.newMessageForm = this.fb.group({
+      message: ['', Validators.required.bind(Validators)]
+    });
   }
 
-  getUser(message: Message) {
-    return this.selectedConversation?.participants.find(
-      user => user.uid.S === message.authorID) ?? this.currentUser;
+  ngOnInit(): void {
+    this.conversationID = localStorage.getItem('cid') ?? '';
+    this.fetchMessages(this.conversationID);
+    this.service.getPeople$().subscribe(people =>
+      this.users.next(people.Items));
   }
 
-  onPostMessage() {
-    //   this.postMessage.emit({
-    //     message: this.newMessage,
-    //     recipient: this.selectedConversation?.participants[1].uid || ''
-    //   });
-    //   this.chatService.sendMessage(
-    //     this.selectedConversation?.participants[1].uid || '', this.newMessage).pipe(
-    //     take(1)).subscribe();
+
+  fetchMessages(conversationID: string): void {
+    this.service.getConversationMessages(conversationID).pipe(
+      tap((data) => {
+        this.messages = data.Items;
+      }),
+      catchError((error: ErrorMessage) => {
+        this.toast.showMessage(error.message, 'error');
+        return of(null);
+      })
+    ).subscribe();
+  }
+
+  get message() {
+    return this.newMessageForm?.get('message');
+  }
+
+  onSelectConversation(id: string) {
+    if (this.newMessageForm?.invalid) {
+      return;
+    }
+    let message = '';
+    if (this.newMessageForm?.value) {
+      message = (this.newMessageForm.value as { message: string }).message;
+    }
+    this.service.sendNewMessage(id, message);
+    void this.router.navigate(['/', 'conversation', id]);
+  }
+
+  ngOnDestroy() {
+    this.subject.next();
+    this.subject.complete();
   }
 }

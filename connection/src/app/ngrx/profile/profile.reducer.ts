@@ -5,17 +5,17 @@ import {
   updateProfileSuccess
 } from './profile.actions';
 import {ErrorMessage} from '@app/model/message/error-message.model';
-import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
+import {People} from '@app/model/user/user-profile-response.model';
 
 export interface ProfileState {
   name: string;
-  profile: UserProfileResponse;
+  profile: People;
   error: ErrorMessage;
 }
 
 export const initialProfileState: ProfileState = {
   name: '',
-  profile: {} as UserProfileResponse,
+  profile: {} as People,
   error: {} as ErrorMessage
 };
 
@@ -24,7 +24,7 @@ export const profileReducer = createReducer(
   on(loadProfileSuccess, (state, {profile}) =>
     ({...state, profile, error: {} as ErrorMessage})),
   on(loadProfileFailure, (state, {error}) =>
-    ({...state, profile: {} as UserProfileResponse, error})),
+    ({...state, profile: {} as People, error})),
   on(updateProfileSuccess, (state, { updatedProfile }) =>
     ({ ...state, profile: updatedProfile })),
   on(updateProfileFailure, (state, { error }) =>

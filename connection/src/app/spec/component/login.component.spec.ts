@@ -1,15 +1,17 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {beforeEach, describe, expect, it} from '@jest/globals';
-import {RegistrationComponent} from '@app/auth/page/registration/registration.component';
-import {HttpClientModule} from '@angular/common/http';
+import {
+  RegistrationComponent
+} from '@app/auth/page/registration/registration.component';
 import {ToastService} from '@app/shared/component/toast/toast.service';
 import {
   ActionsSubject,
-  ReducerManager, ReducerManagerDispatcher,
+  ReducerManager,
+  ReducerManagerDispatcher,
   StateObservable,
-  Store, StoreModule
+  Store,
+  StoreModule
 } from '@ngrx/store';
-import {ActivatedRoute} from '@angular/router';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ReactiveFormsModule} from '@angular/forms';
 import {UserReducer} from '@app/ngrx/user/user.reducer';

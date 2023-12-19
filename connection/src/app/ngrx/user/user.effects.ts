@@ -41,26 +41,12 @@ export class UserEffects {
       ofType(loginUser),
       mergeMap((action) =>
         this.userService.login(action.authUser).pipe(
-          map((user) => loginSuccess({ user })),
-          catchError(() => of(loginFailure({ error: 'Login failed' })))
+          map((user) => loginSuccess({user})),
+          catchError(() => of(loginFailure({error: 'Login failed'})))
         )
       )
     )
   );
-
-  // loadUser$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(fetchUser),
-  //     mergeMap(() =>
-  //       this.userService.getAuthUser$().pipe(
-  //         map((user: AuthUser) => fetchUserSuccess({user})),
-  //         catchError((error: ErrorMessage) => {
-  //           return of(fetchUserFailed({error: `Registration failed ${error.message}`}));
-  //         })
-  //       )
-  //     )
-  //   )
-  // );
 
   constructor(
     private store: Store,

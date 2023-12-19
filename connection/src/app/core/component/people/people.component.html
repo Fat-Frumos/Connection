@@ -10,8 +10,7 @@
   <li *ngFor="let participant of users"
       class="participant-name">
     <div>{{ participant.name.S }}</div>
-    <button class="btn-message"
-            (click)="createConversation(participant.uid.S)">
+    <button class="btn-message" (click)="createConversation(participant.uid.S)">
       Message
     </button>
   </li>

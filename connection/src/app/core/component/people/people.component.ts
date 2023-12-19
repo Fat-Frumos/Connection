@@ -1,10 +1,8 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {UserProfileResponse} from '@app/model/user/user-profile-response.model';
-import {ConversationService} from '@app/core/service/conversation.service';
-import {AppState} from '@app/ngrx/app/app.state';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
-import {Conversation} from '@app/model/conversation/conversation.model';
+import {People} from '@app/model/user/user-profile-response.model';
+import {Conversation} from '@app/model/conversation/conversation.models';
+import {GroupService} from '@app/core/service/group.service';
+import {RouterService} from '@app/auth/service/router.service';
 
 @Component({
   selector: 'app-people',
@@ -14,9 +12,7 @@ import {Conversation} from '@app/model/conversation/conversation.model';
 })
 export class PeopleComponent implements OnInit {
 
-  users: UserProfileResponse[];
-
-  people$: Observable<UserProfileResponse[]>;
+  users: People[];
 
   isLoading = false;
 
@@ -24,15 +20,12 @@ export class PeopleComponent implements OnInit {
 
   countdown = 0;
 
-  currentUser = {} as UserProfileResponse;
-
   conversations: Conversation[] = [];
 
   constructor(
-    private store: Store<AppState>,
-    private service: ConversationService) {
+    private router: RouterService,
+    private service: GroupService) {
     this.users = [];
-    this.people$ = store.select(state => state.people.people);
   }
 
   ngOnInit(): void {
@@ -47,7 +40,7 @@ export class PeopleComponent implements OnInit {
   }
 
   loadPeople(): void {
-    this.service.getUsers$().subscribe(people => {
+    this.service.getPeople$().subscribe(people => {
       this.users = people.Items;
     });
   }
@@ -55,7 +48,7 @@ export class PeopleComponent implements OnInit {
   updatePeople(): void {
     if (this.canUpdate) {
       this.isLoading = true;
-      this.service.getUsers$().subscribe(() => {
+      this.service.getPeople$().subscribe(() => {
         this.loadPeople();
         this.isLoading = false;
         this.canUpdate = false;
@@ -71,13 +64,30 @@ export class PeopleComponent implements OnInit {
     }
   }
 
-  createConversation(id: string) {
-    this.service.createConversation(id).subscribe(() => {
-      this.loadPeople();
-      const conversationExists = this.service.checkConversation(id);
-      if (!conversationExists) {
-        this.service.createConversation(id);
+  createConversation(uid: string) {
+    if (this.service.conversations && this.conversations.length > 0) {
+      const conversation = this.conversations.find(
+        (item: Conversation) => item.id.S === uid) ?? null;
+      if (conversation) {
+        this.router.navigate(['conversation', conversation.id.S]);
+      } else {
+        this.create(uid);
       }
+    } else {
+      this.create(uid);
+    }
+    this.router.navigate(['conversation', uid]);
+  }
+
+  private create(uid: string) {
+    this.service.createConversation(uid).subscribe(conversationId => {
+      this.service.currentConversationId = conversationId.conversationID;
+      localStorage.setItem('cid', conversationId.conversationID);
     });
+  }
+
+  hasConversation(id: string): boolean {
+    return this.conversations.some(conversation =>
+      conversation.id.S === id);
   }
 }

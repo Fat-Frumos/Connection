@@ -5,8 +5,6 @@ import {ToastService} from '@app/shared/component/toast/toast.service';
 import {GroupCreate} from '@app/model/conversation/group-create.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {AppState} from '@app/ngrx/app/app.state';
-import {Store} from '@ngrx/store';
 
 const MINUTE = 60;
 
@@ -18,23 +16,22 @@ const MINUTE = 60;
 })
 export class GroupComponent implements OnInit {
 
-  groups: Group[] = [];
-
   createGroupModel: GroupCreate;
-
-  canUpdate: boolean = true;
 
   countdown: number = MINUTE;
 
+  isLoading = false;
+
+  canUpdate: boolean = true;
+
   groupForm: FormGroup;
 
-  isLoading = false;
+  groups: Group[] = [];
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private toast: ToastService,
-    private store: Store<AppState>,
     private groupService: GroupService
   ) {
     this.createGroupModel = {name: ''};
@@ -45,7 +42,6 @@ export class GroupComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadGroups();
-    // this.groups$ = this.store.select(getGroups);
   }
 
   loadGroups() {
@@ -56,59 +52,42 @@ export class GroupComponent implements OnInit {
 
   deleteGroup(groupId: string) {
     this.groupService.deleteGroup(groupId).subscribe(() => {
-      this.groups = this.groups.filter(group => {
-        return group.id.S !== groupId;
-      });
       this.loadGroups();
     });
-    // this.store.dispatch(deleteGroup({ groupId }));
   }
 
   updateGroups(): void {
     if (this.canUpdate) {
       this.isLoading = true;
       this.groupService.getGroups().subscribe(() => {
-        this.loadGroups();
         this.isLoading = false;
         this.countdown = MINUTE;
         this.canUpdate = this.toast.count(this.countdown);
-        // this.count();
+        this.loadGroups();
       });
     }
-    // this.store.dispatch(updateGroup({ group }));
-  }
-
-  private count() {
-    this.countdown = MINUTE;
-    const interval = setInterval(() => {
-      this.countdown--;
-      if (this.countdown === 0) {
-        clearInterval(interval);
-        this.canUpdate = true;
-      }
-    }, 1000);
   }
 
   createGroup(): void {
     if (this.groupForm.valid) {
-      const nameControl = this.groupForm.get('groupName');
-      console.log(nameControl);
-      if (nameControl && typeof nameControl.value === 'string') {
-        const groupName: string = nameControl.value;
-        this.groupService.createGroup({name: groupName}).subscribe(newGroup => {
-          this.groups.push(newGroup);
-          this.createGroupModel.name = '';
-          this.groupForm.reset();
-          this.toast.showMessage('Group created successfully', 'success');
-        });
+      const control = this.groupForm.get('groupName');
+      if (control) {
+        const groupName: string = control.value as string;
+        if (groupName) {
+          this.groupService.createGroup(groupName).subscribe(newGroup => {
+            this.toast.showMessage(`Group created successfully${newGroup.id.S} ${newGroup.createdBy.S}`, 'success');
+            this.createGroupModel.name = '';
+            this.groupForm.reset();
+            this.loadGroups();
+          });
+        }
       } else {
         this.toast.showMessage('Invalid form control or value for "name"', 'error');
       }
     }
-    // this.store.dispatch(createGroup({ group }));
   }
 
-  goToGroup(id: string): void {
-    void this.router.navigate(['/group', id]);
+  goToGroup(group: Group): void {
+    void this.router.navigate(['/group', group.id.S]);
   }
 }
